@@ -1,0 +1,73 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<AddEditVoteCodeModal> _localizer
+@using Application.Responses.Identity
+<EditForm Model="@AddEditModel" OnValidSubmit="SaveAsync">
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <MudDialog>
+        <TitleContent>
+            @{
+                if (AddEditModel.Id == 0)
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
+                        @_localizer["Add Vote Code"]
+                    </MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Update" Class="mr-3 mb-n1" />
+                        @_localizer["Update Vote Code"]
+                    </MudText>
+                }
+            }
+        </TitleContent>
+        <DialogContent>
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" T="string" For="@(() => AddEditModel.VoteCode)" @bind-Value="AddEditModel.VoteCode" Label="@_localizer["Code"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField Immediate="true" T="string" For="@(() => AddEditModel.VoteShortcut)" @bind-Value="AddEditModel.VoteShortcut" Label="@_localizer["VC Shortcut"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudSelect T="int" Required="true" For="@(()=> AddEditModel.ForceId)" ToStringFunc="@Forceconverter()" @bind-Value="@AddEditModel.ForceId" Label="@_localizer["Force"]" AnchorOrigin="Origin.BottomCenter">
+                        @if (ForcesList != null)
+                        {
+                            foreach (var force in ForcesList)
+                            {
+                                <MudSelectItem Value="@force.Id" />
+                            }
+                        }
+
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" md="6">
+
+                    <MudAutocomplete T="UserResponse" Label="Default Controller" @bind-Value="selectedUser" Required="true" ToStringFunc="@converter()"
+                                     SearchFunc="@SearchAsync" Immediate="true" CoerceValue="@coerceValue" ResetValueOnEmptyText="true"
+                                     AdornmentIcon="@Icons.Material.Filled.VerifiedUser" Error="@coerceValue" AdornmentColor="Color.Primary" ErrorText="Please Supply A Valid Controller" />
+                </MudItem>
+                @if (AddEditModel.Id == 0)
+                {
+                    <MudItem xs="12" md="6">
+                        <MudTextField Immediate="true" T="decimal" For="@(() => AddEditModel.CreditAmount)" @bind-Value="AddEditModel.CreditAmount" Label="@_localizer["Opening Balance"]" />
+                    </MudItem>
+                }
+
+            </MudGrid>
+        </DialogContent>
+        <DialogActions>
+            <MudButton DisableElevation Variant="Variant.Filled" OnClick="Cancel">@_localizer["Cancel"]</MudButton>
+            @if (AddEditModel.Id != 0)
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Secondary">@_localizer["Update"]</MudButton>
+            }
+            else
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Success">@_localizer["Save"]</MudButton>
+            }
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+
+

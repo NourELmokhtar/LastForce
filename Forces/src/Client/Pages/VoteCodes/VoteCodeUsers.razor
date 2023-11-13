@@ -1,0 +1,44 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<VoteCodeUsers> _localizer
+@using Application.Enums
+@using Forces.Application.Extensions
+@using Application.Responses.Identity
+<MudDialog>
+    <TitleContent>
+        <MudText Typo="Typo.h6">
+            <MudIcon Icon="@Icons.Material.Filled.Update" Class="mr-3 mb-n1" />
+            @_localizer["Manage Vote Code Controllers"]
+        </MudText>
+    </TitleContent>
+    <DialogContent>
+        <MudTable Elevation="0" Items="@_voteUsers" MultiSelection="true" Striped="true" Dense="true" Filter="new Func<UserResponse,bool>(Search)" @bind-user="_user" @bind-SelectedItems="SelectedUsers" Hover="true">
+            <ToolBarContent>
+                <MudText Typo="Typo.h6">@AddEditModel.VoteCode | @AddEditModel.VoteShortcut</MudText>
+                <MudSpacer />
+                <MudTextField Immediate="true" @bind-Value="searchString" Placeholder="Search For Users" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+            </ToolBarContent>
+            <HeaderContent>
+                <MudTh>User Name</MudTh>
+                <MudTh>Rank</MudTh>
+                <MudTh>Title</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="User Name">
+                    <MudHighlighter Text="@context.UserName" HighlightedText="@searchString" />
+                </MudTd>
+                <MudTd DataLabel="Rank">
+                    <MudHighlighter Text="@(((RankType)context.Rank).ToEnDescriptionString())" HighlightedText="@searchString" />
+                </MudTd>
+                <MudTd DataLabel="Title">
+                    <MudHighlighter Text="@context.JobTitle" HighlightedText="@searchString" />
+                </MudTd>
+            </RowTemplate>
+            <PagerContent>
+                <MudTablePager />
+            </PagerContent>
+        </MudTable>
+    </DialogContent>
+    <DialogActions>
+        <MudButton DisableElevation Variant="Variant.Filled" OnClick="Cancel">@_localizer["Cancel"]</MudButton>
+        <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" OnClick="SaveAsync" Color="Color.Success">@_localizer["Save"]</MudButton>
+    </DialogActions>
+</MudDialog>

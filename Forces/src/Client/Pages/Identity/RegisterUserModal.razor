@@ -1,0 +1,161 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<RegisterUserModal> _localizer
+@using Forces.Application.Enums
+@using Forces.Application.Extensions
+<style>
+
+
+   .rank * {
+        height: 150px !important;
+    }
+</style>
+<EditForm Model="@_registerUserModel" OnValidSubmit="SubmitAsync">
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <div style="overflow-y:auto; height:90vh">
+        <MudDialog>
+
+            <TitleContent>
+                @{
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.VerifiedUser" Class="mr-3 mb-n1" />
+                        @_localizer["Register User"]
+                    </MudText>
+                }
+            </TitleContent>
+            <DialogContent>
+
+                <MudTextField Immediate="true" For="@(() => _registerUserModel.UserName)" @bind-Value="_registerUserModel.UserName" Label="@_localizer["User Name"]" />
+                <MudTextField Immediate="true" For="@(() => _registerUserModel.FirstName)" @bind-Value="_registerUserModel.FirstName" Label="@_localizer["First Name"]" />
+                <MudTextField Immediate="true" For="@(() => _registerUserModel.LastName)" @bind-Value="_registerUserModel.LastName" Label="@_localizer["Last Name"]" />
+                <MudTextField Immediate="true" For="@(() => _registerUserModel.Email)" InputType="InputType.Email" @bind-Value="_registerUserModel.Email" Label="@_localizer["Email"]" />
+                <MudTextField Immediate="true" For="@(() => _registerUserModel.PhoneNumber)" @bind-Value="_registerUserModel.PhoneNumber" Label="@_localizer["Phone Number"]" />
+                <MudTextField Immediate="true" For="@(() => _registerUserModel.Password)" InputType="@_passwordInput" Adornment="Adornment.End" AdornmentIcon="@_passwordInputIcon" OnAdornmentClick="TogglePasswordVisibility" @bind-Value="_registerUserModel.Password" Label="@_localizer["Password"]" />
+                <MudTextField Immediate="true" For="@(() => _registerUserModel.ConfirmPassword)" InputType="InputType.Password" @bind-Value="_registerUserModel.ConfirmPassword" Label="@_localizer["Confirm Password"]" />
+                @if (!string.IsNullOrEmpty(_registerUserModel.UserName))
+                {
+                    @if (_registerUserModel.UserName.ToLower().StartsWith("d1"))
+                    {
+                       @* <div class="d-flex flex-column align-center">
+                            <MudRating @bind-SelectedValue="selectedVal" MaxValue="10" HoveredValueChanged="HandleHoveredValueChanged" />
+                            <MudText Typo="Typo.subtitle2" Class="mt-2">@LabelText</MudText>
+                        </div>*@
+                        <MudSelect Class="rank" @bind-Value="_registerUserModel.Rank" ToStringFunc="converter" Lines="5" Label="Rank">
+                            @foreach (RankType item in Enum.GetValues(typeof(RankType)))
+                            {
+                                <MudSelectItem  T="int?" Value="@RankConvert(item)">
+                                    <img  src="@GetRankImage(item)" height="100" class="mr-5" />
+                                    @item.ToLocalizedDescriptionString(lang)</MudSelectItem>
+                            }
+                        </MudSelect>
+                    }
+                }
+
+                <MudTextField Style="padding-top:10px;" Immediate="true" AdornmentColor="Color.Secondary" AdornmentText="@(((RankType)_registerUserModel.Rank).ToLocalizedDescriptionString(lang))" Adornment="Adornment.Start" For="@(() => _registerUserModel.JobTitle)" @bind-Value="_registerUserModel.JobTitle" Label="@_localizer["Title"]" />
+
+                <MudSelect @bind-Value="_registerUserModel.UserType" Label="User Type">
+                    @foreach (UserType item in Enum.GetValues(typeof(UserType)))
+                    {
+                        <MudSelectItem Value="@item">
+                          
+                            @item.ToDescriptionString()</MudSelectItem>
+                    }
+                </MudSelect>
+                @if (mprStep.userTypeScope[_registerUserModel.UserType] >= Scope.Force)
+                {
+                    <MudSelect T="int?" Required="true" SelectedValuesChanged="FoceChanged" For="@(()=> _registerUserModel.ForceID)" ToStringFunc="@ForceStringconverter()" @bind-Value="@_registerUserModel.ForceID" Label="Force" AnchorOrigin="Origin.BottomCenter">
+                        @if (_ForceList != null)
+                        {
+                            foreach (var force in _ForceList)
+                            {
+                                <MudSelectItem T="int?" Value="@force.Id" />
+                            }
+                        }
+
+                    </MudSelect>
+                }
+                @if (_registerUserModel.UserType == UserType.Department || _registerUserModel.UserType == UserType.DepartmentAdmin)
+                {
+                    <MudSelect T="DepartType?" SelectedValuesChanged="DepartTypeChanged" For="@(()=> _registerUserModel.DepartmentType)" @bind-Value="_registerUserModel.DepartmentType" Label=@_localizer["Department Type"]>
+                        @foreach (DepartType item in Enum.GetValues(typeof(DepartType)))
+                        {
+                            <MudSelectItem T="DepartType?" Value="@item">@item.ToDescriptionString()</MudSelectItem>
+                        }
+                    </MudSelect>
+                    @if (_registerUserModel.DepartmentType == DepartType.Depot)
+                    {
+                        <MudSelect T="int?" Required="true" For="@(() => _registerUserModel.DepoDepartmentID)" ToStringFunc="@DepoStringconverter()" @bind-Value="@_registerUserModel.DepoDepartmentID" Label=@_localizer["Department"] AnchorOrigin="Origin.BottomCenter">
+                            @if (_DepoDepartmentList != null)
+                            {
+                                foreach (var depo in _DepoDepartmentList)
+                                {
+                                    <MudSelectItem T="int?" Value="@depo.Id" />
+                                }
+                            }
+                        </MudSelect>
+                    }
+                    @if (_registerUserModel.DepartmentType == DepartType.HQ)
+                    {
+                        <MudSelect T="int?" Required="true" For="@(() => _registerUserModel.HQDepartmentID)" ToStringFunc="@HQStringconverter()" @bind-Value="@_registerUserModel.HQDepartmentID" Label=@_localizer["Department"] AnchorOrigin="Origin.BottomCenter">
+                            @if (_HQDepartmentList != null)
+                            {
+                                foreach (var HQ in _HQDepartmentList)
+                                {
+                                    <MudSelectItem T="int?" Value="@HQ.Id" />
+                                }
+                            }
+                        </MudSelect>
+                    }
+
+                }
+
+
+                @if (mprStep.userTypeScope[_registerUserModel.UserType] >= Scope.Base)
+                {
+                    <MudSelect T="int?" For="@(()=> _registerUserModel.BaseID)" SelectedValuesChanged="BaseChanged" ToStringFunc="@BaseStringconverter()" @bind-Value="@_registerUserModel.BaseID" Label=@_localizer["Base"] AnchorOrigin="Origin.BottomCenter">
+                        @if (_BasesList != null)
+                        {
+                            foreach (var Base in _BasesList)
+                            {
+                                <MudSelectItem T="int?" Value="@Base.Id" />
+                            }
+                        }
+
+                    </MudSelect>
+                }
+                @if (mprStep.userTypeScope[_registerUserModel.UserType] >= Scope.Section)
+                {
+                    <MudSelect T="int?" For="@(()=> _registerUserModel.BaseSectionID)" ToStringFunc="@BaseSectionStringconverter()" @bind-Value="@_registerUserModel.BaseSectionID" Label=@_localizer["Base Section"] AnchorOrigin="Origin.BottomCenter">
+                        @if (_baseSectionList != null)
+                        {
+                            foreach (var Section in _baseSectionList)
+                            {
+                                <MudSelectItem T="int?" Value="@Section.Id" />
+                            }
+                        }
+
+                    </MudSelect>
+                }
+                <MudCheckBox @bind-Checked="@_registerUserModel.ActivateUser" Label="@_localizer["Activate User?"]" Color="Color.Primary"></MudCheckBox>
+                <MudCheckBox @bind-Checked="@_registerUserModel.AutoConfirmEmail" Label="@_localizer["Auto Confirm Email?"]" Color="Color.Primary"></MudCheckBox>
+
+            </DialogContent>
+            <DialogActions>
+                <MudButton Variant="Variant.Filled" OnClick="Cancel">@_localizer["Cancel"]</MudButton>
+                @{
+                    <MudButton Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Success">@_localizer["Register"]</MudButton>
+                }
+            </DialogActions>
+        </MudDialog>
+    </div>
+</EditForm>
+
+@code{
+    private int RankConvert(RankType type)
+    {
+        return (int)type;
+    }
+    private string GetRankImage(RankType type)
+    {
+        return $"images/Ranks/{type.ToImagePath()}.png";
+    }
+    Func<int?, string> converter = p => ((RankType)p).ToEnDescriptionString();
+}

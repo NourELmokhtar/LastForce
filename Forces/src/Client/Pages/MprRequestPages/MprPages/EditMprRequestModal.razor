@@ -1,0 +1,154 @@
+﻿@using Forces.Application.Features.Items.Queries.GetAll;
+@using Forces.Application.Features.MprRequest.Dto.Response;
+@using Forces.Client.Infrastructure.Managers.Items;
+@inject IItemsManager ItemManager
+
+          @*<MudContainer Style="overflow-y:auto;height:80vh">*@
+            <DxGrid Data="Items"
+            @ref="Grid"
+            EditModelSaving="OnEditModelSaving"
+            DataItemDeleting="OnDataItemDeleting"
+        CustomizeEditModel="Grid_CustomizeEditModel" 
+        EditMode="GridEditMode.EditRow" 
+                    PageSize="8"
+            EditorRenderMode="GridEditorRenderMode.Integrated"
+                    ValidationEnabled="false">
+                <Columns>
+        <DxGridDataColumn FieldName="ItemName">
+                        <CellEditTemplate>
+                            @{
+                                var itemModel = (ItemDto)context.EditModel;
+                            }
+                <DxComboBox Data="@_ItemsList"
+                            NullText="Select Item..."
+                            FilteringMode="DataGridFilteringMode.Contains"
+                            TextFieldName="ItemName"
+                            ValueFieldName="ItemName"
+                            Value="@itemModel.ItemName"
+                            Context="item"
+                            ValueChanged="(string itemname) => {
+                                                var SelectedItem = _ItemsList.FirstOrDefault(x=>x.ItemName == itemname);
+                                              itemModel.ItemId = SelectedItem.Id;
+                                              itemModel.VotecodeId = SelectedItem.VoteCodesId.Value;
+                                              itemModel.ItemNSN = SelectedItem.ItemNsn;
+                                              itemModel.ItemCode = SelectedItem.ItemCode;
+                                              itemModel.ItemNameAR = SelectedItem.ItemArName;
+                                              itemModel.ItemName = SelectedItem.ItemName;
+                                              itemModel.ItemUnit = SelectedItem.MeasureName;
+                                              itemModel.ItemQTY = 1;
+                                              itemModel.ItemPrice = 0;
+                                          }">
+                    <Columns>
+                        <DxListEditorColumn FieldName="@nameof(GetAllItemsResponse.ItemName)" Caption="item" />
+                        <DxListEditorColumn FieldName="@nameof(GetAllItemsResponse.ItemCode)" Caption="Code" />
+                        <DxListEditorColumn FieldName="@nameof(GetAllItemsResponse.ItemNsn)" Caption="NSN" />
+                        <DxListEditorColumn FieldName="@nameof(GetAllItemsResponse.SerialNumber)" Caption="ISN" />
+                        <DxListEditorColumn FieldName="@nameof(GetAllItemsResponse.ItemClass)" Caption="Class" />
+                    </Columns>
+                </DxComboBox>
+                        </CellEditTemplate>
+                    </DxGridDataColumn>
+                    <DxGridDataColumn FieldName="ItemCode" ReadOnly="true" />
+                <DxGridDataColumn FieldName="ItemNSN" ReadOnly="true" />
+                <DxGridDataColumn FieldName="ItemQTY"/>
+                <DxGridDataColumn FieldName="ItemUnit" ReadOnly="true" />
+                    <DxGridDataColumn FieldName="ItemPrice" />
+                    <DxGridCommandColumn Width="160px" Context="edit">
+                        <CellDisplayTemplate>
+                                <DxButton Click="@(() => Grid.StartEditRowAsync(edit.VisibleIndex))" Text="Edit" />
+                        </CellDisplayTemplate>
+                        <CellEditTemplate>
+                            <DxButton Click="@(() => Grid.SaveChangesAsync())" Text="Save" />
+                            <DxButton Click="@(() => Grid.CancelEditAsync())" Text="Discard" />
+                        </CellEditTemplate>
+                    </DxGridCommandColumn>
+                </Columns>
+            </DxGrid>
+ @*         </MudContainer>*@
+
+@code {
+    [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+    [Parameter] public List<ItemDto> Items { get; set; }
+    [Parameter]
+    public int? VoteCodeId { get; set; }
+    IGrid Grid { get; set; }
+    private List<GetAllItemsResponse> _ItemsList = new();
+    public void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        await GetItemsAsync();
+    }
+    private void Submit()
+    {
+        MudDialog.Close(Items);
+    }
+
+    async Task OnEditModelSaving(GridEditModelSavingEventArgs e)
+    {
+        var editModel = (ItemDto)e.EditModel;
+        // Re-query a data item from the database.
+        var dataItem = e.IsNew ? new ItemDto() : (ItemDto)e.DataItem;
+        // Assign changes from the edit model to the data item.
+        if (dataItem != null)
+        {
+            dataItem.ItemId = editModel.ItemId;
+            dataItem.VotecodeId = editModel.VotecodeId;
+            dataItem.ItemNSN = editModel.ItemNSN;
+            dataItem.ItemCode = editModel.ItemCode;
+            dataItem.ItemNameAR = editModel.ItemNameAR;
+            dataItem.ItemName = editModel.ItemName;
+            dataItem.ItemUnit = editModel.ItemUnit;
+            dataItem.ItemPrice = editModel.ItemPrice;
+            dataItem.ItemQTY = editModel.ItemQTY;
+            if (e.IsNew)
+                Items.Add(dataItem);
+        }
+        StateHasChanged();
+    }
+    void Grid_CustomizeEditModel(GridCustomizeEditModelEventArgs e)
+    {
+        if (e.IsNew)
+        {
+            var newItem = (ItemDto)e.EditModel;
+            newItem.ItemId = _ItemsList.FirstOrDefault().Id;
+            newItem.ItemName = _ItemsList.FirstOrDefault().ItemName;
+        }
+    }
+    async Task OnDataItemDeleting(GridDataItemDeletingEventArgs e)
+    {
+        var editModel = (ItemDto)e.DataItem;
+        // Re-query a data item from the database.
+        var dataItem = Items.FirstOrDefault(x => x.ItemId == editModel.ItemId);
+        if (dataItem != null)
+        {
+            Items.Remove(dataItem);
+        }
+    }
+
+    private async Task GetItemsAsync()
+    {
+        var response = await ItemManager.GetAllAsync();
+        if (response.Succeeded)
+        {
+            if (VoteCodeId.HasValue)
+            {
+                _ItemsList = response.Data.ToList().Where(x => x.VoteCodesId == VoteCodeId.Value).ToList();
+                _ItemsList.RemoveAll(x => Items.Select(e=>e.ItemId).Contains(x.Id));
+            }
+            else
+            {
+                _ItemsList = response.Data.ToList();
+            }
+        }
+        else
+        {
+            foreach (var message in response.Messages)
+            {
+                _snackBar.Add(message, Severity.Error);
+            }
+        }
+    }
+}

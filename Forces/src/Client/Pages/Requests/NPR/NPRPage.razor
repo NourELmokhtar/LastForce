@@ -1,0 +1,86 @@
+﻿@page "/Requests/MPROld"
+@inject Microsoft.Extensions.Localization.IStringLocalizer<NPRPage> _localizer
+@attribute [Authorize(Policy = Permissions.MPR.View)]
+@using Forces.Application.Responses.Requets.MPR
+
+<style>
+    .mud-table-container {
+        overflow: auto;
+    }
+</style>
+<HeroTitle Title="@_localizer["MPR"]" Description="@_localizer["Manage MPR Requests."]" />
+@if (!_loaded)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+    <MudTable Hover="true" Elevation="25" Items="RequestsList" Dense="@_dense" Bordered="@_bordered" Striped="@_striped" Filter="new Func<GetAllMPRResponse, bool>(Search)" @bind-request="request">
+        <ToolBarContent>
+            <div class="justify-center mud-text-align-center">
+                @if (_canCreateMPR)
+                {
+                    <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Primary" OnClick="AddNew" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Surface">@_localizer["Create"]</MudButton>
+                }
+                <MudButton DisableElevation Variant="Variant.Filled" OnClick="GetRequests" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Color="Color.Secondary">@_localizer["Reload"]</MudButton>
+                <PrintDialog Report="Requests" DataSource="RequestsList" ReportName="Requests"></PrintDialog>
+            </div>
+            <MudSpacer />
+            <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="@_localizer["Search for MPR Requests"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+        </ToolBarContent>
+        <HeaderContent>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetAllMPRResponse, object>(x => x.RefrenceId)">@_localizer["Code"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetAllMPRResponse, object>(x => x.RequestState)">@_localizer["State"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetAllMPRResponse, object>(x => x.CreationDate)">@_localizer["Date"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetAllMPRResponse, object>(x => x.CurrentStep)">@_localizer["Location"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetAllMPRResponse, object>(x => x.ItemCode)">@_localizer["Part Number"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetAllMPRResponse, object>(x => x.ItemName)">@_localizer["Part"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetAllMPRResponse, object>(x => x.ItemNSN)">@_localizer["NSN"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetAllMPRResponse, object>(x => x.Priority)">@_localizer["Priority"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetAllMPRResponse, object>(x => x.Priority)">@_localizer["Action"]</MudTableSortLabel></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Code">
+                <MudHighlighter Text="@context.RefrenceId" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="State">
+                <MudHighlighter Text="@context.RequestState.ToString()" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="Date">
+                <MudHighlighter Text="@context.CreationDate.ToString("dd/MM/yyyy")" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="Location">
+                <MudHighlighter Text="@context.CurrentStep.ToString()" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="Part Number">
+                <MudHighlighter Text="@context.ItemCode" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="Part">
+                <MudHighlighter Text="@context.ItemName" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="NSN">
+                <MudHighlighter Text="@context.ItemNSN" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="Priority">
+                <MudHighlighter Text="@context.Priority.ToString()" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd DataLabel="Action">
+                <MudHighlighter Text="@(GetCurentActionState(context.CurrentStep,context.RequestState))" HighlightedText="@_searchString" />
+            </MudTd>
+            <MudTd>
+                <MudIconButton Icon="@Icons.Filled.Preview" OnClick="@(()=> PreviewRequest(context.Id))"></MudIconButton>
+            </MudTd>
+
+        </RowTemplate>
+        <FooterContent>
+            <MudSwitch @bind-Checked="@_dense" Color="Color.Secondary" Style="margin-left: 5px;">@_localizer["Dense"]</MudSwitch>
+            <MudSwitch @bind-Checked="@_striped" Color="Color.Tertiary" Style="margin-left: 5px;">@_localizer["Striped"]</MudSwitch>
+            <MudSwitch @bind-Checked="@_bordered" Color="Color.Warning" Style="margin-left: 5px;">@_localizer["Bordered"]</MudSwitch>
+        </FooterContent>
+        <PagerContent>
+            <TablePager />
+        </PagerContent>
+    </MudTable>
+}
+
+

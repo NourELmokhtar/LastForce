@@ -1,0 +1,50 @@
+﻿@page "/vcodedashboard"
+@attribute [Authorize(Policy = Permissions.VoteCodeController.ViewDashboard)]
+@inject Microsoft.Extensions.Localization.IStringLocalizer<VoteCodeDashboard> _localizer
+@using Application.Enums
+<HeroTitle Title="@_localizer["Dashboard"]" Description="@_localizer["Realtime Updates & Insights"]" />
+@if (!_loaded)
+{
+
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+
+}
+else
+{
+    <MudGrid>
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                <MudIcon Icon="@Icons.Filled.Castle" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                <div>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Primary Vote Codes"]</MudText>
+                    <MudText Typo="Typo.h5">@PrimaryCount</MudText>
+                </div>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                <MudIcon Icon="@Icons.Filled.Castle" Color="Color.Secondary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                <div>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Secondary Vote Codes"]</MudText>
+                    <MudText Typo="Typo.h5">@SecoundryCount</MudText>
+                </div>
+            </MudPaper>
+        </MudItem>
+        @foreach (var voteCode in voteCodesList)
+        {
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px; cursor:pointer; position:relative !important" @onclick="@(()=> CodeDetails(voteCode.Id))">
+                    <MudBadge Left="false" Visible="@(voteCode.CompletedRequestsCount >0)" Style="position:absolute !important;right:22px" Overlap="true" Color="Color.Error" Content="@voteCode.CompletedRequestsCount" />
+                    <MudIcon Icon="@Icons.Filled.AccountBalance" Color="@CardColor(voteCode.IsPrimery)" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@voteCode.VoteShortcut | @voteCode.VoteCode</MudText>
+                        <MudText Typo="Typo.h6">@voteCode.Cridet @_localizer["OMR"]</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+
+        }
+    </MudGrid>
+
+
+}

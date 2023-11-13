@@ -1,0 +1,6 @@
+﻿@*<MudSelect T="Enum"   For="@(()=> _registerUserModel.DepartmentType)" @bind-Value="_registerUserModel.DepartmentType" Label=@_localizer["Department Type"]>
+        @foreach (DepartType item in Enum.GetValues(typeof(DepartType)))
+        {
+            <MudSelectItem T="DepartType?" Value="@item">@item.ToDescriptionString()</MudSelectItem>
+        }
+    </MudSelect>*@

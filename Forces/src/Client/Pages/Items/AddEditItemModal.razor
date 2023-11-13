@@ -1,0 +1,104 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<AddEditItemModal> _localizer
+@using Forces.Application.Enums
+@using Forces.Application.Extensions
+<EditForm Model="@AddEditModel" OnValidSubmit="SaveAsync">
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <MudDialog>
+        <TitleContent>
+            @{
+                if (AddEditModel.Id == 0)
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
+                        @_localizer["Add Item"]
+                    </MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Update" Class="mr-3 mb-n1" />
+                        @_localizer["Update Item"]
+                    </MudText>
+                }
+            }
+        </TitleContent>
+        <DialogContent>
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" T="string" For="@(() => AddEditModel.ItemName)" @bind-Value="AddEditModel.ItemName" Label="@_localizer["Item EN Name"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField Immediate="true" T="string" For="@(() => AddEditModel.ItemArName)" @bind-Value="AddEditModel.ItemArName" Label="@_localizer["Item AR Name"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" For="@(() => AddEditModel.ItemCode)" @bind-Value="AddEditModel.ItemCode" Label="@_localizer["Item Code"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" For="@(() => AddEditModel.ItemNsn)" @bind-Value="AddEditModel.ItemNsn" Label="@_localizer["Item NSN"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudSelect T="int" Required="true" For="@(()=> AddEditModel.MeasureUnitId)" ToStringFunc="@converter()" @bind-Value="@AddEditModel.MeasureUnitId" Label="@_localizer["Measure Unit"]" AnchorOrigin="Origin.BottomCenter">
+                        @if (_UnitsList != null)
+                        {
+                            foreach (var unit in _UnitsList)
+                            {
+                                <MudSelectItem Value="@unit.Id" />
+                            }
+                        }
+
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudSelect Required="true" For="@(()=> AddEditModel.ItemClass)" @bind-Value="@AddEditModel.ItemClass" Label="@_localizer["Class"]" AnchorOrigin="Origin.BottomCenter">
+
+                        @foreach (ItemClass itemClass in Enum.GetValues(typeof(ItemClass)))
+                        {
+                            <MudSelectItem Value="@itemClass">@itemClass.ToDescriptionString()</MudSelectItem>
+                        }
+
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField ReadOnly="true" @bind-Value="AddEditModel.VoteCodesId" For="@(() => AddEditModel.VoteCodesId)" Text="@AddEditModel.VoteCode" Label="Vote Code" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.PinInvoke" OnAdornmentClick="SelectVoteCode" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudDatePicker Label="Date OF Enter" @bind-Date="AddEditModel.DateOfEnter" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudDatePicker Label="End OF Service" @bind-Date="AddEditModel.EndOfServiceDate" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudDatePicker Label="First Use Date" @bind-Date="AddEditModel.FirstUseDate" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudSelect @bind-Value="AddEditModel.MadeIn" Label="Made In">
+                        @foreach (var country in CountryListExtention.CountryList)
+                        {
+                            <MudSelectItem Value="@country">@country</MudSelectItem>
+                        }
+                    </MudSelect>
+                </MudItem>
+
+                <MudItem xs="12" md="12">
+                    <MudTextField Lines="3" Immediate="true" For="@(() => AddEditModel.ItemDescription)" @bind-Value="AddEditModel.ItemDescription" Label="@_localizer["Item Description"]" />
+                </MudItem>
+                <MudItem xs="12" md="12">
+                    <MudTextField Immediate="true" For="@(() => AddEditModel.SerialNumber)" @bind-Value="AddEditModel.SerialNumber" Label="@_localizer["Serial Number"]" />
+                </MudItem>
+            </MudGrid>
+        </DialogContent>
+        <DialogActions>
+            <MudButton DisableElevation Variant="Variant.Filled" OnClick="Cancel">@_localizer["Cancel"]</MudButton>
+            @if (AddEditModel.Id != 0)
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Secondary">@_localizer["Update"]</MudButton>
+            }
+            else
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Success">@_localizer["Save"]</MudButton>
+            }
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+
+

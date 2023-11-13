@@ -1,0 +1,11 @@
+﻿@page "/designer"
+
+<DxWasmReportDesigner    Height="700px" Width="100%" DevelopmentMode=true>
+    <DxWasmReportDesignerRequestOptions   GetDesignerModelAction="DXXRD/GetReportDesignerModel">
+       
+    </DxWasmReportDesignerRequestOptions>
+    <DxReportDesignerModelSettings  AllowMDI=true>
+        <DxReportDesignerWizardSettings EnableObjectDataSource=true EnableFederationDataSource=true EnableJsonDataSource=true EnableSqlDataSource =true UseFullscreenWizard=true />
+        <DxReportDesignerDataSourceSettings AllowAddDataSource=true AllowEditDataSource=true AllowRemoveDataSource=true/>
+    </DxReportDesignerModelSettings>
+</DxWasmReportDesigner>

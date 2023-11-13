@@ -1,0 +1,199 @@
+﻿@page "/dashboard"
+@attribute [Authorize(Policy = Permissions.Dashboards.View)]
+@inject Microsoft.Extensions.Localization.IStringLocalizer<Dashboard> _localizer
+@using Application.Enums
+
+<HeroTitle Title="@_localizer["Dashboard"]" Description="@_localizer["Realtime Updates & Insights"]" />
+@if (!_loaded)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+    @*@foreach (var item in Enum.GetValues(typeof(UserType)))
+        {
+            <h1>(@item.ToString() =>@((int)item) )</h1>
+        }
+        <h1>@userType.ToString()</h1>*@
+    <MudGrid>
+
+        @if ((userType & Application.Enums.UserType.SuperAdmin) == Application.Enums.UserType.SuperAdmin)
+        {
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudIcon Icon="@Icons.Filled.Castle" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Forces"]</MudText>
+                        <MudText Typo="Typo.h5">@ForcesCount</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+        }
+        @if ((userType & Application.Enums.UserType.ForceAdmin) == UserType.ForceAdmin)
+        {
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudIcon Icon="@Icons.Filled.AccountBalance" Color="Color.Secondary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Bases"]</MudText>
+                        <MudText @bind-Value="@BrandCount" Typo="Typo.h5">@BasesCount</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+        }
+        @if ((userType & Application.Enums.UserType.BaseAdmin) == UserType.BaseAdmin)
+        {
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudIcon Icon="@Icons.Filled.AccountTree" Color="Color.Secondary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Bases Sections"]</MudText>
+                        <MudText @bind-Value="@BrandCount" Typo="Typo.h5">@BaseSectionsCount</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+        }
+
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                <MudIcon Icon="@Icons.Material.Filled.AttachFile" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                <div>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Documents"]</MudText>
+                    <MudText @bind-Value="@DocumentCount" Typo="Typo.h5">@DocumentCount</MudText>
+                </div>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                <MudIcon Icon="@Icons.Material.Filled.FileCopy" Color="Color.Secondary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                <div>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Document Types"]</MudText>
+                    <MudText @bind-Value="@DocumentTypeCount" Typo="Typo.h5">@DocumentTypeCount</MudText>
+                </div>
+            </MudPaper>
+        </MudItem>
+        @*<MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudIcon Icon="@Icons.Material.Filled.Assignment" Color="Color.Error" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                    <div>
+                        <MudText Typo="Typo.body1" Class="mud-text-secondary mb-n1">@_localizer["Document Extended Attributes"]</MudText>
+                        <MudText @bind-Value="@DocumentExtendedAttributeCount" Typo="Typo.h5">@DocumentExtendedAttributeCount</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>*@
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                <MudIcon Icon="@Icons.Material.Filled.Face" Color="Color.Success" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                <div>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Registered Users"]</MudText>
+                    <MudText Typo="Typo.h5">@UserCount</MudText>
+                </div>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                <MudIcon Icon="@Icons.Material.Filled.Groups" Color="Color.Warning" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                <div>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Registered Roles"]</MudText>
+                    <MudText Typo="Typo.h5">@RoleCount</MudText>
+                </div>
+            </MudPaper>
+        </MudItem>
+        @if (_canViewDepo)
+        {
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudIcon Icon="@Icons.Filled.Airlines" Color="Color.Warning" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Depo Departments"]</MudText>
+                        <MudText Typo="Typo.h5">@DepoCount</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+        }
+        @if (_canViewHQ)
+        {
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudIcon Icon="@Icons.Filled.HighQuality" Color="Color.Warning" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["HQ Departments"]</MudText>
+                        <MudText Typo="Typo.h5">@HQCount</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+        }
+        @if (_canViewItems)
+        {
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudIcon Icon="@Icons.Filled.ProductionQuantityLimits" Color="Color.Warning" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Items"]</MudText>
+                        <MudText Typo="Typo.h5">@ItemsCount</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+        }
+        @if (_canViewMeasureUnits)
+        {
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudIcon Icon="@Icons.Filled.ConfirmationNumber" Color="Color.Warning" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Measure Units"]</MudText>
+                        <MudText Typo="Typo.h5">@MeasureUnitsCount</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+        }
+        @if (_canViewVoteCodes)
+        {
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudIcon Icon="@Icons.Filled.AccountBalance" Color="Color.Warning" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Vote Codes"]</MudText>
+                        <MudText Typo="Typo.h5">@VoteCodesCount</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+            @foreach (var voteCode in voteCodesList)
+            {
+                <MudItem xs="12" sm="6" md="3">
+                    <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                        <MudIcon Icon="@Icons.Filled.AccountBalance" Color="Color.Secondary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                        <div>
+                            <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@voteCode.VoteShortcut | @voteCode.VoteCode</MudText>
+                            <MudText Typo="Typo.h6">@voteCode.Cridet OMR</MudText>
+                        </div>
+                    </MudPaper>
+                </MudItem>
+            }
+            <MudItem xs="12" sm="6" md="3">
+                <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudIcon Icon="@Icons.Filled.SupervisorAccount" Color="Color.Warning" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Vote Code Controllers"]</MudText>
+                        <MudText Typo="Typo.h5">@VoteCodesUsersCount</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+        }
+
+
+    </MudGrid>
+    <MudGrid>
+        <MudItem xs="12" sm="8">
+            <MudPaper Elevation="25" Class="pa-4" Style="height:400px;">
+                <MudChart ChartType="ChartType.Bar" ChartSeries="@_dataEnterBarChartSeries" XAxisLabels="@_dataEnterBarChartXAxisLabels.Select(a => _localizer[a].Value).ToArray()" Width="100%" Height="300px"></MudChart>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="4">
+            <MudPaper Elevation="25" Class="pa-4" Style="height:400px;">
+                @_localizer["Charts comming soon ish..."]
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+}

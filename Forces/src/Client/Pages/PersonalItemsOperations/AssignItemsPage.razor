@@ -1,0 +1,5 @@
+﻿@page "/ItemsOperations/Assign/{UserId}"
+@attribute [Authorize(Policy = Permissions.PersonalItemsOperations.Create)]
+@inject Microsoft.Extensions.Localization.IStringLocalizer<AssignItemsPage> _localizer
+<HeroTitle Title="@($"{user.FirstName} {user.LastName}")" Description="@user.UserName" />
+<h1>@UserId</h1>

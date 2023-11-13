@@ -1,0 +1,37 @@
+﻿@using DevExpress.DataAccess.ObjectBinding;
+@using DevExpress.XtraReports.UI
+@inject IDialogService Dialog
+@using Forces.Client.Pages.Reports
+@using System.Reflection;
+@inject HttpClient _httpClient;
+<MudIconButton Icon="@Icons.Material.Filled.Print" aria-label="Print" OnClick="OpenDialog"></MudIconButton>
+<style>
+    .dxbl-popup-cell {
+        z-index: 2700 !important;
+    }
+</style>
+<DxPopup AllowDrag="true" HeaderText="@ReportName" @bind-Visible="@PopupVisible" Width="100%" ZIndex="1700">
+
+    <ReportViewer Report="Report" DataSource="DataSource"></ReportViewer>
+
+</DxPopup>
+@code {
+
+    [Parameter]
+    public XtraReport Report { get; set; }
+    [Parameter]
+    public object DataSource { get; set; }
+    [Parameter]
+    public string ReportName { get; set; } = "Report Viewer";
+
+    private XtraReport report = new();
+    bool PopupVisible { get; set; } = false;
+
+    private async Task OpenDialog()
+    {
+        report.DataSource = DataSource;
+      await report.CreateDocumentAsync();
+        PopupVisible = true; 
+    }
+ 
+}

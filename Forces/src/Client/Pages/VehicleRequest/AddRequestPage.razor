@@ -1,0 +1,126 @@
+﻿@page "/VehicleRequest/New"
+@inject Microsoft.Extensions.Localization.IStringLocalizer<AddRequestPage> _localizer
+@inject IDialogService DialogService
+@using Forces.Application.Enums
+@using Forces.Application.Features.VehicleRequest.Dto
+@using Forces.Client.Pages.BasicInformations.Component
+<HeroTitle Title="@_localizer["Vehicle Request"]" Description="@_localizer["Add New Vehicle Request"]" />
+<EditForm Model="@Model" OnValidSubmit="Submit">
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <MudCard Style="margin-bottom:16px;">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">@_localizer["Request Details"]</MudText>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            <MudGrid>
+                <MudItem sm="6" md="3">
+                    <MudDatePicker Label="@_localizer["From - Date"]" @bind-Date="Model.BookingDateTime" />
+                </MudItem>
+                <MudItem sm="6" md="3">
+                    <MudTimePicker Label="@_localizer["From - Time"]" @bind-Time="@FromTime" TimeEditMode="TimeEditMode.Normal" />
+                </MudItem>
+                <MudItem sm="6" md="3">
+                    <MudDatePicker Label="@_localizer["To - Date"]" @bind-Date="Model.EndDateTime" />
+                </MudItem>
+                <MudItem sm="6" md="3">
+                    <MudTimePicker Label="@_localizer["To - Time"]" @bind-Time="@ToTime" TimeEditMode="TimeEditMode.Normal" />
+                </MudItem>
+                <MudItem sm="6" md="6">
+                    <BasesSelectComponent Lable="@_localizer["Pickup Location"]" Required="true" For="@(() => Model.PickupBaseId)" @bind-BindingValue="Model.PickupBaseId"></BasesSelectComponent>
+                </MudItem>
+                <MudItem sm="6" md="6">
+                    <BasesSelectComponent Lable="@_localizer["Drop Location"]" Required="true" For="@(() => Model.DropBaseId)" @bind-BindingValue="Model.DropBaseId"></BasesSelectComponent>
+                </MudItem>
+                <MudItem sm="6" md="9" />
+                <MudItem sm="6" md="3">
+                    <MudCheckBox @bind-Checked="@Model.WithDriver" Label="@_localizer["With Driver"]"></MudCheckBox>
+                </MudItem>
+            </MudGrid>
+        </MudCardContent>
+    </MudCard>
+    <MudCard Style="padding-bottom:30px" Outlined="true">
+        <MudCardHeader>
+            <CardHeaderContent>
+                <MudText Typo="Typo.h6">@_localizer["Shipment Type"]</MudText>
+                <MudRadioGroup @bind-SelectedOption="@Model.ShipmentType">
+                    <MudRadio Color="Color.Primary" Option="@(ShipmentType.Passengers)">Passengers</MudRadio>
+                    <MudRadio Color="Color.Primary" Option="@(ShipmentType.Package)">Package</MudRadio>
+                </MudRadioGroup>
+            </CardHeaderContent>
+        </MudCardHeader>
+        <MudCardContent>
+            @if (Model.ShipmentType == ShipmentType.Passengers)
+            {
+                <MudGrid>
+                    <MudItem sm="6" md="6">
+                        <MudTextField Required="true" @bind-Value="Model.PassengersCount" Label=@_localizer["Passengers Count"] Variant="Variant.Text"></MudTextField>
+                    </MudItem>
+                    <MudItem sm="6" md="6">
+                        <MudSelect @bind-Value="Model.PassengersGender" Label="@_localizer["Gender"]" AnchorOrigin="Origin.BottomCenter">
+                            <MudSelectItem T="Genders?" Value="@Genders.Male" />
+                            <MudSelectItem T="Genders?" Value="@Genders.Female" />
+                        </MudSelect>
+
+                    </MudItem>
+                </MudGrid>
+            }
+            else
+            {
+                <MudTable Items="@Model.Packages" Context="Pkg" Hover="true" LoadingProgressColor="Color.Info">
+                    <ToolBarContent>
+                        <MudButton OnClick="@(()=> AddPackage())" Variant="Variant.Filled" StartIcon="@Icons.Material.Filled.Add" Color="Color.Success">@_localizer["Add package"]</MudButton>
+                        <MudSpacer />
+                    </ToolBarContent>
+                    <HeaderContent>
+                        <MudTh>Height</MudTh>
+                        <MudTh>Width</MudTh>
+                        <MudTh>Length</MudTh>
+                        <MudTh>Weight</MudTh>
+                        <MudTh>PickupBaseId</MudTh>
+                        <MudTh>DropBaseId</MudTh>
+                        <MudTh>PackageNote</MudTh>
+                        <MudTh>AthurityCode</MudTh>
+                        <MudTh>Delete</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Height">@Pkg.Height</MudTd>
+                        <MudTd DataLabel="Width">@Pkg.Width</MudTd>
+                        <MudTd DataLabel="Length">@Pkg.Length</MudTd>
+                        <MudTd DataLabel="Weight">@Pkg.Weight</MudTd>
+                        <MudTd DataLabel="PickupBaseId">@Pkg.PickupBaseId</MudTd>
+                        <MudTd DataLabel="DropBaseId">@Pkg.DropBaseId</MudTd>
+                        <MudTd DataLabel="PackageNote">@Pkg.PackageNote</MudTd>
+                        <MudTd DataLabel="AthurityCode">@Pkg.AthurityCode</MudTd>
+                        <MudTd DataLabel="Delete"><MudIconButton OnClick="@(()=> DeletePackage(Pkg))" Icon="@Icons.Material.Filled.Delete" aria-label="delete"></MudIconButton></MudTd>
+                    </RowTemplate>
+                </MudTable>
+            }
+        </MudCardContent>
+    </MudCard>
+       <MudButton ButtonType="ButtonType.Submit" Size="Size.Large" Style="position: absolute; right: 25px;margin-top:10px" Variant="Variant.Filled" Color="Color.Primary">Submit Request</MudButton>
+</EditForm>
+
+@code {
+    public TimeSpan? FromTime { get; set; }
+    public TimeSpan? ToTime { get; set; }
+
+    private async Task AddPackage()
+    {
+        var options = new DialogOptions { CloseOnEscapeKey = true };
+        var dialog = DialogService.Show<AddPackageModal>("Simple Dialog", options);
+        var result = await dialog.Result;
+        if (!result.Cancelled)
+        {
+            Model.Packages.Add((VehicleRequestPackageDto)result.Data);
+        }
+
+    }
+    private void DeletePackage(VehicleRequestPackageDto Package)
+    {
+        Model.Packages.Remove(Package);
+    }
+
+}
+

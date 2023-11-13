@@ -1,0 +1,52 @@
+2023-10-08 09:06:25.605 +04:00 [INF] AspNetCoreThreadingTimerStoragesCleaner.StartCore
+
+2023-10-08 09:06:25.785 +04:00 [INF] Now listening on: https://localhost:5001
+2023-10-08 09:06:25.789 +04:00 [INF] Now listening on: http://localhost:5000
+2023-10-08 09:06:25.793 +04:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-10-08 09:06:25.794 +04:00 [INF] Hosting environment: Development
+2023-10-08 09:06:25.795 +04:00 [INF] Content root path: C:\Users\OMEN\Documents\GitHub\Forces\Forces\src\Server
+2023-10-08 09:10:52.281 +04:00 [WRN] Stopping the server due to DomainUnload or ProcessExit event...
+2023-10-08 09:10:52.292 +04:00 [WRN] Server desktop-2rfigff:16476:730f7813 caught shutdown signal...
+2023-10-08 09:10:52.295 +04:00 [WRN] Server desktop-2rfigff:16476:730f7813 stopped non-gracefully due to DelayedJobScheduler, RecurringJobScheduler. Outstanding work on those dispatchers could be aborted, and there can be delays in background processing. This server instance will be incorrectly shown as active for a while. To avoid non-graceful shutdowns, investigate what prevents from stopping gracefully and add CancellationToken support for those methods.
+2023-10-08 09:11:35.225 +04:00 [INF] AspNetCoreThreadingTimerStoragesCleaner.StartCore
+
+2023-10-08 09:11:35.402 +04:00 [INF] Now listening on: https://localhost:5001
+2023-10-08 09:11:35.410 +04:00 [INF] Now listening on: http://localhost:5000
+2023-10-08 09:11:35.418 +04:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-10-08 09:11:35.419 +04:00 [INF] Hosting environment: Development
+2023-10-08 09:11:35.420 +04:00 [INF] Content root path: C:\Users\OMEN\Documents\GitHub\Forces\Forces\src\Server
+2023-10-08 21:34:23.652 +04:00 [INF] AspNetCoreThreadingTimerStoragesCleaner.StartCore
+
+2023-10-08 21:34:23.883 +04:00 [INF] Now listening on: https://localhost:5001
+2023-10-08 21:34:23.891 +04:00 [INF] Now listening on: http://localhost:5000
+2023-10-08 21:34:23.897 +04:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-10-08 21:34:23.898 +04:00 [INF] Hosting environment: Development
+2023-10-08 21:34:23.899 +04:00 [INF] Content root path: C:\Users\OMEN\Documents\GitHub\Forces\Forces\src\Server
+2023-10-08 21:36:52.889 +04:00 [INF] AspNetCoreThreadingTimerStoragesCleaner.StartCore
+
+2023-10-08 21:36:52.975 +04:00 [INF] Now listening on: https://localhost:5001
+2023-10-08 21:36:52.980 +04:00 [INF] Now listening on: http://localhost:5000
+2023-10-08 21:36:52.984 +04:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-10-08 21:36:52.985 +04:00 [INF] Hosting environment: Development
+2023-10-08 21:36:52.989 +04:00 [INF] Content root path: C:\Users\OMEN\Documents\GitHub\Forces\Forces\src\Server
+2023-10-08 21:52:54.762 +04:00 [WRN] Stopping the server due to DomainUnload or ProcessExit event...
+2023-10-08 21:52:54.765 +04:00 [WRN] Server desktop-2rfigff:17724:1abc688d caught shutdown signal...
+2023-10-08 21:52:54.773 +04:00 [WRN] Server desktop-2rfigff:17724:1abc688d stopped non-gracefully due to ServerJobCancellationWatcher, ExpirationManager, CountersAggregator, Worker, DelayedJobScheduler, RecurringJobScheduler. Outstanding work on those dispatchers could be aborted, and there can be delays in background processing. This server instance will be incorrectly shown as active for a while. To avoid non-graceful shutdowns, investigate what prevents from stopping gracefully and add CancellationToken support for those methods.
+2023-10-08 21:53:09.435 +04:00 [INF] AspNetCoreThreadingTimerStoragesCleaner.StartCore
+
+2023-10-08 21:53:09.508 +04:00 [INF] Now listening on: https://localhost:5001
+2023-10-08 21:53:09.512 +04:00 [INF] Now listening on: http://localhost:5000
+2023-10-08 21:53:09.514 +04:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-10-08 21:53:09.515 +04:00 [INF] Hosting environment: Development
+2023-10-08 21:53:09.516 +04:00 [INF] Content root path: C:\Users\OMEN\Documents\GitHub\Forces\Forces\src\Server
+2023-10-08 21:53:20.127 +04:00 [WRN] Stopping the server due to DomainUnload or ProcessExit event...
+2023-10-08 21:53:20.131 +04:00 [WRN] Server desktop-2rfigff:5160:6ce218c4 caught shutdown signal...
+2023-10-08 21:59:50.498 +04:00 [INF] AspNetCoreThreadingTimerStoragesCleaner.StartCore
+
+2023-10-08 21:59:50.620 +04:00 [INF] Now listening on: https://localhost:5001
+2023-10-08 21:59:50.625 +04:00 [INF] Now listening on: http://localhost:5000
+2023-10-08 21:59:50.630 +04:00 [INF] Application started. Press Ctrl+C to shut down.
+2023-10-08 21:59:50.632 +04:00 [INF] Hosting environment: Development
+2023-10-08 21:59:50.634 +04:00 [INF] Content root path: C:\Users\OMEN\Documents\GitHub\Forces\Forces\src\Server
+2023-10-08 22:01:27.698 +04:00 [WRN] Stopping the server due to DomainUnload or ProcessExit event...
+2023-10-08 22:01:27.701 +04:00 [WRN] Server desktop-2rfigff:22100:ffb75667 caught shutdown signal...

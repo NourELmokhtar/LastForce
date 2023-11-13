@@ -1,0 +1,32 @@
+﻿<MudItem xs="12" sm="6" md="3">
+    <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+
+        <div Class="d-flex flex-row " style="min-width:100%">
+            <MudIcon Icon="@Icon" Color="Color.Primary" Class="mx-4" Style="@IconStyle"></MudIcon>
+           
+                <div class="d-flex flex-column">
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1"><strong>@Title</strong></MudText>
+                    <MudText Typo="Typo.h5">@Data</MudText>
+                </div>
+                <div class="ml-auto">
+                    <div class="d-flex flex-column" style="padding-right:6px;text-align:right">
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Passenger:@PCount</MudText>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">Shipment:@SCount</MudText>
+                    </div>
+                </div>
+        </div>
+
+
+    </MudPaper>
+</MudItem>
+@code {
+    [Parameter] public string Icon { get; set; } = Icons.Material.Outlined.VerticalSplit;
+    [Parameter] public string IconColor { get; set; } = "";
+    [Parameter] public string Title { get; set; } = "Title";
+    [Parameter] public string Data { get; set; } = "0";
+    [Parameter] public string PCount { get; set; } = "0";
+    [Parameter] public string SCount { get; set; } = "0";
+
+    private string IconStyle => string.IsNullOrEmpty(IconColor) ? "width:54px; height:54px;" : $"width:54px; height:54px;color:{IconColor} !important;";
+
+}

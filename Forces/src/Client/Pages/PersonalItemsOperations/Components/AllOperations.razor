@@ -1,0 +1,53 @@
+﻿@attribute [Authorize(Policy = Permissions.PersonalServicesItems.View)]
+@inject Microsoft.Extensions.Localization.IStringLocalizer<AllOperations> _localizer
+@using Forces.Application.Features.PersonalItemOperations.Queries.Dto
+<style>
+    .mud-table-container {
+        overflow: auto;
+    }
+</style>
+
+<HeroTitle Title="@_localizer["Operations"]" Description="@_localizer["View Operations."]" />
+@if (!_loaded)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+    <MudTable Hover="true" Elevation="25" Items="OperationsList" Dense="@_dense" Bordered="@_bordered" Striped="@_striped">
+        <ToolBarContent>
+            <div class="justify-center mud-text-align-center">
+                <MudButton DisableElevation Variant="Variant.Filled" OnClick="LoadDataAsync" StartIcon="@Icons.Filled.FilterAltOff" IconColor="Color.Surface" Color="Color.Secondary">@_localizer["Reset Filter"]</MudButton>
+            </div>
+            <MudSpacer />
+            @if (_canSearch)
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => InvokeModal())" StartIcon="@Icons.Filled.FilterAlt" IconColor="Color.Surface">@_localizer["Filter"]</MudButton>
+
+            }
+        </ToolBarContent>
+
+        <HeaderContent>
+            <MudTh>@_localizer["Id"]</MudTh>
+            <MudTh>@_localizer["User Name"]</MudTh>
+            <MudTh>@_localizer["Date"]</MudTh>
+            <MudTh>@_localizer["Section ID"]</MudTh>
+            <MudTh>@_localizer["Total"]</MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Id">@context.Id</MudTd>
+            <MudTd DataLabel="User Name">@context.UserId</MudTd>
+            <MudTd DataLabel="Date">@context.OperationDate</MudTd>
+            <MudTd DataLabel="Section ID">@context.BaseSectionId</MudTd>
+            <MudTd DataLabel="Total">@context.Total</MudTd>
+        </RowTemplate>
+        <FooterContent>
+            <MudSwitch @bind-Checked="@_dense" Color="Color.Secondary" Style="margin-left: 5px;">@_localizer["Dense"]</MudSwitch>
+            <MudSwitch @bind-Checked="@_striped" Color="Color.Tertiary" Style="margin-left: 5px;">@_localizer["Striped"]</MudSwitch>
+            <MudSwitch @bind-Checked="@_bordered" Color="Color.Warning" Style="margin-left: 5px;">@_localizer["Bordered"]</MudSwitch>
+        </FooterContent>
+        <PagerContent>
+            <TablePager />
+        </PagerContent>
+    </MudTable>
+}

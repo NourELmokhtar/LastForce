@@ -1,0 +1,30 @@
+﻿@using Forces.Application.Responses.VoteCodes
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SelectVoteCodesModal> _localizer
+
+<MudDialog>
+    <DialogContent>
+        <MudContainer Style="max-height: 80vh; overflow-y: scroll">
+            <MudTable Items="@votecodeList" Dense="true" Hover="true" Breakpoint="Breakpoint.Sm" Filter="new Func<VoteCodeResponse,bool>(FilterFunc)" Loading="@_loading" LoadingProgressColor="Color.Info">
+                <ToolBarContent>
+                    <MudText Typo="Typo.h6">Vote Codes</MudText>
+                    <MudSpacer />
+                    <MudTextField Immediate="true" @bind-Value="searchString1" Placeholder=@_localizer["Search For Vote Codes"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                </ToolBarContent>
+                <HeaderContent>
+                    <MudTh>@_localizer["VoteCode"]</MudTh>
+                    <MudTh>@_localizer["Short"]</MudTh>
+                    <MudTh>@_localizer["Holder"]</MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="VoteCode">@context.VoteCode</MudTd>
+                    <MudTd DataLabel="Short">@context.VoteShortcut</MudTd>
+                    <MudTd DataLabel="Holder">@context.UserName</MudTd>
+                    <MudTd><MudIconButton OnClick="@(()=> Submit(context.Id))" Icon=@Icons.Filled.PinInvoke Color="Color.Success"></MudIconButton></MudTd>
+                </RowTemplate>
+            </MudTable>
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+        <MudButton DisableElevation Variant="Variant.Filled" OnClick="Cancel">@_localizer["Cancel"]</MudButton>
+    </DialogActions>
+</MudDialog>

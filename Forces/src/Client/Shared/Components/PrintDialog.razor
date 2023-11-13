@@ -1,0 +1,52 @@
+﻿@using DevExpress.DataAccess.ObjectBinding;
+@using DevExpress.XtraReports.UI
+@inject IDialogService Dialog
+@using Forces.Client.Pages.Reports
+@using System.Reflection;
+@inject HttpClient _httpClient;
+<MudIconButton Icon="@Icons.Material.Filled.Print" aria-label="Print" OnClick="OpenDialog"></MudIconButton>
+<style>
+    .dxbl-popup-cell{
+        z-index:2700 !important;
+    }
+</style>
+<DxPopup AllowDrag="true" HeaderText="@ReportName" @bind-Visible="@PopupVisible" Width="100%" ZIndex="1700">
+
+    <ReportViewer Report="report" DataSource="DataSource"></ReportViewer>
+   
+     </DxPopup>
+@code {
+    
+    [Parameter]
+    public string Report { get; set; }
+    [Parameter]
+    public object DataSource { get; set; }
+    [Parameter]
+    public string ReportName { get; set; } = "Report Viewer";
+
+    private XtraReport report = new();
+    bool PopupVisible { get; set; } = false;
+    List<string> RequiredFonts = new() {
+        "segoeui.ttf", "segoeuib.ttf", "segoeuii.ttf","Traditional-Arabic.ttf","Arial.ttf",
+        "segoeuil.ttf", "segoeuisl.ttf", "segoeuiz.ttf","Cairo-ExtraLight.ttf","Cairo-Light.ttf","Cairo.ttf",
+        "Cairo-Regular.ttf","Cairo-Medium.ttf","Cairo-SemiBold.ttf","Cairo-Bold.ttf","Cairo-ExtraBold.ttf","Cairo-Black.ttf","Cairo-VariableFont_slnt,wght.ttf","Cairo.ttf"
+    };
+    private async Task OpenDialog()
+    {
+        await FontLoader.LoadFonts(_httpClient, RequiredFonts);
+        var stream = await GetStreamFromUrl(Report);
+        var x = XtraReport.FromStream(stream);
+        x.DataSource = DataSource;
+        report = x;
+        PopupVisible = true;
+        //DialogOptions fullScreen = new DialogOptions() { FullScreen = true, CloseButton = true };
+        //var parameters = new DialogParameters();
+        //parameters.Add(nameof(ReportViewer.Report), x);
+        //parameters.Add(nameof(ReportViewer.DataSource), DataSource);
+        //Dialog.Show<ReportViewer>(ReportName, parameters, fullScreen);
+    }
+    private async Task<Stream> GetStreamFromUrl(string url)
+    {
+        return await _httpClient.GetStreamAsync($"Files/Reports/{url}.REPX");
+    }
+}

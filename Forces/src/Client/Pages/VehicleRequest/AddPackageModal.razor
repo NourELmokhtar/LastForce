@@ -1,0 +1,52 @@
+﻿@using Forces.Application.Features.VehicleRequest.Dto
+@using Forces.Client.Pages.BasicInformations.Component
+@inject Microsoft.Extensions.Localization.IStringLocalizer<AddPackageModal> _localizer
+<EditForm Model="@Model" OnValidSubmit="Submit">
+
+    <MudDialog>
+        <TitleContent>
+            @_localizer["Add Package"]
+        </TitleContent>
+        <DialogContent>
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" For="@(() => Model.Height)" @bind-Value="Model.Height" Label="@_localizer["Height"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" For="@(() => Model.Width)" @bind-Value="Model.Width" Label="@_localizer["Width"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" For="@(() => Model.Length)" @bind-Value="Model.Length" Label="@_localizer["Length"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" For="@(() => Model.Weight)" @bind-Value="Model.Weight" Label="@_localizer["Weight"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <BasesSelectComponent Lable="@_localizer["Pickup Base"]" Required="true" For="@(() => Model.PickupBaseId)" @bind-BindingValue="Model.PickupBaseId"></BasesSelectComponent>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <BasesSelectComponent Required="true" Lable="@_localizer["Drop Base"]" For="@(() => Model.DropBaseId)" @bind-BindingValue="Model.DropBaseId"></BasesSelectComponent>
+                </MudItem>
+
+                <MudItem xs="12" md="12">
+                    <MudTextField Required="true" Immediate="true" For="@(() => Model.AthurityCode)" @bind-Value="Model.AthurityCode" Label="@_localizer["Athurity Code"]" />
+                </MudItem>
+                
+                <MudItem xs="12" md="12">
+                    <MudTextField Required="true"  Lines="3" Immediate="true" For="@(() => Model.PackageNote)" @bind-Value="Model.PackageNote" Label="@_localizer["Note"]" />
+                </MudItem>
+            </MudGrid>
+        </DialogContent>
+        <DialogActions>
+            <MudButton OnClick="Cancel">Cancel</MudButton>
+            <MudButton Color="Color.Primary" OnClick="Submit">Ok</MudButton>
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+
+@code {
+    [CascadingParameter] MudDialogInstance MudDialog { get; set; }
+    public VehicleRequestPackageDto Model { get; set; } = new();
+    void Submit() => MudDialog.Close(Model);
+    void Cancel() => MudDialog.Cancel();
+}

@@ -1,0 +1,521 @@
+is_global = true
+build_property.TargetFramework = net6.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = browser
+build_property.RootNamespace = Forces.Client
+build_property.RootNamespace = Forces.Client
+build_property.ProjectDir = D:\ForcesNew\Forces\src\Client\
+build_property.RazorLangVersion = 6.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = D:\ForcesNew\Forces\src\Client
+build_property._RazorSourceGeneratorDebug = 
+
+[D:/ForcesNew/Forces/src/Client/App.razor]
+build_metadata.AdditionalFiles.TargetPath = QXBwLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Authentication/Login.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cTG9naW4ucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Authentication/Register.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cUmVnaXN0ZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/BasicInformations/AddEditBaseModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmFzaWNJbmZvcm1hdGlvbnNcQWRkRWRpdEJhc2VNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/BasicInformations/AddEditForce.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmFzaWNJbmZvcm1hdGlvbnNcQWRkRWRpdEZvcmNlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/BasicInformations/AddEditSectionModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmFzaWNJbmZvcm1hdGlvbnNcQWRkRWRpdFNlY3Rpb25Nb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/BasicInformations/BaseSectionsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmFzaWNJbmZvcm1hdGlvbnNcQmFzZVNlY3Rpb25zUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/BasicInformations/BasesPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmFzaWNJbmZvcm1hdGlvbnNcQmFzZXNQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/BasicInformations/Component/BasesSelectComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmFzaWNJbmZvcm1hdGlvbnNcQ29tcG9uZW50XEJhc2VzU2VsZWN0Q29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/BasicInformations/ForcesPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQmFzaWNJbmZvcm1hdGlvbnNcRm9yY2VzUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Building/AddEditBuildingModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQnVpbGRpbmdcQWRkRWRpdEJ1aWxkaW5nTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Building/MyBuildingsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQnVpbGRpbmdcTXlCdWlsZGluZ3NQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Catalog/AddEditBrandModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0YWxvZ1xBZGRFZGl0QnJhbmRNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Catalog/AddEditProductModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0YWxvZ1xBZGRFZGl0UHJvZHVjdE1vZGFsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Catalog/Brands.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0YWxvZ1xCcmFuZHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Catalog/Products.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ2F0YWxvZ1xQcm9kdWN0cy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Colors/AddEditColorsModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29sb3JzXEFkZEVkaXRDb2xvcnNNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Communication/Chat.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29tbXVuaWNhdGlvblxDaGF0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Content/Dashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29udGVudFxEYXNoYm9hcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Content/Home.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29udGVudFxIb21lLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Content/VoteCodeDashboard.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29udGVudFxWb3RlQ29kZURhc2hib2FyZC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Content/VoteCodeDashboardDetail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQ29udGVudFxWb3RlQ29kZURhc2hib2FyZERldGFpbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Departments/Depo/AddEditDepoDepartmentModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVwYXJ0bWVudHNcRGVwb1xBZGRFZGl0RGVwb0RlcGFydG1lbnRNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Departments/Depo/DepoPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVwYXJ0bWVudHNcRGVwb1xEZXBvUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Departments/HQ/AddEditHQDepartmentModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVwYXJ0bWVudHNcSFFcQWRkRWRpdEhRRGVwYXJ0bWVudE1vZGFsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Departments/HQ/HQPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRGVwYXJ0bWVudHNcSFFcSFFQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/House/AddEditHouseModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG91c2VcQWRkRWRpdEhvdXNlTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/House/MyHousesPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSG91c2VcTXlIb3VzZXNQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Identity/Account.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSWRlbnRpdHlcQWNjb3VudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Identity/Forgot.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSWRlbnRpdHlcRm9yZ290LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Identity/Profile.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSWRlbnRpdHlcUHJvZmlsZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Identity/RegisterUserModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSWRlbnRpdHlcUmVnaXN0ZXJVc2VyTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Identity/Reset.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSWRlbnRpdHlcUmVzZXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Identity/RoleModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSWRlbnRpdHlcUm9sZU1vZGFsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Identity/RolePermissions.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSWRlbnRpdHlcUm9sZVBlcm1pc3Npb25zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Identity/Roles.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSWRlbnRpdHlcUm9sZXMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Identity/Security.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSWRlbnRpdHlcU2VjdXJpdHkucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Identity/UserProfile.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSWRlbnRpdHlcVXNlclByb2ZpbGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Identity/UserRoles.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSWRlbnRpdHlcVXNlclJvbGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Identity/Users.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSWRlbnRpdHlcVXNlcnMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/InventoryItem/AddEditInventoryItemModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50b3J5SXRlbVxBZGRFZGl0SW52ZW50b3J5SXRlbU1vZGFsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/InventoryItem/MyInventoryItemPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50b3J5SXRlbVxNeUludmVudG9yeUl0ZW1QYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Inventory/AddEditInventoryModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50b3J5XEFkZEVkaXRJbnZlbnRvcnlNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Inventory/MyInventoryPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50b3J5XE15SW52ZW50b3J5UGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/InventryItemBridge/AddEditInventoryItemBridgeModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50cnlJdGVtQnJpZGdlXEFkZEVkaXRJbnZlbnRvcnlJdGVtQnJpZGdlTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/InventryItemBridge/MyInventoryItemBridge.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW52ZW50cnlJdGVtQnJpZGdlXE15SW52ZW50b3J5SXRlbUJyaWRnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Items/AddEditItemModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSXRlbXNcQWRkRWRpdEl0ZW1Nb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Items/ItemsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSXRlbXNcSXRlbXNQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Items/MeasureUnits/AddEditMeasureUnitModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSXRlbXNcTWVhc3VyZVVuaXRzXEFkZEVkaXRNZWFzdXJlVW5pdE1vZGFsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Items/MeasureUnits/MeasureUnitsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSXRlbXNcTWVhc3VyZVVuaXRzXE1lYXN1cmVVbml0c1BhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Items/SelectVoteCodesModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSXRlbXNcU2VsZWN0Vm90ZUNvZGVzTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Misc/AddEditDocumentModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWlzY1xBZGRFZGl0RG9jdW1lbnRNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Misc/AddEditDocumentTypeModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWlzY1xBZGRFZGl0RG9jdW1lbnRUeXBlTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Misc/DocumentStore.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWlzY1xEb2N1bWVudFN0b3JlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Misc/DocumentTypes.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWlzY1xEb2N1bWVudFR5cGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Misc/ExtendedAttribute/DocumentExtendedAttributes.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTWlzY1xFeHRlbmRlZEF0dHJpYnV0ZVxEb2N1bWVudEV4dGVuZGVkQXR0cmlidXRlcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/MPRDashboard/MPRDashboardPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTVBSRGFzaGJvYXJkXE1QUkRhc2hib2FyZFBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/MprRequestPages/AddMprRequestPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTXByUmVxdWVzdFBhZ2VzXEFkZE1wclJlcXVlc3RQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/MprRequestPages/MprPages/AllMprPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTXByUmVxdWVzdFBhZ2VzXE1wclBhZ2VzXEFsbE1wclBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/MprRequestPages/MprPages/EditMprRequestModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTXByUmVxdWVzdFBhZ2VzXE1wclBhZ2VzXEVkaXRNcHJSZXF1ZXN0TW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/MprRequestPages/MprPages/MprDetailPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTXByUmVxdWVzdFBhZ2VzXE1wclBhZ2VzXE1wckRldGFpbFBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/MprRequestPages/MprPages/MprPageMain.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTXByUmVxdWVzdFBhZ2VzXE1wclBhZ2VzXE1wclBhZ2VNYWluLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Office/AddEditOfficeModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcT2ZmaWNlXEFkZEVkaXRPZmZpY2VNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Office/MyOfficePage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcT2ZmaWNlXE15T2ZmaWNlUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/PersonalItemsOperations/Components/AllOperations.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29uYWxJdGVtc09wZXJhdGlvbnNcQ29tcG9uZW50c1xBbGxPcGVyYXRpb25zLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/PersonalItemsOperations/Components/AllUsersComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29uYWxJdGVtc09wZXJhdGlvbnNcQ29tcG9uZW50c1xBbGxVc2Vyc0NvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/PersonalItemsOperations/Components/FillterModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29uYWxJdGVtc09wZXJhdGlvbnNcQ29tcG9uZW50c1xGaWxsdGVyTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/PersonalItemsOperations/ItemsOperationsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29uYWxJdGVtc09wZXJhdGlvbnNcSXRlbXNPcGVyYXRpb25zUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/PersonalItems/AddEditPersonalItemModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29uYWxJdGVtc1xBZGRFZGl0UGVyc29uYWxJdGVtTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/PersonalItems/PersonalItemsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29uYWxJdGVtc1xQZXJzb25hbEl0ZW1zUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Person/AddEditPersonModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29uXEFkZEVkaXRQZXJzb25Nb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Person/MyPersonsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29uXE15UGVyc29uc1BhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Reports/ReportDesigner.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVwb3J0c1xSZXBvcnREZXNpZ25lci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Reports/ReportViewer.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVwb3J0c1xSZXBvcnRWaWV3ZXIucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Requests/NPR/AddNewNPRRequest.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVxdWVzdHNcTlBSXEFkZE5ld05QUlJlcXVlc3QucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Requests/NPR/MPRDetail.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVxdWVzdHNcTlBSXE1QUkRldGFpbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Requests/NPR/MPRLineComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVxdWVzdHNcTlBSXE1QUkxpbmVDb21wb25lbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Requests/NPR/NPRPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVxdWVzdHNcTlBSXE5QUlBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Requests/SelectItemModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVxdWVzdHNcU2VsZWN0SXRlbU1vZGFsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Room/AddEditRoomModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUm9vbVxBZGRFZGl0Um9vbU1vZGFsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Room/MyRoomsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUm9vbVxNeVJvb21zUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/StoreSection/AddEditStoreSectionModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3RvcmVTZWN0aW9uXEFkZEVkaXRTdG9yZVNlY3Rpb25Nb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/StoreSection/AllStoreSectionsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU3RvcmVTZWN0aW9uXEFsbFN0b3JlU2VjdGlvbnNQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Tailers/AddEditTailerModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFpbGVyc1xBZGRFZGl0VGFpbGVyTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Tailers/Component/TailerSelectComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFpbGVyc1xDb21wb25lbnRcVGFpbGVyU2VsZWN0Q29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Tailers/TailersPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVGFpbGVyc1xUYWlsZXJzUGFnZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Utilities/AuditTrails.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVXRpbGl0aWVzXEF1ZGl0VHJhaWxzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/VehicleRequest/AddPackageModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmVoaWNsZVJlcXVlc3RcQWRkUGFja2FnZU1vZGFsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/VehicleRequest/AddRequestPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmVoaWNsZVJlcXVlc3RcQWRkUmVxdWVzdFBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Vehicles/AddEditVehicleModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmVoaWNsZXNcQWRkRWRpdFZlaGljbGVNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Vehicles/VehicleDashboardPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmVoaWNsZXNcVmVoaWNsZURhc2hib2FyZFBhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Vehicles/VehicleDBItem.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmVoaWNsZXNcVmVoaWNsZURCSXRlbS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Vehicles/VehiclesPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVmVoaWNsZXNcVmVoaWNsZXNQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/VoteCodes/AddEditVoteCodeModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVm90ZUNvZGVzXEFkZEVkaXRWb3RlQ29kZU1vZGFsLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/VoteCodes/AddTransactionModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVm90ZUNvZGVzXEFkZFRyYW5zYWN0aW9uTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/VoteCodes/VoteCodesPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVm90ZUNvZGVzXFZvdGVDb2Rlc1BhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/VoteCodes/VoteCodeUsers.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVm90ZUNvZGVzXFZvdGVDb2RlVXNlcnMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/AddEditExtendedAttributeModal.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcQWRkRWRpdEV4dGVuZGVkQXR0cmlidXRlTW9kYWwucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/CustomUserCard.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcQ3VzdG9tVXNlckNhcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/EnumSelectorComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcRW51bVNlbGVjdG9yQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/ExtendedAttributes.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcRXh0ZW5kZWRBdHRyaWJ1dGVzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/ExtendedAttributesBase.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcRXh0ZW5kZWRBdHRyaWJ1dGVzQmFzZS5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/HeroTitle.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcSGVyb1RpdGxlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/Image.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcSW1hZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/LanguageSelector.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcTGFuZ3VhZ2VTZWxlY3Rvci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/PrintDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcUHJpbnREaWFsb2cucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/ReportPrintDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcUmVwb3J0UHJpbnREaWFsb2cucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/TablePager.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcVGFibGVQYWdlci5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/UserCard.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcVXNlckNhcmQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/Dialogs/ConfirmDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXERpYWxvZ3NcQ29uZmlybURpYWxvZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/Dialogs/DeleteConfirmation.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXERpYWxvZ3NcRGVsZXRlQ29uZmlybWF0aW9uLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/Dialogs/Logout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXERpYWxvZ3NcTG9nb3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/Error.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXEVycm9yLnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/NavMenu.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5hdk1lbnUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Shared/NotFoundLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE5vdEZvdW5kTGF5b3V0LnJhem9y
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/_Imports.razor]
+build_metadata.AdditionalFiles.TargetPath = X0ltcG9ydHMucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/ForcesNew/Forces/src/Client/Pages/Identity/EditUserModal.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSWRlbnRpdHlcRWRpdFVzZXJNb2RhbC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-6s2gbxs9o8
+
+[D:/ForcesNew/Forces/src/Client/Pages/PersonalItemsOperations/AssignItemsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUGVyc29uYWxJdGVtc09wZXJhdGlvbnNcQXNzaWduSXRlbXNQYWdlLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-18v52smzdf
+
+[D:/ForcesNew/Forces/src/Client/Pages/VoteCodeController/VoteCodeRequests/TransactionRequestsPage.razor]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcVm90ZUNvZGVDb250cm9sbGVyXFZvdGVDb2RlUmVxdWVzdHNcVHJhbnNhY3Rpb25SZXF1ZXN0c1BhZ2UucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-9djt0g9pvu
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/ForbiddenAccess.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcRm9yYmlkZGVuQWNjZXNzLnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-nd424bb4xi
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/MessagesComponent/MessageCopmonent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcTWVzc2FnZXNDb21wb25lbnRcTWVzc2FnZUNvcG1vbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-wle06ebgdl
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/MessagesComponent/MessageItemComponant.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcTWVzc2FnZXNDb21wb25lbnRcTWVzc2FnZUl0ZW1Db21wb25hbnQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-13nsqajh44
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/NotificationComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcTm90aWZpY2F0aW9uQ29tcG9uZW50LnJhem9y
+build_metadata.AdditionalFiles.CssScope = b-x0e7l4tkku
+
+[D:/ForcesNew/Forces/src/Client/Shared/Components/NotificationItemComponent.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXENvbXBvbmVudHNcTm90aWZpY2F0aW9uSXRlbUNvbXBvbmVudC5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-syy8trhhtm
+
+[D:/ForcesNew/Forces/src/Client/Shared/Dialogs/Success.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXERpYWxvZ3NcU3VjY2Vzcy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = b-dghv24qodu
+
+[D:/ForcesNew/Forces/src/Client/Shared/MainLayout.razor]
+build_metadata.AdditionalFiles.TargetPath = U2hhcmVkXE1haW5MYXlvdXQucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = b-ihwwkphzsc

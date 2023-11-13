@@ -1,0 +1,29 @@
+-O1
+-s DISABLE_EXCEPTION_CATCHING=0
+-g
+-v
+-s TOTAL_MEMORY=536870912
+-s ERROR_ON_UNDEFINED_SYMBOLS=0
+--js-library "C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.Mono.browser-wasm\6.0.24\runtimes\browser-wasm\native\src\binding_support.js"
+--js-library "C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.Mono.browser-wasm\6.0.24\runtimes\browser-wasm\native\src\dotnet_support.js"
+--js-library "C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.Mono.browser-wasm\6.0.24\runtimes\browser-wasm\native\src\library_mono.js"
+--js-library "C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.Mono.browser-wasm\6.0.24\runtimes\browser-wasm\native\src\pal_random.js"
+"C:\Users\noure\.nuget\packages\skiasharp.nativeassets.webassembly\2.88.3\buildTransitive\netstandard1.0\..\..\build\netstandard1.0\libSkiaSharp.a\2.0.23\libSkiaSharp.a"
+"C:\Users\noure\.nuget\packages\harfbuzzsharp.nativeassets.webassembly\2.8.2.3\buildTransitive\netstandard1.0\..\..\build\netstandard1.0\libHarfBuzzSharp.a\2.0.23\libHarfBuzzSharp.a"
+"D:\ForcesNew\Forces\src\Client\obj\Debug\net6.0\wasm\for-build\pinvoke.o"
+"D:\ForcesNew\Forces\src\Client\obj\Debug\net6.0\wasm\for-build\driver.o"
+"D:\ForcesNew\Forces\src\Client\obj\Debug\net6.0\wasm\for-build\corebindings.o"
+"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.Mono.browser-wasm\6.0.24\runtimes\browser-wasm\native\libicui18n.a"
+"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.Mono.browser-wasm\6.0.24\runtimes\browser-wasm\native\libicuuc.a"
+"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.Mono.browser-wasm\6.0.24\runtimes\browser-wasm\native\libmono-component-debugger-static.a"
+"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.Mono.browser-wasm\6.0.24\runtimes\browser-wasm\native\libmono-component-diagnostics_tracing-stub-static.a"
+"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.Mono.browser-wasm\6.0.24\runtimes\browser-wasm\native\libmono-component-hot_reload-static.a"
+"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.Mono.browser-wasm\6.0.24\runtimes\browser-wasm\native\libmono-ee-interp.a"
+"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.Mono.browser-wasm\6.0.24\runtimes\browser-wasm\native\libmono-icall-table.a"
+"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.Mono.browser-wasm\6.0.24\runtimes\browser-wasm\native\libmono-ilgen.a"
+"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.Mono.browser-wasm\6.0.24\runtimes\browser-wasm\native\libmono-profiler-aot.a"
+"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.Mono.browser-wasm\6.0.24\runtimes\browser-wasm\native\libmonosgen-2.0.a"
+"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.Mono.browser-wasm\6.0.24\runtimes\browser-wasm\native\libSystem.IO.Compression.Native.a"
+"C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Runtime.Mono.browser-wasm\6.0.24\runtimes\browser-wasm\native\libSystem.Native.a"
+-o "D:\ForcesNew\Forces\src\Client\obj\Debug\net6.0\wasm\for-build\dotnet.js"
+--js-library="C:\Users\noure\.nuget\packages\skiasharp.views.blazor\2.88.3\buildTransitive\net6.0\\SkiaSharpGLInterop.js"

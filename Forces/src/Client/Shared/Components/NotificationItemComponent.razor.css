@@ -1,0 +1,153 @@
+﻿
+
+.container {
+    margin: 0 auto;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    background-color: rgb(243, 243, 243);
+    height: 245px;
+    width: 273px;
+    overflow-y: auto;
+    white-space: nowrap;
+}
+
+.msg-Holder {
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+.msg-item {
+    padding: 0 8px;
+    background-color: rgb(255, 255, 255);
+    /* background-color: rgb(248, 186, 186); */
+    transition: .3s;
+    cursor: pointer;
+    display: grid;
+    grid-template-columns: auto auto auto;
+    grid-template-rows: auto auto auto;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 1px;
+    line-height: .8;
+    user-select: none;
+    overflow: hidden;
+}
+
+    .msg-item:hover {
+        background-color: #F5F5F5;
+        /* outline: 5px solid #FF4081;
+    outline-color:#FF4081 ; */
+        /* box-shadow: 0px 0px 0px 1px black; */
+    }
+
+@keyframes BigAvatar {
+
+    to {
+        font-size: 20px;
+    }
+}
+
+@keyframes smallAvatar {
+    from {
+        font-size: 20px;
+    }
+
+    to {
+        font-size: 14px;
+    }
+}
+
+.msg-item:hover .msg-avatar {
+    animation: BigAvatar .2s;
+    animation-fill-mode: both;
+    animation-timing-function: linear;
+    animation-direction: alternate;
+}
+
+.msg-item:hover .msg-msg, .msg-item:hover .msg-Name {
+    opacity: 1;
+}
+
+.msg-avatar {
+    height: 45px;
+    width: 45px;
+    grid-row: span 3;
+    background-color: #FF4081;
+    border-radius: 50%;
+    margin: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* transition: .3s; */
+    animation: smallAvatar .2s;
+    color: white;
+    margin-left: 0px;
+}
+
+.msg-Name, .msg-msg, .time-icon {
+    grid-column: span 2;
+}
+
+.msg-Name {
+    margin: 0 5px;
+    font-weight: bold;
+    font-size: 13px;
+    opacity: .5;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    padding: 3px;
+}
+
+.msg-msg {
+    font-size: 13px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin: 0 8px;
+    opacity: .7;
+}
+
+.time-icon {
+    font-size: 10px;
+    opacity: .6;
+}
+
+.un-read {
+    background-color: #e4e4e4;
+    position: relative;
+    opacity: .8;
+    border-left: 2px solid #1E88E5;
+}
+
+    .un-read::after {
+        /*content: '•';*/
+        position: absolute;
+        font-size: 50px;
+        right: 5PX;
+        bottom: -17px;
+        transition: .5s;
+        opacity: .5;
+        color: #1E88E5;
+    }
+
+    .un-read:hover::after {
+        font-size: 52px;
+        opacity: 1;
+        color: #1E88E5;
+    }
+
+    .un-read .msg-Name {
+        opacity: 1;
+    }
+
+    .un-read .msg-msg {
+        opacity: 1;
+        font-weight: bold;
+    }
+
+    .un-read .time-icon {
+        opacity: 1;
+        font-weight: bold;
+    }

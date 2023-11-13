@@ -1,0 +1,33 @@
+﻿<MudMenu @ref="mnue" Dense="true" AnchorOrigin="Origin.BottomCenter" PopoverClass="pop-custom" TransformOrigin="Origin.TopCenter" Style="padding-top: 1px; overflow: visible !important;" MaxHeight="300" Icon="@Icons.Material.Filled.NotificationsActive" Direction="Direction.Bottom" Color="Color.Inherit">
+    <ActivatorContent>
+        <MudIconButton Color="Color.Inherit" OnClick="markAllAsSeen" Icon="@Icons.Material.Filled.NotificationsActive"></MudIconButton>
+    </ActivatorContent>
+    <ChildContent>
+        <span style="border: 13px solid; border-style: solid; border-color: transparent transparent white transparent; position: absolute; top: -26px; right: 124px; z-index: 9999999999; "></span>
+
+        <MudContainer Class="container" Style=" height: 245px; position: relative; width: 273px; padding: 0px; white-space: nowrap; overflow-y: auto">
+            <div class="msg-Holder">
+                @foreach (var item in NotificationList)
+                {
+                    <NotificationItemComponent Date="@item.CreatedOn"
+                                               Seen="@item.Readed"
+                                               Description="@item.Description"
+                                               Title="@item.Title"
+                                               Url="@item.RefUrl"
+                                               OnClick="@(()=>GoToNotification(item.Id ,item.RefUrl))" />
+                }
+
+            </div>
+            @if (NotificationList.Count == 0)
+            {
+                <div style="position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);">
+                    NO NEW NOTIFICATION
+                </div>
+            }
+        </MudContainer>
+        <MudDivider />
+        <MudText Align="Align.Center"> <MudLink Style="margin-bottom:1px;" Typo="Typo.body2" Href="#">All Notifications</MudLink></MudText>
+    </ChildContent>
+
+</MudMenu>
+<MudBadge Visible="@(UnSeenCounter() >0)" Style="position:absolute; margin-top:10px;margin-left:-10px" Overlap="true" Color="Color.Error" Content="@(UnSeenCounter())"></MudBadge>

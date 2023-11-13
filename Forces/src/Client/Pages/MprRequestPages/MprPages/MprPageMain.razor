@@ -1,0 +1,102 @@
+﻿@page "/Requests/MPR"
+@using Forces.Application.Enums;
+@using Forces.Application.Features.MprRequest.Dto.Response;
+@using Forces.Application.Responses.Identity;
+@using Forces.Client.Infrastructure.Managers.MPR
+@using System.Security.Claims
+@inject Microsoft.Extensions.Localization.IStringLocalizer<MprPageMain> _localizer
+@attribute [Authorize(Policy = Permissions.MPR.View)]
+@inject IMprRequestManager _mprManager
+@inject MprStepTypes mprStep
+
+<style>
+    .mud-table-container {
+        overflow: auto;
+    }
+</style>
+ 
+<HeroTitle Title="@_localizer["MPR"]" Description="@_localizer["Manage MPR Requests."]" />
+@if (_canCreateMPR)
+{
+  <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Primary" OnClick="AddNew" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Surface">@_localizer["Create"]</MudButton>
+}
+<MudButton DisableElevation Variant="Variant.Filled" OnClick="GetRequests" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Color="Color.Secondary">@_localizer["Reload"]</MudButton>
+
+<MudTabs Elevation="2" Rounded="true" ApplyEffectsToContainer="true" PanelClass="pa-6">
+    <MudTabPanel Text="Requests" BadgeData="@Requests.Count">
+         <AllMprPage CurrentUserType="@CurrentUserType" RequestsList="@Requests" />
+    </MudTabPanel>
+    <MudTabPanel Text="Pending" BadgeData="@PendingRequests.Count">
+        <AllMprPage CurrentUserType="@CurrentUserType" RequestsList="@PendingRequests" />
+    </MudTabPanel>
+    @if (_canCreateMPR)
+    {
+        <MudTabPanel Text="My Requests" BadgeData="@MyRequests.Count">
+            <AllMprPage CurrentUserType="@CurrentUserType" RequestsList="@MyRequests" />
+        </MudTabPanel>
+    }
+</MudTabs>
+
+@code {
+    public List<GetMprResponse> Requests { get; set; } = new();
+    public List<GetMprResponse> PendingRequests { get; set; } = new();
+    public List<GetMprResponse> MyRequests { get; set; } = new();
+    private bool _canCreateMPR;
+    private ClaimsPrincipal _authenticationStateProviderUser;
+    string userType = "";
+    string userStep = "";
+    private UserType CurrentUserType { get; set; }
+    private UserResponse CurrentUser { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadUserData();
+        await GetRequests();
+        _canCreateMPR = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.MPR.Create)).Succeeded;
+    }
+    private void AddNew()
+    {
+        _navigationManager.NavigateTo("/Requests/MPR/New");
+    }
+
+    private async Task LoadUserData()
+    {
+        var uType = await _userManager.GetUserType();
+        CurrentUserType = uType.Data;
+        var authenticatedUser = await _authenticationManager.CurrentUser();
+        var CurrentUserResponse = await _userManager.GetAsync(authenticatedUser.FindFirst(ClaimTypes.NameIdentifier).Value);
+        CurrentUser = CurrentUserResponse.Data;
+        _authenticationStateProviderUser = await _stateProvider.GetAuthenticationStateProviderUserAsync();
+    }
+    public bool GetCurentActionState(MprSteps Step, RequestState requestState)
+    {
+        var CurrentUserStep = mprStep.GetUserStep(CurrentUserType);
+        userType = CurrentUser.UserType.ToString();
+        userStep = CurrentUserStep.ToString();
+
+        if (Step == CurrentUserStep && requestState == RequestState.Pending)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+
+    }
+    private async Task GetRequests()
+    {
+        var Response = await _mprManager.GetRequestsAsync();
+        if (Response.Succeeded)
+        {
+            Requests = Response.Data;
+            PendingRequests = Response.Data.Where(x => GetCurentActionState(x.CurrentStep, x.RequestState)).ToList();
+            MyRequests = Response.Data.Where(x => x.UserName == CurrentUser.UserName).ToList();
+        }else
+        {
+            foreach (var msg in Response.Messages)
+            {
+                _snackBar.Add(msg, Severity.Error);
+            }
+        }
+    }
+}

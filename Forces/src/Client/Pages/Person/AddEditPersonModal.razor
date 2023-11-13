@@ -1,0 +1,100 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<AddEditPersonModal> _localizer
+@inject IJSRuntime JSRuntime
+
+@code {
+
+    private async Task LogToConsole()
+    {
+        await JSRuntime.InvokeVoidAsync("console.log", BuildingName);
+        await JSRuntime.InvokeVoidAsync("console.log", filteredRooms);
+    }
+}
+<EditForm Model="@AddEditPersonModel" OnValidSubmit="SaveAsync">
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <MudDialog>
+        <TitleContent>
+            @{
+                if (AddEditPersonModel.Id == 0)
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
+                        @_localizer["Add Person"]
+                    </MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Update" Class="mr-3 mb-n1" />
+                        @_localizer["Update Person"]
+                    </MudText>
+                }
+            }
+        </TitleContent>
+        <DialogContent>
+            <MudGrid>
+
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" T="string" For="@(() => AddEditPersonModel.Name)" @bind-Value="AddEditPersonModel.Name" Label="@_localizer["Name"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" T="string" For="@(() => AddEditPersonModel.NationalNumber)" @bind-Value="AddEditPersonModel.NationalNumber" Label="@_localizer["National Number"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" T="string" For="@(() => AddEditPersonModel.Phone)" @bind-Value="AddEditPersonModel.Phone" Label="@_localizer["Phone"]" />
+
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" T="string" For="@(() => AddEditPersonModel.OfficePhone)" @bind-Value="AddEditPersonModel.OfficePhone" Label="@_localizer["Office Phone"]" />
+
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" T="string" For="@(() => AddEditPersonModel.Section)" @bind-Value="AddEditPersonModel.Section" Label="@_localizer["Section"]" />
+
+                </MudItem>
+
+            </MudGrid>
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudSelect Label="Select Building" @bind-Value="BuildingName" @onchange="GetRoomsAsync">
+                        @if (_BuildingList != null)
+                        {
+                            @foreach (var item in _BuildingList)
+                            {
+                                <MudSelectItem Value="@item.BuildingName">@item.BuildingName</MudSelectItem>
+                            }
+                        }
+                    </MudSelect>
+
+                </MudItem>
+                @if(BuildingName!=string.Empty && BuildingName != null)
+                {  
+                    <MudItem xs="12" md="6">
+                        <MudSelect Label="Select Base" @bind-Value="RoomNumber">
+                            @if (filteredRooms != null)
+                            {
+                                @foreach (var item in filteredRooms)
+                                {
+                                    <MudSelectItem Value="@item.RoomNumber">@item.RoomNumber</MudSelectItem>
+                                }
+                            }
+                        </MudSelect>
+
+                    </MudItem>
+                }
+
+            </MudGrid>
+        </DialogContent>
+        <DialogActions>
+            <MudButton DisableElevation Variant="Variant.Filled" OnClick="Cancel">@_localizer["Cancel"]</MudButton>
+            @if (AddEditPersonModel.Id != 0)
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Secondary">@_localizer["Update"]</MudButton>
+            }
+            else
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Success">@_localizer["Save"]</MudButton>
+            }
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+<MudButton DisableElevation Variant="Variant.Filled" OnClick="LogToConsole">Log to Console</MudButton>

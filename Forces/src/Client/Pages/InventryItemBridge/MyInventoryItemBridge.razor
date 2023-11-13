@@ -1,0 +1,92 @@
+﻿@page "/InventoryItemBridge/MyInventoryItemBridge"
+@inject Microsoft.Extensions.Localization.IStringLocalizer<MyInventoryItemBridge> _localizer
+@attribute [Authorize(Policy = Permissions.InventoryItemsBridge.View)]
+@using Forces.Application.Extensions
+@using Forces.Application.Features.InventoryItemBridge.Queries.GetAll;
+
+<style>
+    .mud-table-container {
+        overflow: auto;
+    }
+</style>
+
+<HeroTitle Title="@_localizer["InventoryItemBridge"]" Description="@_localizer["Manage InventoryItemsBridge"]" />
+@if (!_loaded)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+    <MudTable Hover="true" Elevation="25" Items="_InventoryItemBridgeList" Dense="@_dense" Bordered="@_bordered" Striped="@_striped" Filter="new Func<GetAllInventoryItemBridgeResponse, bool>(Search)" >
+        <ToolBarContent>
+            <div class="justify-center mud-text-align-center">
+                @if (_canCreateInventoryItemBridge)
+                {
+                    <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => InvokeModal())" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Surface">@_localizer["Create"]</MudButton>
+                }
+                <MudButton DisableElevation Variant="Variant.Filled" OnClick="GetInventoryItemsBridgeAsync" StartIcon="@Icons.Material.Filled.Refresh" IconColor="Color.Surface" Color="Color.Secondary">@_localizer["Reload"]</MudButton>
+
+             </div>
+             <MudSpacer />
+             @if (_canSearchInventoryItemBridge)
+            {
+                <MudTextField @bind-Value="_searchString" Immediate="true" Placeholder="@_localizer["Search for InventoryItems"]" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0 mb-3"></MudTextField>
+            }
+        </ToolBarContent>
+        <ColGroup>
+            <col style="width: 60px;" />
+            <col />
+            <col />
+            <col />
+            <col />
+            <col />
+        </ColGroup>
+        <HeaderContent>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetAllInventoryItemBridgeResponse, object>(x => x.SerialNumber)">@_localizer["Serial Number"]</MudTableSortLabel></MudTh>
+
+            <MudTh Style="text-align:right">@_localizer["Actions"]</MudTh>
+        </HeaderContent>
+        
+            <RowTemplate>
+
+                <MudTd DataLabel="Serial Number">
+                    <MudHighlighter Text="@context.SerialNumber" HighlightedText="@_searchString" />
+                </MudTd>
+
+
+
+                <MudTd DataLabel="Actions" Style="text-align: right">
+
+                    <MudMenu Label="@_localizer["Actions"]" Variant="Variant.Filled" DisableElevation="true" EndIcon="@Icons.Filled.KeyboardArrowDown">
+                    @if (_canEditInventoryItemBridge)
+                    {
+                        <MudMenuItem @onclick="@(() => InvokeModal(@context.Id))">@_localizer["Edit"]</MudMenuItem>
+                    }
+                    @if (_canDeleteInventoryItemBridge)
+                    {
+                        <MudMenuItem @onclick="@(() => Delete(@context.Id))">@_localizer["Delete"]</MudMenuItem>
+                    }
+                </MudMenu>
+
+
+                <MudButton Variant="Variant.Filled"
+                           DisableElevation="true"
+                           StartIcon="@Icons.Material.Filled.DoNotTouch"
+                           IconColor="Color.Secondary"
+                           Size="Size.Small"
+                           Color="Color.Surface">
+                    @_localizer["No Allowed Actions"]
+                </MudButton>
+
+            </MudTd>
+        </RowTemplate>
+        <FooterContent>
+            <MudSwitch @bind-Checked="@_dense" Color="Color.Secondary" Style="margin-left: 5px;">@_localizer["Dense"]</MudSwitch>
+            <MudSwitch @bind-Checked="@_striped" Color="Color.Tertiary" Style="margin-left: 5px;">@_localizer["Striped"]</MudSwitch>
+            <MudSwitch @bind-Checked="@_bordered" Color="Color.Warning" Style="margin-left: 5px;">@_localizer["Bordered"]</MudSwitch>
+        </FooterContent>
+        <PagerContent>
+            <TablePager />
+        </PagerContent>
+    </MudTable>
+}

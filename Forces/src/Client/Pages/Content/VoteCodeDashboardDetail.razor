@@ -1,0 +1,222 @@
+﻿@page "/vcodedashboard/{voteCode}"
+@using Forces.Application.Requests.VoteCodes
+@using Forces.Application.Responses.VoteCodes
+@using Forces.Application.Enums
+@using Forces.Application.Extensions
+@using Forces.Client.Infrastructure.Managers.MPR;
+@using Forces.Client.Pages.MprRequestPages.MprPages
+@inject Microsoft.Extensions.Localization.IStringLocalizer<VoteCodeDashboardDetail> _localizer
+@inject IMprRequestManager _mprManager
+@if (!_loaded)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+    @if (_Authurized)
+    {
+        <MudGrid Style="margin-bottom:10px">
+            <MudItem xs="12" sm="6" md="6">
+                <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                    <MudIcon Icon="@Icons.Filled.Castle" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                    <div>
+                        <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@DetailedvoteCode.VoteShortcut | @DetailedvoteCode.VoteCode</MudText>
+                        <MudText Typo="Typo.h6">@DetailedvoteCode.Cridet</MudText>
+                    </div>
+                </MudPaper>
+            </MudItem>
+            <MudItem xs="12" sm="6" md="6">
+                <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4 pr-4 pl-4" Style="height:100px;">
+                    <MudDateRangePicker DateFormat="d/M/yyyy" Label="Transactions Date Range" @bind-DateRange="_dateRange" />
+                </MudPaper>
+            </MudItem>
+        </MudGrid>
+        <MudTabs Elevation="25" Color="Color.Transparent" Rounded="true" PanelClass="mt-6">
+            <MudTabPanel Text="Transactions Logs">
+
+
+                <MudCard>
+                    <MudExpansionPanels MultiExpansion="true">
+                        <MudExpansionPanel Text="By Part & Request">
+                            <MudGrid>
+                                <MudItem xs="12" sm="6" md="3"> <MudTextField @bind-Value="Specifcation.ItemName" Label=@_localizer["Part Name"] Variant="Variant.Text"></MudTextField></MudItem>
+                                <MudItem xs="12" sm="6" md="3"> <MudTextField @bind-Value="Specifcation.ItemCode" Label=@_localizer["Part Code"] Variant="Variant.Text"></MudTextField></MudItem>
+                                <MudItem xs="12" sm="6" md="3"> <MudTextField @bind-Value="Specifcation.ItemNSN" Label=@_localizer["Part NSN"] Variant="Variant.Text"></MudTextField></MudItem>
+                                <MudItem xs="12" sm="6" md="3"> <MudTextField @bind-Value="Specifcation.RequestRef" Label=@_localizer["Request Refrance"] Variant="Variant.Text"></MudTextField></MudItem>
+                            </MudGrid>
+                        </MudExpansionPanel>
+                        <MudExpansionPanel Text="By user">
+                            <MudTextField @bind-Value="Specifcation.UserName" Label=@_localizer["User Name"] Variant="Variant.Text"></MudTextField>
+                        </MudExpansionPanel>
+                        <MudExpansionPanel Text=@_localizer["By Transaction Amount"]>
+                            <MudGrid>
+                                <MudItem md="6">
+                                    <MudSelect T="MathOperation?" @bind-Value="Specifcation.Operator" Label="Operator">
+                                        @foreach (MathOperation item in Enum.GetValues(typeof(MathOperation)))
+                                        {
+                                            <MudSelectItem T="MathOperation?" Value="@item">@_localizer["Transaction Amount"] @item.ToDescriptionString()</MudSelectItem>
+                                        }
+                                    </MudSelect>
+                                </MudItem>
+                                <MudItem md="3">
+                                    <MudTextField @bind-Value="Specifcation.Value" Label=@_localizer["Value"] Variant="Variant.Text"></MudTextField>
+                                </MudItem>
+                                <MudItem md="3">
+                                    <MudSelect T="TransactionType?" Label=@_localizer["Transaction Type"] @bind-Value="Specifcation.TransactionType" ToStringFunc="TransactionTypeToString">
+                                        <MudSelectItem T="TransactionType?" Value="null">All</MudSelectItem>
+                                        @foreach (TransactionType item in Enum.GetValues(typeof(TransactionType)))
+                                        {
+                                            <MudSelectItem T="TransactionType?" Value="@item">@item.ToString() Transaction</MudSelectItem>
+                                        }
+                                    </MudSelect>
+                                </MudItem>
+                            </MudGrid>
+                        </MudExpansionPanel>
+
+                    </MudExpansionPanels>
+                    <MudCardActions Style="justify-content: end !important;">
+                        <MudButton Variant="Variant.Outlined" OnClick="Search" StartIcon="@Icons.Material.Filled.Search" Color="Color.Primary">@_localizer["Search"]</MudButton>
+                    </MudCardActions>
+                </MudCard>
+                <MudGrid Style="margin-top: 11px;">
+                    <MudItem xs="12" sm="12" md="12">
+
+                        <MudTable Loading="_Searching" FixedHeader="true" FixedFooter="true" Height="500px" Dense="true" Hover="true" Striped="true" Items="DetailedvoteCode.Logs" Filter="new Func<VoteCodeLogResponse, bool>(Filter)">
+                            <ToolBarContent>
+                                <MudText Typo="Typo.h6">@_localizer["Transactions"]</MudText>
+                                <MudButton Style="margin-left: 15px;" OnClick="@(() => InvokeTransactionModal())" Variant="Variant.Outlined" Color="Color.Tertiary" EndIcon="@Icons.Material.Filled.Add">@_localizer["Add Transaction"]</MudButton>
+                                <MudButton DisableElevation Variant="Variant.Filled" OnClick="ExportToExcel" StartIcon="@Icons.Custom.FileFormats.FileExcel" IconColor="Color.Secondary" Color="Color.Surface" Style="margin-left: 5px;">@_localizer["Export"]</MudButton>
+                                <MudSpacer />
+                                <MudTextField Immediate="true" @bind-Value="_searchString" Placeholder=@_localizer["Search"] Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                            </ToolBarContent>
+                            <HeaderContent>
+                                <MudTh><MudTableSortLabel SortBy="new Func<VoteCodeLogResponse, object>(x => x.TransactionDate)">@_localizer["Date"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortBy="new Func<VoteCodeLogResponse, object>(x => x.Transactiontype)">@_localizer["Transaction Type"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortBy="new Func<VoteCodeLogResponse, object>(x => x.TransactionAmount)">@_localizer["Transaction Amount"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortBy="new Func<VoteCodeLogResponse, object>(x => x.AmountBefore)">@_localizer["Amount Before"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortBy="new Func<VoteCodeLogResponse, object>(x => x.AmountAfter)">@_localizer["Amount After"]</MudTableSortLabel></MudTh>
+                                <MudTh><MudTableSortLabel SortBy="new Func<VoteCodeLogResponse, object>(x => x.RequestRefrance)">@_localizer["Request Refrance"]</MudTableSortLabel></MudTh>
+                                @*<MudTh><MudTableSortLabel SortBy="new Func<VoteCodeLogResponse, object>(x=>x.ItemName)">Part</MudTableSortLabel></MudTh>
+                                    <MudTh><MudTableSortLabel SortBy="new Func<VoteCodeLogResponse, object>(x=>x.ItemCode)">Part Code</MudTableSortLabel></MudTh>
+                                    <MudTh><MudTableSortLabel SortBy="new Func<VoteCodeLogResponse, object>(x=>x.ItemNSN)">Part NSN</MudTableSortLabel></MudTh>*@
+                                <MudTh><MudTableSortLabel SortBy="new Func<VoteCodeLogResponse, object>(x => x.TransactionBy)">@_localizer["Transaction By"]</MudTableSortLabel></MudTh>
+                                <MudTh> </MudTh>
+                            </HeaderContent>
+                            <RowTemplate>
+                                <MudTd DataLabel="Date"><MudHighlighter Text="@context.TransactionDate.ToString("d/M/yyyy")" HighlightedText="@_searchString" /></MudTd>
+                                <MudTd DataLabel="Transaction Type"><MudHighlighter Text="@context.Transactiontype.ToString()" HighlightedText="@_searchString" /></MudTd>
+                                <MudTd DataLabel="Transaction Amount"><MudHighlighter Text="@context.TransactionAmount.ToString()" HighlightedText="@_searchString" /></MudTd>
+                                <MudTd DataLabel="Amount Before"><MudHighlighter Text="@context.AmountBefore.ToString()" HighlightedText="@_searchString" /></MudTd>
+                                <MudTd DataLabel="Amount After"><MudHighlighter Text="@context.AmountAfter.ToString()" HighlightedText="@_searchString" /><MudIcon Style=" vertical-align: text-bottom;" Icon="@(ArrowIcon(context.Transactiontype))" Color="@(ArrowColor(context.Transactiontype))" /></MudTd>
+                                <MudTd DataLabel="Request Refrance"><MudHighlighter Text="@context.RequestRefrance" HighlightedText="@_searchString" /></MudTd>
+                                @*<MudTd DataLabel="Part"><MudHighlighter Text="@context.ItemName" HighlightedText="@_searchString" /></MudTd>
+                                    <MudTd DataLabel="Part Code"><MudHighlighter Text="@context.ItemCode" HighlightedText="@_searchString" /></MudTd>
+                                    <MudTd DataLabel="Part NSN"><MudHighlighter Text="@context.ItemNSN" HighlightedText="@_searchString" /></MudTd>*@
+                                <MudTd DataLabel="Transaction By"><MudHighlighter Text="@context.TransactionBy" HighlightedText="@_searchString" /></MudTd>
+                                @*<MudTd><MudButton Variant="Variant.Outlined" Size="Size.Small" OnClick="@(() => ShowBtnPress(context.LogId))">@((context.ShowDetails == true)? "Hide" : "Show") Details</MudButton></MudTd>*@
+                                <MudTd>
+                                    <MudToggleIconButton @bind-Toggled="@context.ShowDetails"
+                                                         Icon="@Icons.Filled.Preview" Color="@Color.Dark" Title=@_localizer["Show Details"]
+                                                         ToggledIcon="@Icons.Filled.WebAssetOff" ToggledColor="@Color.Error" ToggledTitle=@_localizer["Hide Details"] />
+                                </MudTd>
+                            </RowTemplate>
+                            <ChildRowContent>
+                                @if (context.ShowDetails)
+                                        {
+                                    <MudTr>
+                                        <td colspan="7">
+                                            <MudCard Elevation="1" Style="padding-left: 20px; margin-bottom: 15px; background-color: #F5F5F5 ">
+                                                <MudCardHeader>
+                                                    <CardHeaderContent>
+                                                        <MudText Typo="Typo.body1"><strong>@_localizer["Transaction Details"]</strong></MudText>
+                                                    </CardHeaderContent>
+                                                </MudCardHeader>
+                                                <MudCardContent Class="pa-0">
+                                                    <MudGrid>
+                                                        <MudItem md="4">
+                                                            <MudText Typo="Typo.body2">@_localizer["Transaction Date"]: <strong>@context.TransactionDate.ToString("d/M/yyyy")</strong></MudText>
+                                                        </MudItem>
+                                                        <MudItem md="4">
+                                                            <MudText Typo="Typo.body2">@_localizer["Transaction Time"]: <strong>@context.TransactionDate.ToString("h:m tt")</strong></MudText>
+                                                        </MudItem>
+                                                        <MudItem md="4">
+                                                            <MudText Typo="Typo.body2">@_localizer["Transaction Type"]: <strong>@context.Transactiontype.ToString()</strong></MudText>
+                                                        </MudItem>
+                                                        <MudItem md="4">
+                                                            <MudText Typo="Typo.body1">@_localizer["Transaction Amount"]: <strong>@context.TransactionAmount</strong></MudText>
+                                                        </MudItem>
+                                                        <MudItem md="4">
+                                                            <MudText Typo="Typo.body2">@_localizer["Before Transaction Amount"]: <strong>@context.AmountBefore</strong></MudText>
+                                                        </MudItem>
+                                                        <MudItem md="4">
+                                                            <MudText Typo="Typo.body2">
+                                                                @_localizer["After Transaction Amount"]: <strong>@context.AmountAfter</strong>
+                                                                <MudIcon Icon="@(ArrowIcon(context.Transactiontype))" Color="@(ArrowColor(context.Transactiontype))" />
+                                                            </MudText>
+                                                        </MudItem>
+                                                        @if (!string.IsNullOrEmpty(context.ItemName))
+                                                                {
+                                                            <MudItem md="4">
+                                                                <MudText Typo="Typo.body2">@_localizer["Request Type"]: <strong>@context.RequestType</strong></MudText>
+                                                            </MudItem>
+                                                            <MudItem md="4">
+                                                                <MudText Typo="Typo.body2">@_localizer["Request Code"]: <strong>@context.RequestRefrance</strong></MudText>
+                                                            </MudItem>
+                                                            <MudItem md="4">
+                                                                <MudText Typo="Typo.body2">@_localizer["Part Name"]: <strong>@context.ItemName</strong></MudText>
+                                                            </MudItem>
+                                                            <MudItem md="4">
+                                                                <MudText Typo="Typo.body2">@_localizer["Part Code"]: <strong>@context.ItemCode</strong></MudText>
+                                                            </MudItem>
+                                                            <MudItem md="4">
+                                                                <MudText Typo="Typo.body2">@_localizer["Part NSN"]: <strong>@context.ItemNSN</strong></MudText>
+                                                            </MudItem>
+                                                                }
+                                                        <MudItem md="4">
+                                                            <MudText Typo="Typo.body2">@_localizer["Transaction By"]: <strong>@context.TransactionBy</strong></MudText>
+                                                        </MudItem>
+                                                        <MudItem md="4">
+                                                            <MudText Typo="Typo.body2">@_localizer["Transaction Reason"]: <strong>@context.Reason</strong></MudText>
+                                                        </MudItem>
+                                                        <MudItem md="4">
+                                                            <MudText Typo="Typo.body2">@_localizer["Transaction Note"]: <strong>@context.Note</strong></MudText>
+                                                        </MudItem>
+                                                    </MudGrid>
+                                                </MudCardContent>
+                                            </MudCard>
+                                        </td>
+                                    </MudTr>
+                                        }
+                            </ChildRowContent>
+                            <PagerContent>
+                                <MudTablePager />
+                            </PagerContent>
+                            <FooterContent>
+                                <td colspan="5">
+                                    <MudGrid Style="padding-left: 20px; padding-top: 20px; text-align: center">
+                                        <MudItem md="12"><MudDivider DividerType="DividerType.Middle" /></MudItem>
+                                        <MudItem md="4">@_localizer["Credit Transactions"]:    <MudText Typo="Typo.body1" Color="Color.Success"><strong>@DetailedvoteCode.Logs.Where(x => x.Transactiontype == TransactionType.Credit).Sum(x => x.TransactionAmount)</strong></MudText></MudItem>
+                                        <MudItem md="4">@_localizer["Debit Transactions"]:    <MudText Typo="Typo.body1" Color="Color.Error"><strong>@DetailedvoteCode.Logs.Where(x => x.Transactiontype == TransactionType.Debit).Sum(x => x.TransactionAmount)</strong></MudText></MudItem>
+                                        <MudItem md="4">@_localizer["Total Credit"]:    <MudText Typo="Typo.body1" Color="Color.Tertiary"><strong>@(DetailedvoteCode.Logs.Where(x => x.Transactiontype == TransactionType.Credit).Sum(x => x.TransactionAmount) - DetailedvoteCode.Logs.Where(x => x.Transactiontype == TransactionType.Debit).Sum(x => x.TransactionAmount))</strong></MudText></MudItem>
+                                    </MudGrid>
+                                </td>
+                            </FooterContent>
+                        </MudTable>
+                    </MudItem>
+                </MudGrid>
+            </MudTabPanel>
+            <MudTabPanel Text=@_localizer["Completed Requests"]>
+                <AllMprPage CurrentUserType="@CurrentUserType" RequestsList="@Requests" />
+            </MudTabPanel>
+            <MudTabPanel Text=@_localizer["Pending Requests"]>
+                <AllMprPage CurrentUserType="@CurrentUserType" RequestsList="@PendingRequests" />
+            </MudTabPanel>
+        </MudTabs>
+    }
+    else
+    {
+        <ForbiddenAccess />
+    }
+
+
+}

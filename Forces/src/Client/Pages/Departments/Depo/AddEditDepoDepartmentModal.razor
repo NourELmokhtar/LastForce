@@ -1,0 +1,57 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<AddEditDepoDepartmentModal> _localizer
+
+<EditForm Model="@AddEditDepoModel" OnValidSubmit="SaveAsync">
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <MudDialog>
+        <TitleContent>
+            @{
+                if (AddEditDepoModel.Id == 0)
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
+                        @_localizer["Add Department"]
+                    </MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Update" Class="mr-3 mb-n1" />
+                        @_localizer["Update Department"]
+                    </MudText>
+                }
+            }
+        </TitleContent>
+        <DialogContent>
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" T="string" For="@(() => AddEditDepoModel.Name)" @bind-Value="AddEditDepoModel.Name" Label="@_localizer["Department Name"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudSelect T="int" Required="true" For="@(()=> AddEditDepoModel.ForceID)" ToStringFunc="@converter()" @bind-Value="@AddEditDepoModel.ForceID" Label="@_localizer["Force"]" AnchorOrigin="Origin.BottomCenter">
+                        @if (_ForceList != null)
+                        {
+                            foreach (var force in _ForceList)
+                            {
+                                <MudSelectItem Value="@force.Id" />
+                            }
+                        }
+
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+        </DialogContent>
+        <DialogActions>
+            <MudButton DisableElevation Variant="Variant.Filled" OnClick="Cancel">@_localizer["Cancel"]</MudButton>
+            @if (AddEditDepoModel.Id != 0)
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Secondary">@_localizer["Update"]</MudButton>
+            }
+            else
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Success">@_localizer["Save"]</MudButton>
+            }
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+
+

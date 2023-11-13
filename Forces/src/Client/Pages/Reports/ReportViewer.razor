@@ -1,0 +1,55 @@
+﻿@page "/reportviewer/"
+
+@using DevExpress.Blazor.Reporting
+@using DevExpress.XtraReports.UI
+@*
+
+<MudDialog>
+    <DialogContent>*@
+       
+        <link href="_content/DevExpress.Blazor.Themes/blazing-berry.bs5.css" rel="stylesheet" />
+        <link rel="stylesheet" href="_content/DevExpress.Blazor.Reporting.Viewer/css/dx-blazor-reporting-components.bs5.css">
+        <DxReportViewer @ref="reportViewer"  Report="Report"/>
+     
+        @*<DxWasmDocumentViewer @ref=dv  ReportName="Requests" Height="700px"   Width="100%">
+            <DxDocumentViewerExportSettings UseSameTab=false >
+            </DxDocumentViewerExportSettings>
+            
+            <DxWasmDocumentViewerRequestOptions InvokeAction="DXXRDV" >
+            </DxWasmDocumentViewerRequestOptions>
+        </DxWasmDocumentViewer>*@
+@*    </DialogContent>
+</MudDialog>*@
+
+@code {
+    //new Forces.Client.Reports.Requests()
+    [Inject] HttpClient? Http { get; set; }
+    [Parameter]
+    public object DataSource { get; set; }
+    [Parameter]
+    public XtraReport Report { get; set; }
+    [Parameter]
+    public string ReportName { get; set; } = "Report Viewer";
+
+    DxWasmDocumentViewer dv;
+
+    DxReportViewer? reportViewer;
+    List<string> RequiredFonts = new() {
+        "segoeui.ttf", "segoeuib.ttf", "segoeuii.ttf","Traditional-Arabic.ttf","Arial.ttf",
+        "segoeuil.ttf", "segoeuisl.ttf", "segoeuiz.ttf","Cairo-ExtraLight.ttf","Cairo-Light.ttf","Cairo.ttf",
+        "Cairo-Regular.ttf","Cairo-Medium.ttf","Cairo-SemiBold.ttf","Cairo-Bold.ttf","Cairo-ExtraBold.ttf","Cairo-Black.ttf","Cairo-VariableFont_slnt,wght.ttf","Cairo.ttf"
+    };
+    protected override async Task OnInitializedAsync()
+    {
+         await FontLoader.LoadFonts(Http, RequiredFonts);
+    }
+    protected async override Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+           // await FontLoader.LoadFonts(Http, RequiredFonts);
+        }
+        await base.OnAfterRenderAsync(firstRender);
+    }
+
+}

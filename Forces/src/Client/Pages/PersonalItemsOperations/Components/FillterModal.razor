@@ -1,0 +1,58 @@
+﻿@using Forces.Application.Features.PersonalItemOperations.Queries.GetByFillter
+<MudDialog>
+    <DialogContent>
+        <EditForm Model="@Fillter" OnValidSubmit="Submit">
+            <MudGrid>
+                <MudItem md="12">
+                    <MudCard>
+                        <MudCardContent>
+                            <MudDateRangePicker PickerVariant="PickerVariant.Dialog" Label="Date Range" @bind-DateRange="_dateRange">
+                                <PickerActions Context="_picker">
+                                    <MudButton Class="mr-auto align-self-start" OnClick="@(() => _picker.Clear())">Clear</MudButton>
+                                    <MudButton OnClick="@(() => _picker.Close(false))">Cancel</MudButton>
+                                    <MudButton Color="Color.Primary" OnClick="@(() => _picker.Close())">Ok</MudButton>
+                                </PickerActions>
+                            </MudDateRangePicker>
+
+                            <MudTextField Label="User Name" @bind-Value="Fillter.UserName" Immediate="true" />
+                            <MudTextField Label="Item Code" @bind-Value="Fillter.ItemCode" Immediate="true" />
+                            <MudTextField Label="Item Name" @bind-Value="Fillter.ItemName" Immediate="true" />
+                            <MudTextField Label="Item Serial Number" @bind-Value="Fillter.ItemSN" Immediate="true" />
+
+                            <MudTextField Label="User Name" @bind-Value="Fillter.UserName" Immediate="true" />
+                            <MudTextField Label="User Name" @bind-Value="Fillter.UserName" Immediate="true" />
+                            <MudTextField Label="User Name" @bind-Value="Fillter.UserName" Immediate="true" />
+                            <MudTextField Label="User Name" @bind-Value="Fillter.UserName" Immediate="true" />
+                            <MudTextField Label="User Name" @bind-Value="Fillter.UserName" Immediate="true" />
+                            <MudTextField Label="User Name" @bind-Value="Fillter.UserName" Immediate="true" />
+
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudButton StartIcon="@Icons.Outlined.FilterAlt" ButtonType="ButtonType.Submit" Variant="Variant.Outlined" Color="Color.Primary" Class="ml-auto">Filter</MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                </MudItem>
+            </MudGrid>
+        </EditForm>
+    </DialogContent>
+</MudDialog>
+@code {
+    MudDateRangePicker _picker;
+    DateRange _dateRange = new DateRange();
+    [Parameter] public GetPersonalItemsOperationsByFillter Fillter { get; set; } = new();
+    [CascadingParameter] private MudDialogInstance MudDialog { get; set; }
+    private void Submit()
+    {
+        if (_dateRange.Start.HasValue)
+        {
+            Fillter.DateFrom = _dateRange.Start;
+            Fillter.DateTo = _dateRange.End;
+        }
+
+        MudDialog.Close(DialogResult.Ok(Fillter));
+    }
+    private void Cancel()
+    {
+        MudDialog.Cancel();
+    }
+}

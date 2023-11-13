@@ -1,0 +1,176 @@
+﻿@using Forces.Application.Enums
+@using Forces.Application.Extensions
+
+@if (Loaded)
+{
+    <MudCard Elevation="Elevation" Outlined="OutLine" Square="true" Style="@Style">
+        <MudCardHeader>
+            <CardHeaderAvatar>
+                @if (string.IsNullOrEmpty(ImageDataUrl))
+                {
+                    <MudAvatar Variant="Variant.Outlined" Style="height: 70px !important; width: 70px !important; font-size: 2rem " Color="Color.Primary">@FirstLetterOfName</MudAvatar>
+                }
+                else
+                {
+                    <MudAvatar Image="@ImageDataUrl" Variant="Variant.Outlined" Style="height: 70px !important; width: 70px !important; font-size: 2rem "> </MudAvatar>
+                }
+            </CardHeaderAvatar>
+            <CardHeaderContent>
+                <MudGrid>
+                    <MudItem md="4" sm="12">
+                        @if (!string.IsNullOrEmpty(Name))
+                        {
+                            <MudText Inline="false" Typo="Typo.h5" Color="Color.Primary">@Name</MudText>
+                        }
+                        @if (!string.IsNullOrEmpty(Rank))
+                        {
+                            <MudText Inline="false" Typo="Typo.body2">@Rank</MudText>
+                        }
+                        @if (!string.IsNullOrEmpty(jobTitle))
+                        {
+                            <MudText Inline="false" Typo="Typo.body2">@jobTitle</MudText>
+                        }
+                        @if (!string.IsNullOrEmpty(UserName))
+                        {
+                            <MudText Inline="false" Typo="Typo.body2">@UserName</MudText>
+                        }
+                    </MudItem>
+                    @if (!string.IsNullOrEmpty(Force) || !string.IsNullOrEmpty(Base) || !string.IsNullOrEmpty(Section))
+                    {
+
+                        <MudItem md="4" sm="12" Style="align-self: center !important">
+                            <MudText Inline="false" Typo="Typo.h5" Color="Color.Primary"> </MudText>
+                            @if (!string.IsNullOrEmpty(Force))
+                            {
+                                <MudText Typo="Typo.body2">Force: <strong>@Force</strong></MudText>
+                            }
+                            @if (!string.IsNullOrEmpty(Base))
+                            {
+                                <MudText Typo="Typo.body2">Base: <strong>@Base</strong></MudText>
+                            }
+                            @if (!string.IsNullOrEmpty(Section))
+                            {
+                                <MudText Typo="Typo.body2">Section: <strong>@Section</strong></MudText>
+                            }
+
+                        </MudItem>
+                    }
+                    <MudItem md="4" sm="12" Style="align-self: center !important">
+                        <MudText Inline="false" Typo="Typo.h5" Color="Color.Primary"> </MudText>
+                        @if (!string.IsNullOrEmpty(AdditionalData))
+                        {
+                            <MudText Typo="Typo.body2">@AdditionalDataLable: <strong>@AdditionalData</strong></MudText>
+                        }
+                        @if (!string.IsNullOrEmpty(AdditionalData2))
+                        {
+                            <MudText Typo="Typo.body2">@AdditionalData2Lable: <strong>@AdditionalData2</strong></MudText>
+                        }
+                        @if (!string.IsNullOrEmpty(AdditionalData3))
+                        {
+                            <MudText Typo="Typo.body2">@AdditionalData3Lable: <strong>@AdditionalData3</strong></MudText>
+                        }
+                        @if (!string.IsNullOrEmpty(AdditionalData4))
+                        {
+                            <MudText Typo="Typo.body2">@AdditionalData4Lable: <strong>@AdditionalData4</strong></MudText>
+                        }
+                    </MudItem>
+             
+                </MudGrid>
+
+
+            </CardHeaderContent>
+            <CardHeaderActions>
+                <MudTooltip Text="@($"Message {Name}")"><MudIconButton Link="@($"chat/{UserID}")" Icon="@Icons.Material.Outlined.Message" Color="Color.Primary" /></MudTooltip>
+                <MudTooltip Text="@($"{Name} Profile")"><MudIconButton Link="@($"user-profile/{UserID}")" Icon="@Icons.Material.Outlined.Info" Color="Color.Primary" /></MudTooltip>
+            </CardHeaderActions>
+        </MudCardHeader>
+        @if (ChildContent != null)
+        {
+            <MudDivider DividerType="DividerType.Inset"></MudDivider>
+            <MudCardContent>
+                @ChildContent
+            </MudCardContent>
+        }
+    </MudCard>
+}
+else
+{
+    <MudCard Elevation="0" Square="true">
+        <MudCardHeader>
+            <CardHeaderAvatar>
+                <MudSkeleton SkeletonType="SkeletonType.Circle" Animation="Animation.Wave" Height="70px" Width="70px" />
+            </CardHeaderAvatar>
+            <CardHeaderContent>
+                <MudSkeleton Height="32px" Animation="Animation.Wave" Width="10%" />
+                <MudSkeleton Animation="Animation.Wave" Width="8%" />
+                <MudSkeleton Animation="Animation.Wave" Width="6%" />
+            </CardHeaderContent>
+            <CardHeaderActions>
+                <MudSkeleton SkeletonType="SkeletonType.Circle" Animation="Animation.Wave" Height="30px" Width="30px" Class="ml-3 mb-2" />
+                <MudSkeleton SkeletonType="SkeletonType.Circle" Animation="Animation.Wave" Height="30px" Width="30px" Class="ml-3 mb-2" />
+            </CardHeaderActions>
+        </MudCardHeader>
+
+    </MudCard>
+}
+
+
+@code{
+    private bool Loaded = false;
+    public string Class { get; set; }
+    public string Name { get; set; } = "";
+    public string Rank { get; set; } = "";
+    public string jobTitle { get; set; } = "";
+    public string UserName { get; set; } = "";
+    public char FirstLetterOfName { get; set; }
+    [Parameter] public string UserID { get; set; }
+    [Parameter]
+    public string ImageDataUrl { get; set; }
+    [Parameter]
+    public RenderFragment ChildContent { get; set; }
+    [Parameter] public string Force { get; set; }
+    [Parameter] public string Base { get; set; }
+    [Parameter] public string Section { get; set; }
+    [Parameter] public string AdditionalData { get; set; }
+    [Parameter] public string AdditionalDataLable { get; set; }
+    [Parameter] public string AdditionalData2 { get; set; }
+    [Parameter] public string AdditionalData2Lable { get; set; }
+    [Parameter] public string AdditionalData3 { get; set; }
+    [Parameter] public string AdditionalData3Lable { get; set; }
+    [Parameter] public string AdditionalData4 { get; set; }
+    [Parameter] public string AdditionalData4Lable { get; set; }
+    [Parameter] public int Elevation { get; set; } = 0;
+    [Parameter] public bool OutLine { get; set; } = false;
+    [Parameter] public string Style { get; set; } = "";
+
+    protected override async Task OnInitializedAsync()
+    {
+        await LoadDataAsync();
+    }
+
+    private async Task LoadDataAsync()
+    {
+
+        var userResponse = await _userManager.GetAsync(UserID);
+
+        var user = userResponse.Data;
+        
+        Name = $"{user.FirstName} {user.LastName}";
+        jobTitle = user.JobTitle;
+        UserName = user.UserName;
+        Rank = user.Rank != null ? ((RankType)user.Rank).ToEnDescriptionString() : string.Empty;
+        if (this.Name.Length > 0)
+        {
+            FirstLetterOfName = Name.ToUpper()[0];
+        }
+
+        var imageResponse = await _accountManager.GetProfilePictureAsync(UserID);
+        if (imageResponse.Succeeded)
+        {
+            ImageDataUrl = imageResponse.Data;
+        }
+        Loaded = true;
+    }
+
+
+}

@@ -1,0 +1,74 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<AddEditRoomModal> _localizer
+@inject IJSRuntime JSRuntime
+
+@code {
+
+    private async Task LogToConsole()
+    {
+        await JSRuntime.InvokeVoidAsync("console.log", converterForBuildings(selectedBuilding));
+        await JSRuntime.InvokeVoidAsync("console.log", selectedBuilding);
+        await JSRuntime.InvokeVoidAsync("console.log", AddEditRoomModel.BuildingId);
+    }
+}
+<EditForm Model="@AddEditRoomModel" OnValidSubmit="SaveAsync">
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <MudDialog>
+        <TitleContent>
+            @{
+                if (AddEditRoomModel.Id == 0)
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
+                        @_localizer["Add Room"]
+                    </MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Update" Class="mr-3 mb-n1" />
+                        @_localizer["Update Room"]
+                    </MudText>
+                }
+            }
+        </TitleContent>
+        <DialogContent>
+            <MudGrid>
+                
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" T="int" For="@(() => AddEditRoomModel.RoomNumber)" @bind-Value="AddEditRoomModel.RoomNumber" Label="@_localizer["Room Number"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+
+                </MudItem>
+
+            </MudGrid>
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudSelect Label="Select Base" @bind-Value="selectedBuilding">
+                        @if (_BuildingList != null)
+                        {
+                            @foreach (var item in _BuildingList)
+                            {
+                                <MudSelectItem Value="@item.BuildingName">@item.BuildingName</MudSelectItem>
+                            }
+                        }
+                    </MudSelect>
+
+                </MudItem>
+
+            </MudGrid>
+        </DialogContent>
+        <DialogActions>
+            <MudButton DisableElevation Variant="Variant.Filled" OnClick="Cancel">@_localizer["Cancel"]</MudButton>
+            @if (AddEditRoomModel.Id != 0)
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Secondary">@_localizer["Update"]</MudButton>
+            }
+            else
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Success">@_localizer["Save"]</MudButton>
+            }
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+<MudButton DisableElevation Variant="Variant.Filled" OnClick="LogToConsole">Log to Console</MudButton>

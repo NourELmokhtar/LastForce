@@ -1,0 +1,20 @@
+﻿<img src="@Src" style="@Style()" />
+
+@code {
+    [Parameter] public string Src { get; set; }
+    [Parameter] public decimal? Width { get; set; }
+    [Parameter] public decimal? Height { get; set; }
+    private string Style()
+    {
+        List<string> s = new List<string>();
+        if (Width.HasValue)
+        {
+            s.Add($"width:{Width.Value}px");
+        }
+        if (Height.HasValue)
+        {
+            s.Add($"height:{Height.Value}px");
+        }
+        return string.Join(';', s);
+    }
+}

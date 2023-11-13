@@ -1,0 +1,72 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<AddEditSectionModal> _localizer
+
+<EditForm Model="@AddEditBaseSectionModel" OnValidSubmit="SaveAsync">
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <MudDialog>
+        <TitleContent>
+            @{
+                if (AddEditBaseSectionModel.Id == 0)
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
+                        @_localizer["Add Section"]
+                    </MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Update" Class="mr-3 mb-n1" />
+                        @_localizer["Update Section"]
+                    </MudText>
+                }
+            }
+        </TitleContent>
+        <DialogContent>
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" T="string" For="@(() => AddEditBaseSectionModel.SectionName)" @bind-Value="AddEditBaseSectionModel.SectionName" Label="@_localizer["Section Name"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" For="@(() => AddEditBaseSectionModel.SectionCode)" @bind-Value="AddEditBaseSectionModel.SectionCode" Label="@_localizer["BasSectione Code"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudSelect T="int" ToStringFunc="@converter()" SelectedValuesChanged="OnForceChanged" @bind-Value="@ForceID" Label="Force" AnchorOrigin="Origin.BottomCenter">
+                        @if (_ForceList != null)
+                        {
+                            foreach (var force in _ForceList)
+                            {
+                                <MudSelectItem Value="@force.Id" />
+                            }
+                        }
+
+                    </MudSelect>
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudSelect T="int" Required="true" For="@(()=> AddEditBaseSectionModel.BaseId)" ToStringFunc="@Baseconverter()" @bind-Value="@AddEditBaseSectionModel.BaseId" Label="Base" AnchorOrigin="Origin.BottomCenter">
+                        @if (_BasesList != null)
+                        {
+                            foreach (var Base in _BasesList)
+                            {
+                                <MudSelectItem Value="@Base.Id" />
+                            }
+                        }
+
+                    </MudSelect>
+                </MudItem>
+            </MudGrid>
+        </DialogContent>
+        <DialogActions>
+            <MudButton DisableElevation Variant="Variant.Filled" OnClick="Cancel">@_localizer["Cancel"]</MudButton>
+            @if (AddEditBaseSectionModel.Id != 0)
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Secondary">@_localizer["Update"]</MudButton>
+            }
+            else
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Success">@_localizer["Save"]</MudButton>
+            }
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+
+

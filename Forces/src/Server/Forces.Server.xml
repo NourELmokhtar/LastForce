@@ -1,0 +1,1265 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Forces.Server</name>
+    </assembly>
+    <members>
+        <member name="T:Forces.Server.Controllers.BaseApiController`1">
+            <summary>
+            Abstract BaseApi Controller Class
+            </summary>
+        </member>
+        <member name="M:Forces.Server.Controllers.Communication.ChatsController.GetChatHistoryAsync(System.String)">
+            <summary>
+            Get user wise chat history
+            </summary>
+            <param name="contactId"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Communication.ChatsController.GetChatUsersAsync">
+            <summary>
+            get available users
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Communication.ChatsController.GetChatOUsersAsync">
+            <summary>
+            get available users
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Communication.ChatsController.GetAllChatsByUserAsync">
+            <summary>
+            get available users
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Communication.ChatsController.MarkMessageAsRead(System.String)">
+            <summary>
+            get available users
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Communication.ChatsController.MarkAllMessageAsRead">
+            <summary>
+            get available users
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Communication.ChatsController.MarkAllMessageAsSeen">
+            <summary>
+            get available users
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Communication.ChatsController.SaveMessageAsync(Forces.Application.Models.Chat.ChatHistory{Forces.Application.Interfaces.Chat.IChatUser})">
+            <summary>
+            Save Chat Message
+            </summary>
+            <param name="message"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.AccountController.UpdateProfile(Forces.Application.Requests.Identity.UpdateProfileRequest)">
+            <summary>
+            Update Profile
+            </summary>
+            <param name="model"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.AccountController.ChangePassword(Forces.Application.Requests.Identity.ChangePasswordRequest)">
+            <summary>
+            Change Password
+            </summary>
+            <param name="model"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.AccountController.GetProfilePictureAsync(System.String)">
+            <summary>
+            Get Profile picture by Id
+            </summary>
+            <param name="userId"></param>
+            <returns>Status 200 OK </returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.AccountController.UpdateProfilePictureAsync(Forces.Application.Requests.Identity.UpdateProfilePictureRequest)">
+            <summary>
+            Update Profile Picture
+            </summary>
+            <param name="request"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.TokenController.Get(Forces.Application.Requests.Identity.TokenRequest)">
+            <summary>
+            Get Token (Email, Password)
+            </summary>
+            <param name="model"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.TokenController.Refresh(Forces.Application.Requests.Identity.RefreshTokenRequest)">
+            <summary>
+            Refresh Token
+            </summary>
+            <param name="model"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.GetAll">
+            <summary>
+            Get User Details
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.GetVoteCodeHoldersAll(System.Int32)">
+            <summary>
+            Get Vote Code Users Details
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.GetById(System.String)">
+            <summary>
+            Get User By Id
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.GetRolesAsync(System.String)">
+            <summary>
+            Get User Roles By Id
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.UpdateRolesAsync(Forces.Application.Requests.Identity.UpdateUserRolesRequest)">
+            <summary>
+            Update Roles for User
+            </summary>
+            <param name="request"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.RegisterAsync(Forces.Application.Requests.Identity.RegisterRequest)">
+            <summary>
+            Register a User
+            </summary>
+            <param name="request"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.EditAsync(Forces.Application.Requests.Identity.EditUserRequest)">
+            <summary>
+            Edit a User With Edit User Permission
+            </summary>
+            <param name="request"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.ConfirmEmailAsync(System.String,System.String)">
+            <summary>
+            Confirm Email
+            </summary>
+            <param name="userId"></param>
+            <param name="code"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.ToggleUserStatusAsync(Forces.Application.Requests.Identity.ToggleUserStatusRequest)">
+            <summary>
+            Toggle User Status (Activate and Deactivate)
+            </summary>
+            <param name="request"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.ForgotPasswordAsync(Forces.Application.Requests.Identity.ForgotPasswordRequest)">
+            <summary>
+            Forgot Password
+            </summary>
+            <param name="request"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.ResetPasswordAsync(Forces.Application.Requests.Identity.ResetPasswordRequest)">
+            <summary>
+            Reset Password
+            </summary>
+            <param name="request"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.Export(System.String)">
+            <summary>
+            Export to Excel
+            </summary>
+            <param name="searchString"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.GetUserType">
+            <summary>
+            Return User Type
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.GetNotifications">
+            <summary>
+            Return Current User Notifications
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.MarkNotificationAsSeen(System.Int32)">
+            <summary>
+            Return Current User Notifications
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.MarkNotificationAsRead(System.Int32)">
+            <summary>
+            Return Current User Notifications
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.MarkAllNotificationAsSeen">
+            <summary>
+            Return Current User Notifications
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Identity.UserController.MarkAllNotificationAsRead">
+            <summary>
+            Return Current User Notifications
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.RoleClaimController.GetAll">
+            <summary>
+            Get All AppRole Claims(e.g. Product Create Permission)
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.RoleClaimController.GetAllByRoleId(System.String)">
+            <summary>
+            Get All AppRole Claims By Id
+            </summary>
+            <param name="roleId"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.RoleClaimController.Post(Forces.Application.Requests.Identity.RoleClaimRequest)">
+            <summary>
+            Add a AppRole Claim
+            </summary>
+            <param name="request"></param>
+            <returns>Status 200 OK </returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.RoleClaimController.Delete(System.Int32)">
+            <summary>
+            Delete a AppRole Claim
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.RoleController.GetAll">
+            <summary>
+            Get All Roles (basic, admin etc.)
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.RoleController.Post(Forces.Application.Requests.Identity.RoleRequest)">
+            <summary>
+            Add a AppRole
+            </summary>
+            <param name="request"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.RoleController.Delete(System.String)">
+            <summary>
+            Delete a AppRole
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.RoleController.GetPermissionsByRoleId(System.String)">
+            <summary>
+            Get Permissions By AppRole Id
+            </summary>
+            <param name="roleId"></param>
+            <returns>Status 200 Ok</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.RoleController.Update(Forces.Application.Requests.Identity.PermissionRequest)">
+            <summary>
+            Edit a AppRole Claim
+            </summary>
+            <param name="model"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.AuditsController.GetUserTrailsAsync">
+            <summary>
+            Get Current User Audit Trails
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.AuditsController.ExportExcel(System.String,System.Boolean,System.Boolean)">
+            <summary>
+            Search Audit Trails and Export to Excel
+            </summary>
+            <param name="searchString"></param>
+            <param name="searchInOldValues"></param>
+            <param name="searchInNewValues"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="T:Forces.Server.Controllers.Utilities.ExtendedAttributes.Base.ExtendedAttributesController`4">
+            <summary>
+            Abstract Extended Attributes Controller Class
+            </summary>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.ExtendedAttributes.Base.ExtendedAttributesController`4.GetAll">
+            <summary>
+            Get All Entity Extended Attributes
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.ExtendedAttributes.Base.ExtendedAttributesController`4.GetAllByEntityId(`1)">
+            <summary>
+            Get All Entity Extended Attributes by entity id
+            </summary>
+            <param name="entityId"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.ExtendedAttributes.Base.ExtendedAttributesController`4.GetById(`0)">
+            <summary>
+            Get Entity Extended Attribute By Id
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 Ok</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.ExtendedAttributes.Base.ExtendedAttributesController`4.Post(Forces.Application.Features.ExtendedAttributes.Commands.AddEdit.AddEditExtendedAttributeCommand{`0,`1,`2,`3})">
+            <summary>
+            Create/Update a Entity Extended Attribute
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.ExtendedAttributes.Base.ExtendedAttributesController`4.Delete(`0)">
+            <summary>
+            Delete a Entity Extended Attribute
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.ExtendedAttributes.Base.ExtendedAttributesController`4.Export(System.String,`1,System.Boolean,System.Boolean,System.String)">
+            <summary>
+            Search Entity Extended Attribute and Export to Excel
+            </summary>
+            <param name="searchString"></param>
+            <param name="entityId"></param>
+            <param name="includeEntity"></param>
+            <param name="onlyCurrentGroup"></param>
+            <param name="currentGroup"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.Misc.DocumentsController.GetAll(System.Int32,System.Int32,System.String)">
+            <summary>
+            Get All Documents
+            </summary>
+            <param name="pageNumber"></param>
+            <param name="pageSize"></param>
+            <param name="searchString"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.Misc.DocumentsController.GetById(System.Int32)">
+            <summary>
+            Get Document By Id
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 Ok</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.Misc.DocumentsController.Post(Forces.Application.Features.Documents.Commands.AddEdit.AddEditDocumentCommand)">
+            <summary>
+            Add/Edit Document
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.Misc.DocumentsController.Delete(System.Int32)">
+            <summary>
+            Delete a Document
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.Misc.DocumentTypesController.GetAll">
+            <summary>
+            Get All Document Types
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.Misc.DocumentTypesController.GetById(System.Int32)">
+            <summary>
+            Get Document Type By Id
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 Ok</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.Misc.DocumentTypesController.Post(Forces.Application.Features.DocumentTypes.Commands.AddEdit.AddEditDocumentTypeCommand)">
+            <summary>
+            Create/Update a Document Type
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.Misc.DocumentTypesController.Delete(System.Int32)">
+            <summary>
+            Delete a Document Type
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.Misc.DocumentTypesController.Export(System.String)">
+            <summary>
+            Search Document Types and Export to Excel
+            </summary>
+            <param name="searchString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.Utilities.PreferencesController.ChangeLanguageAsync(System.String)">
+            <summary>
+            Change Language Preference
+            </summary>
+            <param name="languageCode"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.AirCraft.AirCraftController.Post(Forces.Application.Features.AirCraft.Commands.AddEdit.AddEditAirCraftCommand)">
+            <summary>
+            Add/Edit a AirCraft
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Forces.Server.Controllers.v1.AirCraft.AirCraftController.Delete(System.Int32)" -->
+        <member name="M:Forces.Server.Controllers.v1.AirCraft.AirCraftController.GetAll">
+            <summary>
+            Get All AirCraft
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.AirCraft.AirCraftController.GetAll(System.Int32)">
+            <summary>
+            Get All AirCraft By Kind Id
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.AirCraft.AirCraftController.Get(System.Int32)">
+            <summary>
+            Get All AirCraft By Id
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.AirKind.AirKindController.Post(Forces.Application.Features.AirKind.Commands.AddEdit.AddEditAirKindCommand)">
+            <summary>
+            Create/Update a AirKnid With Permission Create AirKnids
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.AirKind.AirKindController.GetAll">
+            <summary>
+            Get All AirKnid With Permission View AirKnids
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.AirKind.AirKindController.GetAllAirKind">
+            <summary>
+            Get All AirKind Without Permission AirKind At All
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.AirKind.AirKindController.GetById(System.Int32)">
+            <summary>
+            Get a AirKind By Id Without Any Permission
+            </summary>
+            <param name="Id"></param>
+            <returns>Status 200 Ok</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.AirKind.AirKindController.Delete(System.Int32)">
+            <summary>
+            Delete a AirKind With Permission Delete AirKind
+            </summary>
+            <param name="Id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.AirKind.AirKindController.GetByAirTypeId(System.Int32)">
+            <summary>
+            Get a AirKind By AirType Id Without Any Permission 
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 Ok</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.AirType.AirTypeController.Post(Forces.Application.Features.AirType.Commands.AddEdit.AddEditAirTypeCommand)">
+            <summary>
+            Create/Update a AirType With Permission Create AirType
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.AirType.AirTypeController.GetAll">
+            <summary>
+            Get All AirType With Permission View AirType
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.AirType.AirTypeController.GetAllAirTypeQuery">
+            <summary>
+            Get All AirType Without Permission AirType At All
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.AirType.AirTypeController.GetById(System.Int32)">
+            <summary>
+            Get a AirType By Id Without Any Permission
+            </summary>
+            <param name="Id"></param>
+            <returns>Status 200 Ok</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.AirType.AirTypeController.Delete(System.Int32)">
+            <summary>
+            Delete a AirType With Permission Delete AirType
+            </summary>
+            <param name="Id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.BasesController.Post(Forces.Application.Features.Bases.Commands.AddEdit.AddEditBaseCommand)">
+            <summary>
+            Create/Update a Base With Permission Create Bases
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.BasesController.GetAll">
+            <summary>
+            Get All Bases With Permission View Bases
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.BasesController.GetAllBases">
+            <summary>
+            Get All Bases Without Permission Bases At All
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.BasesController.GetById(System.Int32)">
+            <summary>
+            Get a Base By Id Without Any Permission
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 Ok</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.BasesController.Delete(System.Int32)">
+            <summary>
+            Delete a Base With Permission Delete Bases
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.BasesController.GetByForceId(System.Int32)">
+            <summary>
+            Get a Base By Force Id Without Any Permission 
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 Ok</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.BaseSectionsController.Post(Forces.Application.Features.BaseSections.Commands.AddEdit.AddEditBaseSectionCommand)">
+            <summary>
+            Create/Update a Base Section With Permission Create Bases Section 
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.BaseSectionsController.GetAll">
+            <summary>
+            Get All Bases Section With Permission View Bases Section
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.BaseSectionsController.GetAllSections">
+            <summary>
+            Get All Bases Without Permission Bases Section At All
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.BaseSectionsController.GetById(System.Int32)">
+            <summary>
+            Get a Base Section By Id With Permission View Bases Section
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 Ok</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.BaseSectionsController.Delete(System.Int32)">
+            <summary>
+            Delete a Base Section With Permission Delete Bases
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.BaseSectionsController.GetByBaseId(System.Int32)">
+            <summary>
+            Get a Sections By Base Id Without Any Permission  
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 Ok</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.DepoController.Post(Forces.Application.Features.DepoDepartment.Commands.AddEdit.AddEditDepoCommand)">
+            <summary>
+            Create/Update a Depo Department With Permission Create Depo Department
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.DepoController.GetAll">
+            <summary>
+            Get All Depo Departments With Permission View Depo Department
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.DepoController.GetAllForces">
+            <summary>
+            Get All Depo Department Without Permission Depo Department At All
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.DepoController.GetAllDepos(System.Int32)">
+            <summary>
+            Get All Depo Departments By ForceID Without Permission Depo Department At All
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.DepoController.Delete(System.Int32)">
+            <summary>
+            Delete a Depo Department With Permission Delete Depo Department
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.ForcesController.Post(Forces.Application.Features.Forces.Commands.AddEdit.AddEditForceCommand)">
+            <summary>
+            Create/Update a Force With Permission Create Forces
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.ForcesController.GetAll">
+            <summary>
+            Get All Forces With Permission View Forces
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.ForcesController.GetAllForces">
+            <summary>
+            Get All Forces Without Permission Forces At All
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.ForcesController.GetById(System.Int32)">
+            <summary>
+            Get a Force By Id With Permission View Forces
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 Ok</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.ForcesController.Delete(System.Int32)">
+            <summary>
+            Delete a Force With Permission Delete Forces
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.HQController.Post(Forces.Application.Features.HQDepartment.Commands.AddEdit.AddEditHQCommand)">
+            <summary>
+            Create/Update a HQ Department With Permission Create HQ Department
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.HQController.GetAll">
+            <summary>
+            Get All HQ Departments With Permission View HQ Department
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.HQController.GetAllForces">
+            <summary>
+            Get All HQ Department Without Permission HQ Department At All
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.HQController.GetAllHQs(System.Int32)">
+            <summary>
+            Get All HQ Departments By ForceID Without Permission HQ Department At All
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BasicInformations.HQController.Delete(System.Int32)">
+            <summary>
+            Delete a HQ Department With Permission Delete HQ Department
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.BinRack.BinRackController.Post(Forces.Application.Features.BinRack.Commands.AddEdit.AddEditBinRackCommand)">
+            <summary>
+            Add/Edit a Bin
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Forces.Server.Controllers.v1.BinRack.BinRackController.Delete(System.Int32)" -->
+        <member name="M:Forces.Server.Controllers.v1.BinRack.BinRackController.GetAll">
+            <summary>
+            Get All BinRack
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Building.BuildingController.Post(Forces.Application.Features.Building.Commands.AddEdit.AddEditBuildingCommand)">
+            <summary>
+            Add/Edit a Building
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Forces.Server.Controllers.v1.Building.BuildingController.Delete(System.Int32)" -->
+        <member name="M:Forces.Server.Controllers.v1.Building.BuildingController.GetBy(Forces.Application.Features.Building.Queries.GetBySpecifics.GetBuildingsByQuery)">
+            <summary>
+            Get Buildings By Specifics
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Building.BuildingController.GetAll">
+            <summary>
+            Get All Buildings
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Catalog.BrandsController.GetAll">
+            <summary>
+            Get All Brands
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Catalog.BrandsController.GetById(System.Int32)">
+            <summary>
+            Get a Brand By Id
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 Ok</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Catalog.BrandsController.Post(Forces.Application.Features.BinRack.Commands.AddEdit.AddEditBinRackCommand)">
+            <summary>
+            Create/Update a Brand
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Catalog.BrandsController.Delete(System.Int32)">
+            <summary>
+            Delete a Brand
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Catalog.BrandsController.Export(System.String)">
+            <summary>
+            Search Brands and Export to Excel
+            </summary>
+            <param name="searchString"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Catalog.ProductsController.GetAll(System.Int32,System.Int32,System.String,System.String)">
+            <summary>
+            Get All Products
+            </summary>
+            <param name="pageNumber"></param>
+            <param name="pageSize"></param>
+            <param name="searchString"></param>
+            <param name="orderBy"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Catalog.ProductsController.GetProductImageAsync(System.Int32)">
+            <summary>
+            Get a Product Image by Id
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Catalog.ProductsController.Post(Forces.Application.Features.Products.Commands.AddEdit.AddEditProductCommand)">
+            <summary>
+            Add/Edit a Product
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Catalog.ProductsController.Delete(System.Int32)">
+            <summary>
+            Delete a Product
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK response</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Catalog.ProductsController.Export(System.String)">
+            <summary>
+            Search Products and Export to Excel
+            </summary>
+            <param name="searchString"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Color.ColorsController.Post(Forces.Application.Features.Color.Commands.AddEdit.AddEditColorCommand)">
+            <summary>
+            Add/Edit a Color
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Forces.Server.Controllers.v1.Color.ColorsController.Delete(System.Int32)" -->
+        <member name="M:Forces.Server.Controllers.v1.Color.ColorsController.GetAll">
+            <summary>
+            Get All Colors
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.DashboardController.GetDataAsync">
+            <summary>
+            Get Dashboard Data
+            </summary>
+            <returns>Status 200 OK </returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.House.HouseController.Post(Forces.Application.Features.House.Commands.AddEdit.AddEditHouseCommand)">
+            <summary>
+            Add/Edit a House
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Forces.Server.Controllers.v1.House.HouseController.Delete(System.Int32)" -->
+        <member name="M:Forces.Server.Controllers.v1.House.HouseController.GetBy(Forces.Application.Features.House.Queries.GetBySpecifics.GetHouseByQuery)">
+            <summary>
+            Get Houses By Specifics
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.House.HouseController.GetAll">
+            <summary>
+            Get All Houses
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.InventoryItem.InventoryItemController.Post(Forces.Application.Features.InventoryInventoryItem.Commands.AddEdit.AddEditInventoryItemCommand)">
+            <summary>
+            Add/Edit a InventoryItem
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Forces.Server.Controllers.v1.InventoryItem.InventoryItemController.Delete(System.Int32)" -->
+        <member name="M:Forces.Server.Controllers.v1.InventoryItem.InventoryItemController.GetBy(Forces.Application.Features.InventoryItem.Queries.GetBySpecifics.GetInventoryItemByQuery)">
+            <summary>
+            Get Inventory Items By Specifics
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.InventoryItem.InventoryItemController.GetAll">
+            <summary>
+            Get All Inventories
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Inventory.InventoryController.Post(Forces.Application.Features.Inventory.Commands.AddEdit.AddEditInventoryCommand)">
+            <summary>
+            Add/Edit a Inventory
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Forces.Server.Controllers.v1.Inventory.InventoryController.Delete(System.Int32)" -->
+        <member name="M:Forces.Server.Controllers.v1.Inventory.InventoryController.GetBy(Forces.Application.Features.Inventory.Queries.GetBySpecifics.GetInventoryByQuery)">
+            <summary>
+            Get Inventories By Specifics
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Inventory.InventoryController.GetAll">
+            <summary>
+            Get All Inventories
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Items.ItemsController.Post(Forces.Application.Features.Items.Commands.AddEdit.AddEditItemCommand)">
+            <summary>
+            Create/Update a Item With Permission Create Items
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Items.ItemsController.GetAll">
+            <summary>
+            Get All Items Without Any Permission 
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Items.ItemsController.GetByConditions(Forces.Application.Features.Items.Queries.GetBySpecifics.GetAllItemsBy)">
+            <summary>
+            Get a Items By Id ,Name , ArName , Code , NSN Or Measure Unit Without Any Permission
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 Ok</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Items.ItemsController.Delete(System.Int32)">
+            <summary>
+            Delete an Item With Permission Delete Items
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Items.MeasureUnitsController.Post(Forces.Application.Features.MeasureUnits.Commands.AddEdit.AddEditMeasureUnitsCommand)">
+            <summary>
+            Create/Update a Measure unit With Permission Create MeasureUnit
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Items.MeasureUnitsController.GetAll">
+            <summary>
+            Get All Measure Units Without Any Permission 
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Items.MeasureUnitsController.Delete(System.Int32)">
+            <summary>
+            Delete a Measure Unit With Permission Delete Measure Units
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Office.OfficeController.Post(Forces.Application.Features.Office.Commands.AddEdit.AddEditOfficeCommand)">
+            <summary>
+            Add/Edit a Office
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Forces.Server.Controllers.v1.Office.OfficeController.Delete(System.Int32)" -->
+        <member name="M:Forces.Server.Controllers.v1.Office.OfficeController.GetBy(Forces.Application.Features.Office.Queries.GetAllBySpecifics.GetOfficeByQuery)">
+            <summary>
+            Get Offices By Specifics
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Office.OfficeController.GetAll">
+            <summary>
+            Get All Offices
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.PersonalItems.PersonalItemsController.Post(Forces.Application.Features.PersonalItems.Commands.AddEdit.AddEditPersonalItemCommand)">
+            <summary>
+            Create/Update a Personal Item With Permission Create Personal Service Items
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.PersonalItems.PersonalItemsController.GetAll">
+            <summary>
+            Get All Personal Items Without Any Permission 
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.PersonalItems.PersonalItemsController.GetByConditions(Forces.Application.Features.PersonalItems.Queries.GetByFillter.GetPersonalItemsByFillter)">
+            <summary>
+            Get All Personal Items By Id ,Name , ArName , Code , NSN  Without Any Permission
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 Ok</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.PersonalItems.PersonalItemsController.Delete(System.Int32)">
+            <summary>
+            Delete a Personal Item With Permission Delete Items
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.PersonalItems.PersonalItemsController.GetById(System.Int32)">
+            <summary>
+            Get a Personal Item By Id Without Any Permission 
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.PersonalItems.PersonalItemsOperationsController.Post(Forces.Application.Features.PersonalItemOperations.Commands.AddEdit.AddEditPersonalItemOperationCommand)">
+            <summary>
+            Create/Update a Personal Item Operation With Permission Create Personal Items Operation
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.PersonalItems.PersonalItemsOperationsController.GetAll(Forces.Application.Features.PersonalItemOperations.Queries.GetByFillter.GetPersonalItemsOperationsByFillter)">
+            <summary>
+            Get All Personal Items Operations With Permission View PersonalItem Operation 
+            </summary>
+            <returns>Status 200 OK</returns>
+            
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.PersonalItems.PersonalItemsOperationsController.GetbyCondition(Forces.Application.Features.PersonalItemOperations.Queries.GetByFillter.GetPersonalItemsOperationsByFillter)">
+            <summary>
+            Get All Personal Items Operations With Permission Search PersonalItem Operation 
+            </summary>
+            <returns>Status 200 OK</returns>
+            
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.PersonalItems.PersonalItemsOperationsController.Check(Forces.Application.Features.PersonalItemOperations.Queries.Eligibility.ItemEligibilityQuery)">
+            <summary>
+            Check User Aligbility For An Item Without Any Permissions
+            </summary>
+            <returns>Status 200 OK</returns>
+            
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.RackStore.RackStoreController.Post(Forces.Application.Features.RackStore.Commands.AddEdit.AddEditRackStoreCommand)">
+            <summary>
+            Add/Edit a Rack
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Forces.Server.Controllers.v1.RackStore.RackStoreController.Delete(System.Int32)" -->
+        <member name="M:Forces.Server.Controllers.v1.RackStore.RackStoreController.GetAll">
+            <summary>
+            Get All RackStore
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Room.RoomController.Post(Forces.Application.Features.Room.Commands.AddEdit.AddEditRoomCommand)">
+            <summary>
+            Add/Edit a Room
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Forces.Server.Controllers.v1.Room.RoomController.Delete(System.Int32)" -->
+        <member name="M:Forces.Server.Controllers.v1.Room.RoomController.GetBy(Forces.Application.Features.Room.Queries.GetBySpecifics.GetRoomByQuery)">
+            <summary>
+            Get Rooms By Specifics
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Room.RoomController.GetAll">
+            <summary>
+            Get All Rooms
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.SectionStore.SectionStoreController.Post(Forces.Application.Features.SectionStore.Commands.AddEdit.AddEditSectionStoreCommand)">
+            <summary>
+            Add/Edit a Store
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Forces.Server.Controllers.v1.SectionStore.SectionStoreController.Delete(System.Int32)" -->
+        <member name="M:Forces.Server.Controllers.v1.SectionStore.SectionStoreController.GetAll">
+            <summary>
+            Get All Store
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Tailer.TailerController.Post(Forces.Application.Features.Tailers.Commands.AddEdit.AddEditTailerCommand)">
+            <summary>
+            Create/Update a Tailer With Permission Create Tailers
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Tailer.TailerController.GetAll">
+            <summary>
+            Get All Tailers Without Any Permission  
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Tailer.TailerController.Delete(System.Int32)">
+            <summary>
+            Delete a Tailer With Permission Delete Tailer
+            </summary>
+            <param name="id"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.VehicleRequests.VehicleRequestController.AddEditRequest(Forces.Application.Features.VehicleRequest.AddEditRequest.AddEditVehicleRequest)">
+            <summary>
+            Add/Edit a Vehicle Request
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Vehicle.VehicleController.Post(Forces.Application.Features.Vehicle.Commands.AddEdit.AddEditVehicleCommand)">
+            <summary>
+            Add/Edit a Vehicle
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <!-- Badly formed XML comment ignored for member "M:Forces.Server.Controllers.v1.Vehicle.VehicleController.Delete(System.Int32)" -->
+        <member name="M:Forces.Server.Controllers.v1.Vehicle.VehicleController.GetAll">
+            <summary>
+            Get All Vehicles
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.Vehicle.VehicleController.GetDashboard">
+            <summary>
+            Get All Vehicles Dashboard Data
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.VoteCode.VoteCodesController.Post(Forces.Application.Requests.VoteCodes.AddEditVoteCodeRequest)">
+            <summary>
+            Create/Update a Vote Code With Permission Create VoteCodes
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.VoteCode.VoteCodesController.GetLogsSpec(Forces.Application.Requests.VoteCodes.VoteCodeLogSpecificationRequest)">
+            <summary>
+            Search For Vote Code Logs By Specifications
+            </summary>
+            <param name="command"></param>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.VoteCode.VoteCodesController.GetAll">
+            <summary>
+            Get All Vote Codes Without Any Permission 
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.VoteCode.VoteCodesController.GetAllByUserId(System.String)">
+            <summary>
+            Get All Vote Codes By UserId Without Any Permission 
+            </summary>
+            <param name="userID"/>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.VoteCode.VoteCodesController.GetvCodeLogs(System.Int32)">
+            <summary>
+            Get All Vote Code Logs By Vote Code's Id Without Any Permission 
+            </summary>
+            <param name="Id"/>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.VoteCode.VoteCodesController.GetLogDetails(System.Int32)">
+            <summary>
+            Get a Vote Code Log By Vote Code Log's Id Without Any Permission 
+            </summary>
+            <param name="Id"/>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.VoteCode.VoteCodesController.AddEditTransaction(Forces.Application.Requests.VoteCodes.AddEditVcodeTransactionRequest)">
+            <summary>
+            Add Or Edit Vote Code Transaction Log Without Any Permission 
+            </summary>
+            <param name="command"/>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.VoteCode.VoteCodesController.GetVoteCodeCredit(System.Int32)">
+            <summary>
+            Get a Vote Code Cridet By Vote Code Id Without Any Permission 
+            </summary>
+            <param name="Id"/>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.VoteCode.VoteCodesController.GetAllByCurrentUser">
+            <summary>
+            Get All Vote Codes By UserId Without Any Permission 
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.VoteCode.VoteCodesController.GetById(System.Int32)">
+            <summary>
+            Get All Vote Codes By UserId Without Any Permission 
+            </summary>
+            <returns>Status 200 OK</returns>
+        </member>
+        <member name="M:Forces.Server.Controllers.v1.VoteCode.VoteCodesController.Export(System.Collections.Generic.List{Forces.Application.Responses.VoteCodes.VoteCodeLogResponse})">
+            <summary>
+            Export Transaction Logs to Excel
+            </summary>
+            <param name="Data"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Forces.Server.Report1.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Forces.Server.Report1.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Forces.Server.Report1.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:Forces.Server.Reports.Rpt_MPRRequest.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Forces.Server.Reports.Rpt_MPRRequest.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Forces.Server.Reports.Rpt_MPRRequest.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:Forces.Server.Reports.rpt_Requests.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Forces.Server.Reports.rpt_Requests.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Forces.Server.Reports.rpt_Requests.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:Forces.Server.Reports.TestRPT.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Forces.Server.Reports.TestRPT.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Forces.Server.Reports.TestRPT.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+        <member name="F:Forces.Server.Requests.components">
+            <summary>
+            Required designer variable.
+            </summary>
+        </member>
+        <member name="M:Forces.Server.Requests.Dispose(System.Boolean)">
+            <summary> 
+            Clean up any resources being used.
+            </summary>
+            <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
+        </member>
+        <member name="M:Forces.Server.Requests.InitializeComponent">
+            <summary>
+            Required method for Designer support - do not modify
+            the contents of this method with the code editor.
+            </summary>
+        </member>
+    </members>
+</doc>

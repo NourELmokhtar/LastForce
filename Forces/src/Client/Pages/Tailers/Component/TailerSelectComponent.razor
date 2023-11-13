@@ -1,0 +1,61 @@
+﻿@using System.Linq.Expressions
+@using Forces.Application.Features.Tailers.Queries
+<MudSelect T="int?" Required="@Required" For="@For" ToStringFunc="@Stringconverter()" @bind-Value="@BindingValue" Label="@Lable" AnchorOrigin="Origin.BottomCenter">
+    @if (_List != null)
+    {
+        <MudSelectItem T="int?" Value="null">NO TAILER</MudSelectItem>
+        foreach (var item in _List)
+        {
+            <MudSelectItem T="int?" Value="@item.Id" />
+        }
+
+    }
+
+</MudSelect>
+
+@code {
+    [Inject] private ITailersManager tailersManager { get; set; }
+    [Parameter] public Expression<Func<int?>> For { get; set; }
+    [Parameter] public bool Required { get; set; } = false;
+    [Parameter] public string Lable { get; set; } = "Tailer";
+    private List<TailerDto> _List = new();
+    private int? _value;
+    [Parameter]
+    public int? BindingValue
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+            _value = value;
+            BindingValueChanged.InvokeAsync(value);
+        }
+    }
+    [Parameter]
+    public EventCallback<int?> BindingValueChanged { get; set; }
+    private async Task GetData()
+    {
+        var response = await tailersManager.GetAllAsync();
+        if (response.Succeeded)
+        {
+            _List = response.Data.ToList();
+
+        }
+        else
+        {
+            foreach (var message in response.Messages)
+            {
+                _snackBar.Add(message, Severity.Error);
+            }
+        }
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        await GetData();
+    }
+    Func<int?, string> Stringconverter()
+    {
+
+        return p => p.HasValue ? $"{_List.FirstOrDefault(x => x.Id == p).Name} | {_List.FirstOrDefault(x => x.Id == p).TailerCode}" : "NO TAILER";
+    }
+}

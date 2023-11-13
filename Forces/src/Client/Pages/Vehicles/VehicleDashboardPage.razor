@@ -1,0 +1,177 @@
+﻿@page "/Vehicle/Dashboard"
+@inject Microsoft.Extensions.Localization.IStringLocalizer<VehicleDashboardPage> _localizer
+@attribute [Authorize(Policy = Permissions.Dashboards.View)]
+@using ChartJs.Blazor.Common;
+@using ChartJs.Blazor.PieChart;
+@using ChartJs.Blazor;
+@using System.Drawing
+@using ChartJs.Blazor.Util;
+@using Forces.Application.Features.Vehicle.Queries.Dashboard
+@using Forces.Client.Infrastructure.Managers.Vehicles
+@using System.Collections.Generic
+@using static Forces.Client.Shared.SampleUtils;
+@inject IVehicleManager _manager
+<HeroTitle Title="@_localizer["Dashboard"]" Description="@_localizer["Realtime Updates & Insights"]" />
+@if (!_loaded)
+{
+    <MudProgressCircular Color="MudBlazor.Color.Primary" Indeterminate="true" />
+}
+else
+{
+    <MudGrid>
+        <VehicleDBItem PCount="@Data.AllVehicleCountP.ToString()" SCount="@Data.AllVehicleCountS.ToString()" Data="@Data.AllVehicleCount.ToString()" Title="@_localizer["Vehicles"]" Icon="@Icons.Material.Filled.DirectionsCarFilled"></VehicleDBItem>
+        <VehicleDBItem IconColor="@IconColor(0)" PCount="@Data.AvilableCountP.ToString()" SCount="@Data.AvilableCountS.ToString()" Data="@Data.AvilableCount.ToString()" Title="@_localizer["Avilable Vehicles"]" Icon="@Icons.Material.Filled.EventAvailable"></VehicleDBItem>
+        <VehicleDBItem IconColor="@IconColor(1)" PCount="@Data.NotAvilableCountP.ToString()" SCount="@Data.NotAvilableCountS.ToString()" Data="@Data.NotAvilableCount.ToString()" Title="@_localizer["Not Avilable Vehicles"]" Icon="@Icons.Material.Filled.NotInterested"></VehicleDBItem>
+        <VehicleDBItem IconColor="@IconColor(2)" PCount="@Data.OnServiceP.ToString()" SCount="@Data.OnServiceS.ToString()" Data="@Data.OnServiceCount.ToString()" Title="@_localizer["On Service Vehicles"]" Icon="@Icons.Material.Filled.DoNotDisturbOn"></VehicleDBItem>
+        <MudItem xs="12" sm="12" md="6">
+            <MudPaper Elevation="25" Class="d-flex flex-column pt-6 pb-4" Style="justify-content: center;">
+
+             @*   <div style="padding-top:20px;padding-left:20px">
+                    <HeroTitle Title="@_localizer["Vehicles Avilablity"]" />
+                </div>*@
+                @*<MudChart LegendPosition="Position.Left" ChartType="ChartType.Donut" InputData="@chartData" @bind-SelectedIndex="Index" InputLabels="@labels" Width="300px" Height="300px" />*@
+                <div class="d-flex flex-column" style=" width:100%;justify-content: center">
+                <Chart Config="_configv" @ref="_chartv"></Chart>
+
+               </div>
+            </MudPaper>
+        </MudItem>
+        <MudItem xs="12" sm="12" md="6">
+            <MudPaper Elevation="25" Class="d-flex flex-column pt-6 pb-4" Style="justify-content: center;">
+            @*    <div style="padding-top:20px;padding-left:20px">
+                    <HeroTitle Title="@_localizer["Vehicles Fule Type"]" />
+                </div>*@
+                @*<MudChart LegendPosition="Position.Left" ChartType="ChartType.Donut" InputData="@FulechartData" @bind-SelectedIndex="Index" InputLabels="@Fulelabels" Width="300px" Height="300px" />*@
+            <div class="d-flex flex-column" style=" width:100%;justify-content: center">
+                    <Chart Config="_configf" @ref="_chartf"></Chart>
+            </div>
+            </MudPaper>
+        </MudItem>
+        <VehicleDBItem Data="@Data.TrafficViolations.ToString()" Title="@_localizer["Traffic Violations"]" Icon="@Icons.Material.Filled.Traffic"></VehicleDBItem>
+
+    </MudGrid>
+    <MudSpacer />
+    <div style="padding-top:30px">
+        <HeroTitle Title="@_localizer["Requests Dashboard"]" Description="@_localizer["Vehicles Requests Summry"]" />
+    </div>
+    <MudGrid>
+        <VehicleDBItem Data="@Data.AllRequestsCount.ToString()" PCount="@Data.AllRequestsCountP.ToString()" SCount="@Data.AllRequestsCountS.ToString()" Title="@_localizer["Requests"]" Icon="@Icons.Material.Filled.DirectionsCarFilled"></VehicleDBItem>
+        <VehicleDBItem Data="@Data.CompletedRequests.ToString()" Title="@_localizer["Complete"]" Icon="@Icons.Material.Filled.IncompleteCircle"></VehicleDBItem>
+        <VehicleDBItem Data="@Data.PendingRequests.ToString()" Title="@_localizer["Pending"]" Icon="@Icons.Material.Filled.Pending"></VehicleDBItem>
+        <VehicleDBItem Data="@Data.RejectedRequests.ToString()" Title="@_localizer["Rejected"]" Icon="@Icons.Material.Filled.Cancel"></VehicleDBItem>
+
+    </MudGrid>
+}
+
+
+
+@code {
+    private int Index = -1;
+    private int[] chartData;
+
+    public VehicleDashboardResponse Data { get; set; } = new();
+    string[] labels = {  "Avilable Vehicles", "Not Avilable Vehicles", "On Service Avilable Vehicles" };
+    string[] Fulelabels = { "Petrol", "Disel" };
+    private int[] FulechartData;
+    private bool _loaded;
+    private PieConfig _configv;
+    private Chart _chartv;
+
+    private PieConfig _configf;
+    private Chart _chartf;
+    protected override async Task OnInitializedAsync()
+    {
+        await GetData();
+
+    }
+    private string IconColor(int index)
+    {
+       return ChartColors.All.Take(chartData.Count()).Select(ColorUtil.FromDrawingColor).ToArray()[index];
+    }
+    private void DrawCharts()
+    {
+        DrawVChart();
+        DrawFChart();
+    }
+    private void DrawFChart()
+    {
+        _configf = new PieConfig
+            {
+                Options = new PieOptions
+                {
+                    Responsive = false,
+                    Title = new OptionsTitle
+                    {
+                        Display = true,
+                        Text = "Vehicles Fule Type"
+                    },
+                    Legend = new Legend()
+                    {
+                        Display = true,
+                        Position = ChartJs.Blazor.Common.Enums.Position.Right,
+
+                    },
+                    Tooltips = new Tooltips()
+
+                },
+            };
+        PieDataset<int> dataset = new PieDataset<int>(FulechartData.ToList())
+            {
+                BackgroundColor = ChartColors.All.Take(FulechartData.Count()).Select(ColorUtil.FromDrawingColor).ToArray()
+
+            };
+        _configf.Data.Datasets.Add(dataset);
+        _configf.Data.Labels.AddRange(Fulelabels);
+    }
+    private void DrawVChart()
+    {
+        _configv = new PieConfig
+            { 
+                Options = new PieOptions
+                {
+                   Responsive= false,
+                    Title = new OptionsTitle
+                    {
+                        Display = true,
+                        Text = "Vehicles Avilablity"
+                    },  
+                    Legend = new Legend()
+                    {
+                        Display = true,
+                        Position = ChartJs.Blazor.Common.Enums.Position.Left,
+
+                    },
+                    Tooltips = new Tooltips()
+                    
+                },
+            };
+        PieDataset<int> dataset = new PieDataset<int>(chartData.ToList())
+        {
+                BackgroundColor = ChartColors.All.Take(chartData.Count()).Select(ColorUtil.FromDrawingColor).ToArray()
+
+        };
+        _configv.Data.Datasets.Add(dataset);
+        _configv.Data.Labels.AddRange(labels);
+         
+    }
+    private async Task GetData()
+    {
+        var Response = await _manager.GetDashboardDataAsync();
+        if (Response.Succeeded)
+        {
+            Data = Response.Data;
+        }
+        else
+        {
+            foreach (var msg in Response.Messages)
+            {
+                _snackBar.Add(msg, Severity.Error);
+            }
+        }
+        chartData = new int[] {  Data.AvilableCount, Data.NotAvilableCount, Data.OnServiceCount };
+        FulechartData = new int[] { Data.PetrolCount, Data.DiselCount };
+        _loaded = true;
+        DrawCharts();
+    }
+
+}

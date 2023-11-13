@@ -1,0 +1,122 @@
+﻿@using Forces.Application.Enums
+@inject Microsoft.Extensions.Localization.IStringLocalizer<AddEditVehicleModal> _localizer
+@using Forces.Application.Extensions;
+@using Forces.Application.Features.Color.Queries.GetAll
+
+<EditForm Model="@Model" OnValidSubmit="SaveAsync">
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <MudDialog>
+        <TitleContent>
+            @{
+                if (Model.Id == 0)
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
+                        @_localizer["Add Vehicle"]
+                    </MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Update" Class="mr-3 mb-n1" />
+                        @_localizer["Update Vehicle"]
+                    </MudText>
+                }
+            }
+        </TitleContent>
+        <DialogContent>
+            <MudContainer Style="overflow-y:auto">
+                <MudGrid>
+                    <MudItem xs="12" md="6">
+                        <MudTextField Required="true" Immediate="true" T="string" For="@(() => Model.VehicleNumber)" @bind-Value="Model.VehicleNumber" Label="@_localizer["Vehicle Number"]" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudTextField Required="true" Immediate="true" T="string" For="@(() => Model.VehicleName)" @bind-Value="Model.VehicleName" Label="@_localizer["Vehicle Name"]" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                            <MudSelect Adornment="Adornment.End" AdornmentIcon="@Icons.Material.Filled.Add" OnAdornmentClick="InvokeColorModal" T="int" For="@(()=> Model.ColorID)" ToStringFunc="@converter" @bind-Value="Model.ColorID" Label=@_localizer["Color"]>
+                            @foreach (GetAllColorResponse item in ColorList)
+                            {
+                                <MudSelectItem T="int" Value="@item.Id">@item.ColorName</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudTextField Required="true" Immediate="true" T="string" For="@(() => Model.Year)" @bind-Value="Model.Year" Label="@_localizer["Year"]" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudTextField Required="true" Immediate="true" T="string" For="@(() => Model.MadeIn)" @bind-Value="Model.MadeIn" Label="@_localizer["Made In"]" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudSelect T="BattryType" For="@(()=> Model.BattryType)" @bind-Value="Model.BattryType" Label=@_localizer["Battry Type"]>
+                            @foreach (BattryType item in Enum.GetValues(typeof(BattryType)))
+                            {
+                                <MudSelectItem T="BattryType" Value="@item">@item.ToString()</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudTextField Required="true" Immediate="true" T="string" For="@(() => Model.EngineNo)" @bind-Value="Model.EngineNo" Label="@_localizer["Engine No"]" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                            <MudDatePicker Required="true" For="@(() => Model.DateOfEnter)" Label="Date Of Enter" @bind-Date="Model.DateOfEnter"/>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                    <MudDatePicker Required="true" For="@(() => Model.EndOfServiceDate)" Label="End Of Service Date" @bind-Date="Model.EndOfServiceDate"/>
+                        </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudTextField Required="true" Immediate="true" T="int" For="@(() => Model.WheelsCount)" @bind-Value="Model.WheelsCount" Label="@_localizer["Wheels Count"]" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudTextField Required="true" Immediate="true" T="string" For="@(() => Model.WheelsSize)" @bind-Value="Model.WheelsSize" Label="@_localizer["Wheels Size"]" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudSelect T="FuleType" For="@(()=> Model.FuleType)" @bind-Value="Model.FuleType" Label=@_localizer["Fule Type"]>
+                            @foreach (FuleType item in Enum.GetValues(typeof(FuleType)))
+                            {
+                                <MudSelectItem T="FuleType" Value="@item">@item.ToString()</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudTextField Immediate="true" T="string" For="@(() => Model.AdditionalNumber)" @bind-Value="Model.AdditionalNumber" Label="@_localizer["Additional Number"]" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudTextField Required="true" Immediate="true" T="string" For="@(() => Model.WheelsYear)" @bind-Value="Model.WheelsYear" Label="@_localizer["Wheels Year"]" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudTextField Immediate="true" T="string" For="@(() => Model.VIN)" @bind-Value="Model.VIN" Label="@_localizer["VIN"]" />
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudSelect T="VehicleState" @bind-Value="Model.State" Label="State">
+                            @foreach (VehicleState item in Enum.GetValues(typeof(VehicleState)))
+                            {
+                                <MudSelectItem T="VehicleState" Value="@item">@item.ToDescriptionString()</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+                    <MudItem xs="12" md="6">
+                        <MudSelect T="VehicleCarryType" @bind-Value="Model.VehicleCarryType" Label="Payload type">
+                            @foreach (VehicleCarryType item in Enum.GetValues(typeof(VehicleCarryType)))
+                            {
+                                <MudSelectItem T="VehicleCarryType" Value="@item">@item.ToDescriptionString()</MudSelectItem>
+                            }
+                        </MudSelect>
+                    </MudItem>
+
+                </MudGrid>
+            </MudContainer>
+        </DialogContent>
+        <DialogActions>
+            <MudButton DisableElevation Variant="Variant.Filled" OnClick="Cancel">@_localizer["Cancel"]</MudButton>
+            @if (Model.Id != 0)
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Secondary">@_localizer["Update"]</MudButton>
+            }
+            else
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Success">@_localizer["Save"]</MudButton>
+            }
+        </DialogActions>
+    </MudDialog>
+</EditForm>

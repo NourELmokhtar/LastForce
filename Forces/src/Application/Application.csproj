@@ -1,0 +1,57 @@
+﻿    <Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <RootNamespace>Forces.Application</RootNamespace>
+    <AssemblyName>Forces.Application</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+	  <PackageReference Include="AutoMapper" Version="11.0.1" />
+	  <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+	  <PackageReference Include="FluentValidation" Version="11.0.3" />
+	  <PackageReference Include="LazyCache" Version="2.4.0" />
+	  <PackageReference Include="MediatR" Version="10.0.1" />
+	  <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Http.Features" Version="5.0.17" />
+    <PackageReference Include="Microsoft.Office.Interop.Outlook" Version="15.0.4797.1004" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.2.10" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.19" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Proxies" Version="6.0.19" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Domain\Domain.csproj" />
+    <ProjectReference Include="..\Shared\Shared.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Features\AirKind\Queries\GetByAirKindId\" />
+    <Folder Include="Features\PersonalItemOperations\Commands\Delete\" />
+    <Folder Include="Features\PersonalItemOperations\Queries\GetAll\" />
+    <Folder Include="Features\PersonalItemOperations\Queries\Export\" />
+    <Folder Include="Features\BinRack\Queries\GetByForceId\" />
+    <Folder Include="Features\BinRack\Queries\GetById\" />
+    <Folder Include="Features\RackStore\Queries\GetByForceId\" />
+    <Folder Include="Features\RackStore\Queries\GetById\" />
+    <Folder Include="Features\SectionStore\Queries\GetByForceId\" />
+    <Folder Include="Features\SectionStore\Queries\GetById\" />
+    <Folder Include="Features\Tailers\Queries\GetOperations\" />
+    <Folder Include="Features\VehicleRequest\MTEditRequest\" />
+    <Folder Include="Features\VehicleRequest\GetAllRequests\" />
+    <Folder Include="Features\VehicleRequest\GetRequestBy\" />
+    <Folder Include="Features\VehicleRequest\SecurityEditRequest\" />
+    <Folder Include="Features\VehicleRequest\OCEditRequest\" />
+    <Folder Include="Features\Vehicle\Queries\GetByForceId\" />
+    <Folder Include="Features\Vehicle\Queries\GetById\" />
+    <Folder Include="Resources\Features\BaseSections\Commands\AddEdit\" />
+    <Folder Include="Resources\Features\BaseSections\Commands\Delete\" />
+    <Folder Include="Resources\Features\BaseSections\Queries\GetAll\" />
+    <Folder Include="Resources\Features\BaseSections\Queries\GetByBaseId\" />
+    <Folder Include="Resources\Features\BaseSections\Queries\GetById\" />
+    <Folder Include="Resources\Features\Bases\Commands\Delete\" />
+    <Folder Include="Resources\Features\Bases\Queries\GetAll\" />
+    <Folder Include="Resources\Features\Bases\Queries\GetByForceId\" />
+    <Folder Include="Resources\Features\Bases\Queries\GetById\" />
+    <Folder Include="Resources\Features\Forces\Commands\Delete\" />
+    <Folder Include="Resources\Features\Forces\Queries\GetAll\" />
+    <Folder Include="Resources\Features\Forces\Queries\GetById\" />
+  </ItemGroup>
+</Project>

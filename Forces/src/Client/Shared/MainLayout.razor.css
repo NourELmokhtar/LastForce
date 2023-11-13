@@ -1,0 +1,15 @@
+﻿body {
+
+}
+#appTitleLogo {
+    height: 35px;
+    position: relative;
+    width: 78px;
+}
+    #appTitleLogo::before {
+        content: '';
+        border-left: 10px solid white;
+        position: absolute;
+        left: -9px;
+        height: 39px;
+    }

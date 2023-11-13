@@ -1,0 +1,4 @@
+1 - Pickup.Shared.Constants.Permission.Permissions
+2 - Pickup.Shared.Constants.Permission.PermissionModules
+3 - Pickup.Infrastructure.Services.Identity.RoleService
+4 - Pickup.Infrastructure.DatabaseSeeder

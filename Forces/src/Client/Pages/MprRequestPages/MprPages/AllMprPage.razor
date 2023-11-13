@@ -1,0 +1,82 @@
+﻿@using Forces.Application.Enums;
+@using Forces.Application.Features.MprRequest.Dto.Response;
+@inject Microsoft.Extensions.Localization.IStringLocalizer<AllMprPage> _localizer
+@inject MprStepTypes mprStep
+<MudTable Hover="true" Elevation="0" Items="RequestsList" Dense="@_dense" Bordered="@_bordered" Striped="@_striped"  @bind-request="request">
+        <HeaderContent>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetMprResponse, object>(x => x.RefrenceId)">@_localizer["Code"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetMprResponse, object>(x => x.VoteCode)">@_localizer["Vote Code"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetMprResponse, object>(x => x.RequestState)">@_localizer["State"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetMprResponse, object>(x => x.CreationDate)">@_localizer["Date"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetMprResponse, object>(x => x.CurrentStep)">@_localizer["Location"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetMprResponse, object>(x => x.Items.Count)">@_localizer["Items"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetMprResponse, object>(x => x.Priority)">@_localizer["Priority"]</MudTableSortLabel></MudTh>
+            <MudTh><MudTableSortLabel SortBy="new Func<GetMprResponse, object>(x => x.Priority)">@_localizer["Action"]</MudTableSortLabel></MudTh>
+        </HeaderContent>
+        <RowTemplate>
+            <MudTd DataLabel="Code">
+               @context.RefrenceId
+            </MudTd>
+        <MudTd DataLabel="Vote Code">
+            @context.VoteCode
+        </MudTd>
+            <MudTd DataLabel="State">
+                @context.RequestState.ToString()
+            </MudTd>
+            <MudTd DataLabel="Date">
+               @context.CreationDate.ToString("dd/MM/yyyy")
+            </MudTd>
+            <MudTd DataLabel="Location">
+                @context.CurrentStep.ToString()
+            </MudTd>
+        <MudTd DataLabel="Items">
+            @context.Items.Count.ToString()
+            </MudTd>
+            <MudTd DataLabel="Priority">
+                @context.Priority.ToString()
+            </MudTd>
+            <MudTd DataLabel="Action">
+                @(GetCurentActionState(context.CurrentStep,context.RequestState))
+            </MudTd>
+            <MudTd>
+                <MudIconButton Icon="@Icons.Filled.Preview" OnClick="@(()=> PreviewRequest(context.Id))"></MudIconButton>
+            </MudTd>
+
+        </RowTemplate>
+        <FooterContent>
+            <MudSwitch @bind-Checked="@_dense" Color="Color.Secondary" Style="margin-left: 5px;">@_localizer["Dense"]</MudSwitch>
+            <MudSwitch @bind-Checked="@_striped" Color="Color.Tertiary" Style="margin-left: 5px;">@_localizer["Striped"]</MudSwitch>
+            <MudSwitch @bind-Checked="@_bordered" Color="Color.Warning" Style="margin-left: 5px;">@_localizer["Bordered"]</MudSwitch>
+        </FooterContent>
+        <PagerContent>
+            <TablePager />
+        </PagerContent>
+    </MudTable>
+@code {
+
+    [Parameter] public List<GetMprResponse> RequestsList { get; set; } = new();
+    [Parameter] public UserType CurrentUserType { get; set; }
+    public GetMprResponse request { get; set; } = new();
+    private bool _dense = true;
+    private bool _striped = true;
+    private bool _bordered = false;
+    [Parameter] public bool _loaded { get; set; } = false;
+
+    public string GetCurentActionState(MprSteps Step, RequestState requestState)
+    {
+        var CurrentUserStep = mprStep.GetUserStep(CurrentUserType);
+        if (Step == CurrentUserStep && requestState == RequestState.Pending)
+        {
+            return "Need Action";
+        }
+        else
+        {
+            return "Done";
+        }
+    
+    }
+    private void PreviewRequest(int ID)
+    {
+        _navigationManager.NavigateTo($"/Requests/MPR/{ID}");
+    }
+}

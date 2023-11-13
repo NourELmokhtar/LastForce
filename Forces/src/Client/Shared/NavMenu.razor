@@ -1,0 +1,350 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<NavMenu> _localizer
+@using System.Security.Claims
+
+<UserCard />
+<MudNavMenu>
+    <MudNavLink Href="/" Match="NavLinkMatch.All" Icon="@Icons.Material.Outlined.Home">@_localizer["Home"]</MudNavLink>
+    @*@if (_canViewHangfire)
+        {
+            <MudNavLink Href="/jobs" Target="_blank" Icon="@Icons.Material.Outlined.Work">
+                @_localizer["Hangfire"]
+            </MudNavLink>
+        }
+        <MudNavLink Href="#" Target="_blank" Icon="@Icons.Material.Outlined.ReadMore">
+            @_localizer["Quick Start Guide"]
+        </MudNavLink>
+        <MudNavLink Href="/swagger/index.html" Target="_blank" Icon="@Icons.Material.Outlined.LiveHelp">
+            @_localizer["Swagger"]
+        </MudNavLink>*@
+    <MudNavLink Href="/reportviewer" Icon="@Icons.Material.Outlined.Report">
+        @_localizer["Report Viewer"]
+    </MudNavLink>
+    <MudNavLink Href="/designer" Icon="@Icons.Material.Outlined.DesignServices">
+        @_localizer["Report Designer"]
+    </MudNavLink>
+    <MudListSubheader Class="mt-2 mb-n2">@_localizer["Personal"]</MudListSubheader>
+    @if (_canViewDashboards)
+    {
+        <MudNavLink Href="/dashboard" Icon="@Icons.Material.Outlined.Dashboard">
+            @_localizer["Dashboard"]
+        </MudNavLink>
+
+        <MudNavLink Href="/MPR/Dashboard" Icon="@Icons.Material.Outlined.Dashboard">
+            @_localizer["MPR Dashboard"]
+        </MudNavLink>
+
+    }
+    @if (_canViewVoteCodeDashboard)
+    {
+        <MudNavLink Href="/vcodedashboard" Icon="@Icons.Material.Outlined.Dashboard">
+            @_localizer["Dashboard"]
+        </MudNavLink>
+    }
+    <MudNavLink Href="/Vehicle/Dashboard" Icon="@Icons.Material.Outlined.Dashboard">
+        @_localizer["Vehicles Dashboard"]
+    </MudNavLink>
+    <MudNavLink Href="/account" Icon="@Icons.Material.Outlined.SupervisorAccount">
+        @_localizer["Account"]
+    </MudNavLink>
+    @if (_canViewAuditTrails)
+    {
+        <MudNavLink Href="/audit-trails" Icon="@Icons.Material.Outlined.Security">
+            @_localizer["Audit Trails"]
+        </MudNavLink>
+    }
+    @if (_canViewDocuments || _canViewDocumentTypes)
+    {
+        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Document Management"]</MudListSubheader>
+        @if (_canViewDocuments)
+        {
+            <MudNavLink Href="/document-store" Icon="@Icons.Material.Outlined.AttachFile">
+                @_localizer["Document Store"]
+            </MudNavLink>
+        }
+        @if (_canViewDocumentTypes)
+        {
+            <MudNavLink Href="/document-types" Icon="@Icons.Material.Outlined.FileCopy">
+                @_localizer["Document Types"]
+            </MudNavLink>
+        }
+    }
+    @if (_canViewMPR || _canViewBOD || _canViewCash)
+    {
+        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Requests"]</MudListSubheader>
+        @if (_canViewMPR)
+        {
+            <MudNavLink Href="/Requests/MPR" Icon="@Icons.Filled.ProductionQuantityLimits">
+                @_localizer["MPR"]
+            </MudNavLink>
+        }
+            <MudNavLink Href="/VehicleRequest/New" Icon="@Icons.Material.Filled.DirectionsBus">
+                @_localizer["Vehicle Request"]
+            </MudNavLink>
+        @if (_canViewBOD)
+        {
+            <MudNavLink Href="/Requests/BOD" Icon="@Icons.Filled.ConfirmationNumber">@_localizer["BOD"]</MudNavLink>
+        }
+        @if (_canViewCash)
+        {
+            <MudNavLink Href="/Requests/CASH" Icon="@Icons.Filled.ConfirmationNumber">@_localizer["Cash"]</MudNavLink>
+        }
+    }
+
+
+
+    @if (_canViewUsers || _canViewRoles)
+    {
+        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Administrator"]</MudListSubheader>
+        @if (_canViewUsers)
+        {
+            <MudNavLink Href="/identity/users" Icon="@Icons.Material.Outlined.Person">
+                @_localizer["Users"]
+            </MudNavLink>
+        }
+        @if (_canViewRoles)
+        {
+            <MudNavLink Href="/identity/roles" Icon="@Icons.Material.Outlined.Person">@_localizer["Roles"]</MudNavLink>
+        }
+    }
+    @if (_canViewBases || _canViewBasesSections || _canViewForces || _canViewInventories)
+    {
+        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Basic Informations"]</MudListSubheader>
+        @if (_canViewForces)
+        {
+            <MudNavLink Href="/BasicInformations/Forces" Icon="@Icons.Filled.Castle">
+                @_localizer["Forces"]
+            </MudNavLink>
+        }
+        @if (_canViewBases)
+        {
+            <MudNavLink Href="/BasicInformations/Bases" Icon="@Icons.Filled.AccountBalance">@_localizer["Bases"]</MudNavLink>
+        }
+        @if (_canViewBasesSections)
+        {
+            <MudNavLink Href="/BasicInformations/BasesSections" Icon="@Icons.Filled.AccountTree">@_localizer["Bases Sections"]</MudNavLink>
+        }
+        @if (_canViewOffices)
+        {
+            <MudNavLink Href="/Office/MyOffice" Icon="@Icons.Filled.LocalPostOffice">
+                @_localizer["Offices"]
+            </MudNavLink>
+        }
+        @if (_canViewInventories)
+        {
+            <MudNavLink Href="/Inventory/MyInventory" Icon="@Icons.Filled.Inventory">
+                @_localizer["Inventory"]
+                </MudNavLink>
+        }
+        @if (_canViewInventoryItems)
+        {
+            <MudNavLink Href="/InventoryItem/MyInventoryItem" Icon="@Icons.Filled.Inventory">
+                @_localizer["Inventory Items"]
+                </MudNavLink>
+        }
+        @if (_canViewHouses)
+        {
+            <MudNavLink Href="/House/MyHouse" Icon="@Icons.Filled.Hotel">
+                @_localizer["Houses"]
+            </MudNavLink>
+        }
+        @if (_canViewPersons)
+        {
+            <MudNavLink Href="/Person/MyPerson" Icon="@Icons.Filled.People">
+                @_localizer["Residents"]
+            </MudNavLink>
+        }
+        @if (_canViewBuildings)
+        {
+            <MudNavLink Href="/Building/MyBuilding" Icon="@Icons.Filled.House">
+                @_localizer["Buildings"]
+            </MudNavLink>
+        }
+        @if (_canViewRooms)
+        {
+            <MudNavLink Href="/Room/MyRoom" Icon="@Icons.Filled.Room">
+                @_localizer["Rooms"]
+            </MudNavLink>
+        }
+
+        <MudNavLink Href="/Vehicles" Icon="@Icons.Filled.CarRepair">
+            @_localizer["Vehicles"]
+        </MudNavLink>
+
+    }
+    @if (_canViewVoteCodes || _canViewVoteCodesUsers)
+    {
+        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Vote Codes Control"]</MudListSubheader>
+        @if (_canViewVoteCodes)
+        {
+            <MudNavLink Href="/votecodes" Icon="@Icons.Filled.AccountBalance">
+                @_localizer["Vote Codes"]
+            </MudNavLink>
+        }
+        @if (_canViewVoteCodesUsers)
+        {
+            @*<MudNavLink Href="/BasicInformations/Bases" Icon="@Icons.Filled.SupervisorAccount">@_localizer["Vote Codes Users"]</MudNavLink>*@
+        }
+
+    }
+    @if (_canViewItems || _canViewMeasureUnits)
+    {
+        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Items Management"]</MudListSubheader>
+        @if (_canViewItems)
+        {
+            <MudNavLink Href="/Items/Manage" Icon="@Icons.Filled.ProductionQuantityLimits">
+                @_localizer["Items"]
+            </MudNavLink>
+        }
+
+        <MudNavLink Href="/SectionStore" Icon="@Icons.Filled.ProductionQuantityLimits">
+            @_localizer["Store Sections"]
+        </MudNavLink>
+        @if (_canViewMeasureUnits)
+        {
+            <MudNavLink Href="/Items/MeasureUnits" Icon="@Icons.Filled.ConfirmationNumber">@_localizer["Measure Units"]</MudNavLink>
+        }
+
+    }
+    @if (_canViewPersonalService || _canViewPersonalServiceItems || _canViewPersonalServiceOperations || _canViewTailers || _canViewOperationsReport)
+    {
+        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Personal Service Management"]</MudListSubheader>
+        @if (_canViewPersonalServiceItems)
+        {
+            <MudNavLink Href="/PersonalItems" Icon="@Icons.Filled.ProductionQuantityLimits">
+                @_localizer["Personal Service Items"]
+            </MudNavLink>
+        }
+        @if (_canViewPersonalServiceOperations)
+        {
+            <MudNavLink Href="/ItemsOperations" Icon="@Icons.Filled.ConfirmationNumber">@_localizer["Personal Operations"]</MudNavLink>
+        }
+        @if (_canViewTailers)
+        {
+            <MudNavLink Href="/Tailers" Icon="@Icons.Filled.ConfirmationNumber">@_localizer["Tailers"]</MudNavLink>
+        }
+        @if (_canViewOperationsReport)
+        {
+            <MudNavLink Href="/StockReports" Icon="@Icons.Filled.ConfirmationNumber">@_localizer["Operations Reports"]</MudNavLink>
+        }
+    }
+    @if (_canViewDepo || _canViewHQ)
+    {
+        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Departments"]</MudListSubheader>
+        @if (_canViewDepo)
+        {
+            <MudNavLink Href="/Department/Depo" Icon="@Icons.Filled.Airlines">@_localizer["Depo Departments"]</MudNavLink>
+        }
+        @if (_canViewHQ)
+        {
+            <MudNavLink Href="/Department/HQ" Icon="@Icons.Filled.HighQuality">@_localizer["HQ Departments"]</MudNavLink>
+        }
+
+    }
+    @if (_canViewChat)
+    {
+        <MudListSubheader Class="mt-2 mb-n2">@_localizer["Communication"]</MudListSubheader>
+        <MudNavLink Href="/chat" Icon="@Icons.Material.Outlined.Chat">
+            @_localizer["Chat"]
+        </MudNavLink>
+    }
+    @*@if (_canViewProducts || _canViewBrands)
+        {
+            <MudListSubheader Class="mt-2 mb-n2">@_localizer["Catalog Management"]</MudListSubheader>
+            @if (_canViewProducts)
+            {
+                <MudNavLink Href="/catalog/products" Icon="@Icons.Material.Outlined.CallToAction">
+                    @_localizer["Products"]
+                </MudNavLink>
+            }
+            @if (_canViewBrands)
+            {
+                <MudNavLink Href="/catalog/brands" Icon="@Icons.Material.Outlined.CallToAction">
+                    @_localizer["Brands"]
+                </MudNavLink>
+            }
+        }*@
+</MudNavMenu>
+
+@code {
+    private ClaimsPrincipal _authenticationStateProviderUser;
+
+    private bool _canViewHangfire;
+    private bool _canViewDashboards;
+    private bool _canViewDocuments;
+    private bool _canViewDocumentTypes;
+    private bool _canViewAuditTrails;
+    private bool _canViewRoles;
+    private bool _canViewUsers;
+    private bool _canViewChat;
+    private bool _canViewProducts;
+    private bool _canViewBrands;
+    private bool _canViewForces;
+    private bool _canViewBases;
+    private bool _canViewBasesSections;
+    private bool _canViewInventories;
+    private bool _canViewDepartments;
+    private bool _canViewDepo;
+    private bool _canViewHQ;
+    private bool _canViewItems;
+    private bool _canViewMeasureUnits;
+    private bool _canViewVoteCodes;
+    private bool _canViewVoteCodesUsers;
+    private bool _canViewVoteCodeDashboard;
+    private bool _canViewMPR;
+    private bool _canViewBOD;
+    private bool _canViewCash;
+    private bool _canViewPersonalService;
+    private bool _canViewPersonalServiceItems;
+    private bool _canViewPersonalServiceOperations;
+    private bool _canViewTailers;
+    private bool _canViewOperationsReport;
+    private bool _canViewPersons;
+    private bool _canViewBuildings;
+    private bool _canViewHouses;
+    private bool _canViewRooms;
+    private bool _canViewOffices;
+    private bool _canViewInventoryItems;
+
+
+    protected override async Task OnParametersSetAsync()
+    {
+        _authenticationStateProviderUser = await _stateProvider.GetAuthenticationStateProviderUserAsync();
+        _canViewHangfire = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Hangfire.View)).Succeeded;
+        _canViewDashboards = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Dashboards.View)).Succeeded;
+        _canViewDocuments = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Documents.View)).Succeeded;
+        _canViewDocumentTypes = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.DocumentTypes.View)).Succeeded;
+        _canViewAuditTrails = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.AuditTrails.View)).Succeeded;
+        _canViewRoles = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Roles.View)).Succeeded;
+        _canViewUsers = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Users.View)).Succeeded;
+        _canViewChat = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Communication.Chat)).Succeeded;
+        _canViewProducts = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Products.View)).Succeeded;
+        _canViewBrands = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Brands.View)).Succeeded;
+        _canViewForces = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.BasicInformations.ViewForces)).Succeeded;
+        _canViewBases = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.BasicInformations.ViewBases)).Succeeded;
+        _canViewBasesSections = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.BasicInformations.ViewBasesSection)).Succeeded;
+        _canViewDepartments = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.BasicInformations.ViewDepartments)).Succeeded;
+        _canViewDepo = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.DepoManagement.ViewDepartments)).Succeeded;
+        _canViewHQ = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.HQManagement.ViewDepartments)).Succeeded;
+        _canViewItems = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Items.View)).Succeeded;
+        _canViewMeasureUnits = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.MeasureUnits.View)).Succeeded;
+        _canViewVoteCodes = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.VoteCodes.View)).Succeeded;
+        _canViewVoteCodesUsers = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.VoteCodes.Edit)).Succeeded;
+        _canViewVoteCodeDashboard = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.VoteCodeController.ViewDashboard)).Succeeded;
+        _canViewMPR = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.MPR.View)).Succeeded;
+        _canViewBOD = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.BOD.View)).Succeeded;
+        _canViewCash = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Cash.View)).Succeeded;
+        _canViewPersonalService = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.PersonalServices.View)).Succeeded;
+        _canViewPersonalServiceItems = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.PersonalServicesItems.View)).Succeeded;
+        _canViewTailers = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Tailer.View)).Succeeded;
+        _canViewOperationsReport = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.PersonalItemsOperations.Reports)).Succeeded;
+        _canViewPersonalServiceOperations = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.PersonalItemsOperations.Create)).Succeeded;
+        _canViewInventories = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Inventory.View)).Succeeded;
+        _canViewPersons = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Person.View)).Succeeded;
+        _canViewBuildings = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Building.View)).Succeeded;
+        _canViewHouses = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.House.View)).Succeeded;
+        _canViewRooms = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Rooms.View)).Succeeded;
+        _canViewOffices = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.Office.View)).Succeeded;
+        _canViewInventoryItems = (await _authorizationService.AuthorizeAsync(_authenticationStateProviderUser, Permissions.InventoryItems.View)).Succeeded;
+
+    }
+}

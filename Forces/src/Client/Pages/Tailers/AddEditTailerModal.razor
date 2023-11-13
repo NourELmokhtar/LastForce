@@ -1,0 +1,54 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<AddEditTailerModal> _localizer
+@using Forces.Client.Pages.BasicInformations.Component
+<EditForm Model="@AddEditTaileModel" OnValidSubmit="SaveAsync">
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <MudDialog>
+        <TitleContent>
+            @{
+                if (AddEditTaileModel.Id == 0)
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
+                        @_localizer["Add Tailer"]
+                    </MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Update" Class="mr-3 mb-n1" />
+                        @_localizer["Update Tailer"]
+                    </MudText>
+                }
+            }
+        </TitleContent>
+        <DialogContent>
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" T="string" For="@(() => AddEditTaileModel.Name)" @bind-Value="AddEditTaileModel.Name" Label="@_localizer["Tailer Name"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField Immediate="true" For="@(() => AddEditTaileModel.Phone)" @bind-Value="AddEditTaileModel.Phone" Label="@_localizer["Tailer Phone"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField Immediate="true" For="@(() => AddEditTaileModel.TailerCode)" @bind-Value="AddEditTaileModel.TailerCode" Label="@_localizer["Tailer Code"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <BasesSelectComponent Required="true" For="@(() => AddEditTaileModel.BaseId)" @bind-BindingValue="AddEditTaileModel.BaseId"></BasesSelectComponent>
+                </MudItem>
+            </MudGrid>
+        </DialogContent>
+        <DialogActions>
+            <MudButton DisableElevation Variant="Variant.Filled" OnClick="Cancel">@_localizer["Cancel"]</MudButton>
+            @if (AddEditTaileModel.Id != 0)
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Secondary">@_localizer["Update"]</MudButton>
+            }
+            else
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Success">@_localizer["Save"]</MudButton>
+            }
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+
+

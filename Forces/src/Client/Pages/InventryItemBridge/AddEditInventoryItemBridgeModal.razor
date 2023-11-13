@@ -1,0 +1,94 @@
+﻿@using MudBlazor
+@using MudBlazor.Utilities
+@inject IJSRuntime JSRuntime
+
+@inject Microsoft.Extensions.Localization.IStringLocalizer<AddEditInventoryItemBridgeModal> _localizer
+@code {
+
+    private async Task LogToConsole(){
+
+        await JSRuntime.InvokeVoidAsync("console.log", _InventoryItemsList);
+    }
+}
+
+<EditForm Model="@AddEditInventoryItemBridgeModel" OnValidSubmit="SaveAsync">
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <MudDialog>
+        <TitleContent>
+            @{
+                if (AddEditInventoryItemBridgeModel.Id == 0)
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
+                        @_localizer["Add InventoryItem"]
+                    </MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Update" Class="mr-3 mb-n1" />
+                        @_localizer["Update InventoryItem"]
+                    </MudText>
+                }
+            }
+        </TitleContent>
+        <DialogContent>
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" T="int" For="@(() => AddEditInventoryItemBridgeModel.Id)" @bind-Value="AddEditInventoryItemBridgeModel.Id" Label="@_localizer["InventoryItem Name"]" />
+                </MudItem>
+                
+                <MudItem xs="12" md="6">
+                    <MudGrid>
+                        <MudItem xs="12" md="6">
+                            <MudSelect Label="Select Inventory" @bind-Value="SelectedInventory">
+                                @if (_InventoryList != null)
+                                {
+                                    @for (int i = 0; i < _InventoryList.Count; i++)
+                                    {
+                                        <MudSelectItem Value="@_InventoryList[i].Name"></MudSelectItem>
+
+                                    }
+                                }
+                            </MudSelect>
+
+                        </MudItem>
+
+                    </MudGrid>
+                </MudItem>
+
+        
+
+                <MudItem xs="12" md="6">
+                        @if (_InventoryItemsList != null)
+                        {
+                            @for(int i = 0; i < _InventoryItemsList.Count; i++)
+                            {
+
+                                    <MudLabel>@_InventoryItemsList[i].ItemName</MudLabel>
+
+                                    <MudButton Variant="Variant.Outlined" OnClick="@(() => ItemClicked(_InventoryItemsList[i]))">
+                                    </MudButton>
+                            }
+                        }
+
+                </MudItem>
+
+            </MudGrid>
+
+        </DialogContent>
+        <DialogActions>
+            <MudButton DisableElevation Variant="Variant.Filled" OnClick="Cancel">@_localizer["Cancel"]</MudButton>
+             @if (AddEditInventoryItemBridgeModel.Id != 0)
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Secondary">@_localizer["Update"]</MudButton>
+            }
+            else
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Success">@_localizer["Save"]</MudButton>
+            }
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+            <MudButton DisableElevation Variant="Variant.Filled" OnClick="LogToConsole">Log to Console</MudButton>
+

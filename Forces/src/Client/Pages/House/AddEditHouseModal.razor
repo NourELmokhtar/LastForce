@@ -1,0 +1,76 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<AddEditHouseModal> _localizer
+@inject IJSRuntime JSRuntime
+
+@code {
+
+    private async Task LogToConsole()
+    {
+        await JSRuntime.InvokeVoidAsync("console.log", converterForBases(selectedBase));
+        await JSRuntime.InvokeVoidAsync("console.log", selectedBase);
+        await JSRuntime.InvokeVoidAsync("console.log", AddEditHouseModel.BaseId);
+    }
+}
+<EditForm Model="@AddEditHouseModel" OnValidSubmit="SaveAsync">
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <MudDialog>
+        <TitleContent>
+            @{
+                if (AddEditHouseModel.Id == 0)
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
+                        @_localizer["Add House"]
+                    </MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Update" Class="mr-3 mb-n1" />
+                        @_localizer["Update House"]
+                    </MudText>
+                }
+            }
+        </TitleContent>
+        <DialogContent>
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" T="string" For="@(() => AddEditHouseModel.HouseName)" @bind-Value="AddEditHouseModel.HouseName" Label="@_localizer["House Name"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" T="string" For="@(() => AddEditHouseModel.HouseCode)" @bind-Value="AddEditHouseModel.HouseCode" Label="@_localizer["House Code"]" />
+                </MudItem>
+                <MudItem xs="12" md="6">
+
+                </MudItem>
+
+            </MudGrid>
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudSelect Label="Select Base" @bind-Value="selectedBase">
+                        @if (_BaseList != null)
+                        {
+                            @foreach (var item in _BaseList)
+                            {
+                                <MudSelectItem Value="@item.BaseName">@item.BaseName</MudSelectItem>
+                            }
+                        }
+                    </MudSelect>
+
+                </MudItem>
+
+            </MudGrid>
+        </DialogContent>
+        <DialogActions>
+            <MudButton DisableElevation Variant="Variant.Filled" OnClick="Cancel">@_localizer["Cancel"]</MudButton>
+            @if (AddEditHouseModel.Id != 0)
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Secondary">@_localizer["Update"]</MudButton>
+            }
+            else
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Success">@_localizer["Save"]</MudButton>
+            }
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+<MudButton DisableElevation Variant="Variant.Filled" OnClick="LogToConsole">Log to Console</MudButton>

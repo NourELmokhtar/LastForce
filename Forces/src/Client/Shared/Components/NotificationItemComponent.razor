@@ -1,0 +1,18 @@
+﻿@using Humanizer
+
+<div class="@itemClass()" @onclick="OnClick">
+    <div class="msg-avatar">
+        MPR
+    </div>
+    <div class="msg-Name">
+        @Title
+    </div>
+    <div class="msg-msg">
+        @Description
+    </div>
+    <div class="time-icon">
+        <span></span>
+        <span>@Date.Humanize(true, DateTime.Now)</span>
+    </div>
+
+</div>

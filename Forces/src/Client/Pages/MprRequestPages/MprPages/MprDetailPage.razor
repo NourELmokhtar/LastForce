@@ -1,0 +1,475 @@
+﻿@page "/Requests/MPR/{requestId}"
+ @inject Microsoft.Extensions.Localization.IStringLocalizer<MprDetailPage> _localizer
+@attribute [Authorize(Policy = Permissions.MPR.View)]
+@inject MprStepTypes mprStep
+@using Forces.Application.Extensions
+@using Forces.Application.Enums
+@using Forces.Client.Pages.Requests.NPR
+@using Humanizer
+@if (!_loaded)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+    @if (request == null)
+    {
+        <style>
+            .error-template {
+                padding: 40px 15px;
+                text-align: center;
+            }
+
+            .error-actions {
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+
+                .error-actions .btn {
+                    margin-right: 10px;
+                }
+        </style>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="error-template">
+                        <h1>
+                            Oops!
+                        </h1>
+                        <h2>
+                            Request Not Found!
+                        </h2>
+                        <div class="error-details">
+                            Sorry, an error has occured, Requested page not found!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    else
+    {
+        <MudBreadcrumbs Items="_items"></MudBreadcrumbs>
+        <div class="d-flex pa-4 justify-space-between">
+            <div>
+                <MudText Style="display:inline" Typo="Typo.h5" Color="Color.Primary">@request.RefrenceId</MudText>
+                <MudChip Style="display: inline; margin-left: 8px; vertical-align: bottom;" Color="@(RequestStateColor())">@request.RequestState.ToEnDescriptionString()</MudChip>
+                @if (request.RequestState == RequestState.Completed && request.PaiedOff == true)
+                {
+                    <MudChip Style="display: inline; margin-left: 8px; vertical-align: bottom;" Color="Color.Success">Paid Off</MudChip>
+                }
+                @if (request.RequestState == RequestState.Completed && request.ConfirmPaied == true)
+                {
+                    <MudChip Style="display: inline; margin-left: 8px; vertical-align: bottom;" Color="Color.Success">Confirm Paied</MudChip>
+                }
+            </div>
+            @if (CurrentUserStep == MprSteps.VoteCodeContreoller && request.RequestState == RequestState.Completed &&(request.PaiedOff == null || request.PaiedOff == false) )
+            {
+                <div>
+                    <MudButton Variant="Variant.Filled" OnClick="ConfirmTransaction" EndIcon="@Icons.Material.Filled.Send" Color="Color.Success">@_localizer["Confirm Transaction"]</MudButton>
+                    <MudButton Variant="Variant.Filled" OnClick="RejectActionRequest" StartIcon="@Icons.Material.Filled.Recycling" Color="Color.Error">@_localizer["Reject"]</MudButton>
+                </div>
+
+            }
+            @if (request.PaiedOff == true && request.ConfirmPaied == false && request.UserName == CurrentUser.UserName)
+            {
+                <MudButton Variant="Variant.Filled" OnClick="ConfirmPaiedTransaction" EndIcon="@Icons.Material.Filled.Send" Color="Color.Success">@_localizer["Confirm Paied"]</MudButton>
+
+            }
+            @if(request.CurrentStep == MprSteps.FASection && request.UserName == CurrentUser.UserName)
+            {
+                <MudButton Variant="Variant.Filled" OnClick="CancelActionRequest" StartIcon="@Icons.Material.Filled.Recycling" Color="Color.Error">@_localizer["Cancel Request"]</MudButton>
+
+            }
+            @if (request.CurrentStep > MprSteps.OCLogStep || request.CurrentStep> MprSteps.WKLFinance)
+            {
+                <div>
+                    <PrintDialog Report="Rpt_MPRRequest" DataSource="@(GetDatasource())" ReportName="MPR Request"></PrintDialog>
+                </div>                
+            }
+        </div>
+        <div style="display:block; margin-bottom:8px">
+            <CustomUserCard UserID="@request.CreatorId"
+                            AdditionalDataLable=@_localizer["Date"] AdditionalData="@request.CreationDate.ToString("d/M/yyyy")"
+                            AdditionalData2Lable=@_localizer["Time"] AdditionalData2="@request.CreationDate.ToString("hh:mm tt")"
+                            AdditionalData3Lable=@_localizer["Pariority"] AdditionalData3="@request.Priority.ToEnDescriptionString()"
+                            AdditionalData4Lable="@_localizer["Vote Code"]" AdditionalData4="@request.VoteCode" 
+                            Base="@request.Base" Force="@request.Force" Section="@request.Section">
+
+                <MudTable Items="@request.Items" Hover="true" Breakpoint="Breakpoint.Sm"  LoadingProgressColor="Color.Info">
+                    <HeaderContent>
+                        <MudTh>@_localizer["Part Name"]</MudTh>
+                        <MudTh>@_localizer["Part Number"]</MudTh>
+                        <MudTh>@_localizer["Part NSN"]</MudTh>
+                        <MudTh>@_localizer["QTY"]</MudTh>
+                        <MudTh>@_localizer["D Of Q"]</MudTh>
+                        <MudTh>@_localizer["Price"]</MudTh>
+                    </HeaderContent>
+                    <RowTemplate>
+                        <MudTd DataLabel="Part Name">@context.ItemName</MudTd>
+                        <MudTd DataLabel="Part Number">@context.ItemCode</MudTd>
+                        <MudTd DataLabel="Part NSN">@context.ItemNSN</MudTd>
+                        <MudTd DataLabel="QTY">@context.ItemQTY</MudTd>
+                        <MudTd DataLabel="D Of Q">@context.ItemUnit</MudTd>
+                        <MudTd DataLabel="Price">@context.ItemPrice</MudTd>
+
+                    </RowTemplate>
+
+                    <FooterContent>
+                        <MudTd Class="mud-table-cell-custom-group mud-table-cell-custom-group-footer" Style="text-align: right;" colspan="6"><strong>Total:</strong> @request.Items.Sum(x=>x.ItemPrice)</MudTd>
+                    </FooterContent>
+                </MudTable>
+
+                <MudGrid>
+                    <MudItem sm="12" md="3" xs="12">
+                        <MPRLineComponent Lable=@_localizer["Reason"]>@request.Note</MPRLineComponent>
+                    </MudItem>
+                </MudGrid>
+                <MudSpacer />
+                @if (request.Attachments.Count > 0)
+                {
+                    <MudText Typo="Typo.subtitle1">@_localizer["Attachments"]:</MudText>
+                    <MudList>
+                        @foreach (var req in request.Attachments)
+                        {
+                            AttachmentCounter++;
+                            <MudListItem Icon="@Icons.Filled.AttachFile">
+                                <a href="@req" target="_blank"> @($"Attachment {request.Attachments.IndexOf(req) + 1}")</a>
+                                <MudIconButton Variant="Variant.Text"
+                                               Color="Color.Secondary"
+                                               Icon="@Icons.Filled.CloudDownload"
+                                               Size="Size.Small"
+                                               download="@req"
+                                               Link="@(req)" Target="_top">
+
+                                </MudIconButton>
+                            </MudListItem>
+                        }
+                    </MudList>
+                }
+            </CustomUserCard>
+        </div>
+
+        @foreach (var action in request.Actions.Where(x=>x.ActionStep != MprSteps.CreationStep).ToList())
+        {
+            <div style="display:block; margin-bottom:10px;margin-top:10px">
+                @if ((action.ActionStep == mprStep.GetUserStep(CurrentUserType) && action.ActionState == Application.Enums.ActionState.Pending && (action.Department == 0|| action.Department == null)) || (action.ActionStep == mprStep.GetUserStep(CurrentUserType) && action.ActionState == Application.Enums.ActionState.Pending && action.Department == CurrentUser.DepartType && action.departId == CurrentUser.DepartId))
+                {
+                    { SetActionId(action.Id); }
+                    <MudCard Elevation="4">
+                        <MudCardHeader>
+                            <CardHeaderContent>
+                                <MudText Typo="Typo.body1"> @_localizer["Action Needed"]</MudText>
+                                <MudSpacer />
+                            </CardHeaderContent>
+                        </MudCardHeader>
+                        <MudCardContent>
+                            <MudGrid>
+                                <MudItem sm="12" md="3" xs="12">
+                                    <MudSelect T="StepActions" @bind-Value="ActionModel.Action" Label=@_localizer["Action"] AnchorOrigin="Origin.BottomCenter">
+                                        @foreach (var type in AvilableActions)
+                                        {
+                                            <MudSelectItem Value="@type">@type.ToDescriptionString()</MudSelectItem>
+                                        }
+                                    </MudSelect>
+                                </MudItem>
+
+                                @switch (ActionModel.Action)
+                                {
+                                    case StepActions.Submit:
+                                        <MudItem sm="12" md="4" xs="12">
+                                            <MudTextField ReadOnly="true" @bind-Value="ActionModel.VoteCodeId" For="@(() => ActionModel.VoteCodeId)" Text="@SelectedVoteCode.VoteCode" Label=@_localizer["Vote Code"] Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.PinInvoke" OnAdornmentClick="SelectVoteCode" />
+                                        </MudItem>
+                                        break;
+                                    case StepActions.Esclate:
+                                        @if ((CurrentUserStep == MprSteps.ICPOSection && CurrentUserStep != MprSteps.DepartmentStep))
+                                        {
+                                            <MudItem sm="12" md="4" xs="12">
+                                                <MudSelect T="DepartType?" @bind-Value="departType" Label=@_localizer["Department Type"] AnchorOrigin="Origin.BottomCenter">
+                                                    @foreach (DepartType? type in Enum.GetValues(typeof(DepartType)))
+                                                    {
+                                                        <MudSelectItem Value="@type">@type.ToDescriptionString()</MudSelectItem>
+                                                    }
+                                                </MudSelect>
+                                            </MudItem>
+                                            switch (departType)
+                                            {
+
+                                                case DepartType.Depot:
+                                                    <MudItem sm="12" md="4" xs="12">
+                                                        <MudSelect T="int?" @bind-Value="SelectedDepartId" Label=@_localizer["Department"] AnchorOrigin="Origin.BottomCenter">
+                                                            @foreach (var depo in DepoList)
+                                                            {
+                                                                <MudSelectItem T="int?" Value="@depo.Id">@depo.Name</MudSelectItem>
+                                                            }
+                                                        </MudSelect>
+                                                    </MudItem>
+
+                                                    break;
+                                                case DepartType.HQ:
+                                                    <MudItem sm="12" md="4" xs="12">
+                                                        <MudSelect T="int?" @bind-Value="SelectedDepartId" Label=@_localizer["Department"] AnchorOrigin="Origin.BottomCenter">
+                                                            @foreach (var hq in HqList)
+                                                            {
+                                                                <MudSelectItem T="int?" Value="@hq.Id">@hq.Name</MudSelectItem>
+                                                            }
+                                                        </MudSelect>
+                                                    </MudItem>
+
+                                                    break;
+                                            }
+                                        }
+                                        @if (CurrentUserStep == MprSteps.DepartmentStep)
+                                        {
+                                            <MudItem md="9">
+
+                                            </MudItem>
+                                            //implement Qutation Files And Attach Files
+                                            <MudItem md="12">
+                                                <MudCard Style="margin-top: 30px; padding-bottom: 30px; display:block">
+                                                    <MudCardHeader>
+                                                        <CardHeaderContent>
+                                                            <MudText Typo="Typo.h6">@_localizer["Qutation"]</MudText>
+                                                        </CardHeaderContent>
+                                                        <CardHeaderActions>
+                                                            <MudIconButton Icon="@Icons.Material.Filled.ClearAll" OnClick="CleareAttachment" Color="Color.Default" />
+                                                        </CardHeaderActions>
+                                                    </MudCardHeader>
+                                                    <MudCardContent>
+                                                        <MudGrid>
+                                                            <MudItem md="6">
+                                                                @*<MudTextField @bind-Value="ActionModel.AdditionalPrice" Label=@_localizer["Qutation Price"] Variant="Variant.Text"></MudTextField>*@
+                                                            </MudItem>
+                                                            <MudItem md="6">
+                                                                <InputFile id="fileInput" OnChange="UploadFiles" hidden multiple />
+                                                                <div class="d-inline-flex pa-4 justify-center" style=" width: 100%; flex-direction: column;">
+                                                                    <b class="mud-input-helper-text.mud-input-error" style="margin-bottom: 8px; color: red;">
+                                                                        @*<ValidationMessage For="@(()=> ActionModel.Attachments)"></ValidationMessage>*@
+                                                                    </b>
+                                                                    <MudButton HtmlTag="label"
+                                                                               Variant="Variant.Filled"
+                                                                               Color="Color.Primary"
+                                                                               StartIcon="@Icons.Filled.CloudUpload"
+                                                                               for="fileInput">
+                                                                        @_localizer["Add Qutation Attachment"]
+                                                                    </MudButton>
+                                                                    @if (files != null)
+                                                                    {
+
+                                                                        <MudText Typo="@Typo.h6">@files.Count() File@(files.Count() == 1 ? "" : "s"):</MudText>
+                                                                        <MudList>
+                                                                            @foreach (var file in files)
+                                                                            {
+                                                                                <MudListItem Icon="@Icons.Filled.AttachFile" @key="@file">
+                                                                                    @file.Name <code>@file.Size bytes</code>
+                                                                                    <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(()=>removeItem(file))"></MudIconButton>
+                                                                                </MudListItem>
+                                                                            }
+                                                                        </MudList>
+
+
+                                                                    }
+                                                                </div>
+                                                            </MudItem>
+                                                        </MudGrid>
+
+                                                    </MudCardContent>
+                                                </MudCard>
+                                            </MudItem>
+
+
+                                        }
+                                        break;
+                                    case StepActions.Reject:
+                                        break;
+                                    case StepActions.Redirect:
+                                        <MudItem sm="12" md="4" xs="12">
+                                            <MudSelect T="RedirectAction" @bind-Value="RedirectModel.To" Label=@_localizer["Redirect To"] AnchorOrigin="Origin.BottomCenter">
+                                                @foreach (RedirectAction type in Enum.GetValues(typeof(RedirectAction)))
+                                                {
+                                                    <MudSelectItem Value="@type">@type.ToDescriptionString()</MudSelectItem>
+                                                }
+                                            </MudSelect>
+                                        </MudItem>
+                                        switch (RedirectModel.To)
+                                        {
+                                            case RedirectAction.ToUser:
+                                                <MudItem sm="12" md="4" xs="12">
+                                                    <MudSelect T="string" @bind-Value="RedirectModel.RefId" Label=@_localizer["Users"] AnchorOrigin="Origin.BottomCenter">
+                                                        @foreach (var usr in request.Actions.Select(x=> new{name = x.UserName,id = x.UserID}))
+                                                        {
+                                                            <MudSelectItem Value="usr.id">@usr.name</MudSelectItem>
+                                                        }
+                                                    </MudSelect>
+                                                </MudItem>
+                                                break;
+                                            case RedirectAction.ToUserType:
+                                                <MudItem sm="12" md="4" xs="12">
+                                                    <MudSelect T="string" @bind-Value="RedirectModel.RefId" Label=@_localizer["Steps"] AnchorOrigin="Origin.BottomCenter">
+                                                        @foreach (var stp in request.Actions.Select(x => new { stepint = ((int)x.ActionStep).ToString(), stepName = x.ActionStep.ToDescriptionString() }))
+                                                        {
+                                                            <MudSelectItem Value="stp.stepint">@stp.stepName</MudSelectItem>
+                                                        }
+                                                    </MudSelect>
+                                                </MudItem>
+                                                break;
+                                            case RedirectAction.ToDepartment:
+                                                <MudItem sm="12" md="4" xs="12">
+                                                    <MudSelect T="string" @bind-Value="RedirectModel.RefId" Label=@_localizer["Department Type"] AnchorOrigin="Origin.BottomCenter">
+                                                        @foreach (DepartType type in Enum.GetValues(typeof(DepartType)))
+                                                        {
+                                                            <MudSelectItem Value="((int)type).ToString()">@type.ToDescriptionString()</MudSelectItem>
+                                                        }
+                                                    </MudSelect>
+                                                </MudItem>
+                                                switch (GetSelectedDepartType(RedirectModel.RefId))
+                                                {
+
+                                                    case DepartType.Depot:
+                                                        <MudItem sm="12" md="4" xs="12">
+                                                            <MudSelect T="int?" @bind-Value="RedirectModel.RefIdInt" Label=@_localizer["Department"] AnchorOrigin="Origin.BottomCenter">
+                                                                @foreach (var depo in DepoList)
+                                                                {
+                                                                    <MudSelectItem T="int?" Value="@depo.Id">@depo.Name</MudSelectItem>
+                                                                }
+                                                            </MudSelect>
+                                                        </MudItem>
+
+                                                        break;
+                                                    case DepartType.HQ:
+                                                        <MudItem sm="12" md="4" xs="12">
+                                                            <MudSelect T="int?" @bind-Value="RedirectModel.RefIdInt" Label=@_localizer["Department"] AnchorOrigin="Origin.BottomCenter">
+                                                                @foreach (var hq in HqList)
+                                                                {
+                                                                    <MudSelectItem T="int?" Value="@hq.Id">@hq.Name</MudSelectItem>
+                                                                }
+                                                            </MudSelect>
+                                                        </MudItem>
+
+                                                        break;
+                                                }
+                                                break;
+                                            default:
+                                                break;
+                                        }
+                                        break;
+                                    case StepActions.SelectQutation:
+                                    <MudItem md="12">
+                                            <MudTable  T="string" Items="@request.Attachments" MultiSelection="true" @bind-SelectedItems="SelectedAttachment" Hover="true">
+                                                <HeaderContent>
+                                                    <MudTh>View</MudTh>
+                                                    <MudTh>Download</MudTh>
+                                                </HeaderContent>
+                                                <RowTemplate>
+                                                    <MudTd DataLabel="Attachment">   <a href="@context" target="_blank"> @($"Attachment {request.Attachments.IndexOf(context) + 1}")</a></MudTd>
+                                                    <MudTd DataLabel="View"> <MudIconButton Variant="Variant.Text"
+                                               Color="Color.Secondary"
+                                               Icon="@Icons.Filled.CloudDownload"
+                                               Size="Size.Small"
+                                               download="@context"
+                                                                       Link="@(context)" Target="_top">
+
+                                </MudIconButton></MudTd> 
+                                                </RowTemplate>
+                                                <FooterContent>
+                                                    <MudTd colspan="5">Select All</MudTd>
+                                                </FooterContent>
+                                            </MudTable>
+                                        </MudItem>
+                                        break;
+                                    case StepActions.Edit:
+                                        <EditMprRequestModal Items="@request.Items" VoteCodeId="@VoteCodesList.FirstOrDefault(x=>x.VoteCode == request.VoteCode).Id"/>
+                                        <MudItem md="12">
+                                            <InputFile id="fileInput" OnChange="UploadFiles" hidden multiple />
+                                            <div class="d-inline-flex pa-4 justify-center" style=" width: 100%; flex-direction: column;">
+                                                <b class="mud-input-helper-text.mud-input-error" style="margin-bottom: 8px; color: red;">
+                                                    @*<ValidationMessage For="@(()=> ActionModel.Attachments)"></ValidationMessage>*@
+                                                </b>
+                                                <MudButton HtmlTag="label"
+                                                           Variant="Variant.Filled"
+                                                           Color="Color.Primary"
+                                                           StartIcon="@Icons.Filled.CloudUpload"
+                                                           for="fileInput">
+                                                    @_localizer["Add Qutation Attachment"]
+                                                </MudButton>
+                                                @if (files != null)
+                                                {
+
+                                                    <MudText Typo="@Typo.h6">@files.Count() File@(files.Count() == 1 ? "" : "s"):</MudText>
+                                                    <MudList>
+                                                        @foreach (var file in files)
+                                                        {
+                                                            <MudListItem Icon="@Icons.Filled.AttachFile" @key="@file">
+                                                                @file.Name <code>@file.Size bytes</code>
+                                                                <MudIconButton Icon="@Icons.Material.Filled.Delete" OnClick="@(()=>removeItem(file))"></MudIconButton>
+                                                            </MudListItem>
+                                                        }
+                                                    </MudList>
+
+
+                                                }
+                                            </div>
+                                        </MudItem>
+                                            break;
+                                                 }
+
+                                <MudItem sm="12" md="12" xs="12">
+                                    <MudTextField Label=@_localizer["Note"] Lines="4" @bind-Value="ActionModel.ActionNote"></MudTextField>
+                                </MudItem>
+                            </MudGrid>
+                        </MudCardContent>
+                        <MudCardActions>
+                            <MudSpacer />
+                            <MudButton Variant="Variant.Outlined" OnClick="Submitrequest" Color="Color.Success">@_localizer["Submit"]</MudButton>
+                        </MudCardActions>
+                    </MudCard>
+                }
+                else if (!string.IsNullOrEmpty(action.UserID))
+                {
+                    <CustomUserCard UserID="@action.UserID"
+                                    AdditionalDataLable=@_localizer["Date"] AdditionalData="@action.ActionDate.Value.ToString("d/M/yyyy")"
+                                    AdditionalData2Lable=@_localizer["Time"] AdditionalData2="@action.ActionDate.Value.ToString("hh:mm tt")"
+                                    AdditionalData3Lable=@_localizer["Action"] AdditionalData3="@action.TakenAction" OutLine="true" Elevation="1" Style="border-radius: 8px !important;">
+                        <MudGrid>
+                            <MudItem sm="12" md="12" xs="12">
+                                <MPRLineComponent Lable=@_localizer["Action Result"]>@action.ActionResult</MPRLineComponent>
+                            </MudItem>
+                            <MudItem sm="12" md="12" xs="12">
+                                <MPRLineComponent Lable=@_localizer["Action Note"]>@action.ActionNote</MPRLineComponent>
+                            </MudItem>
+                            <MudItem sm="12" md="12" xs="12">
+                                <MPRLineComponent Lable=@_localizer["Action Date"]>@action.ActionDate.Value.ToString("dd/M/yyyy hh:mm tt") | @action.ActionDate.Value.Humanize(dateToCompareAgainst: DateTime.Now)</MPRLineComponent>
+                            </MudItem>
+                            <MudItem sm="12" md="12" xs="12">
+                                <MPRLineComponent Lable=@_localizer["Action Location"]>@action.ActionStep.ToString()</MPRLineComponent>
+                            </MudItem>
+                        </MudGrid>
+                        <MudSpacer />
+                        @if (action.ActionAttachment.Count > 0)
+                        {
+                            <MudText Typo="Typo.subtitle1">@_localizer["Attachments"]:</MudText>
+                            <MudList>
+                                @foreach (var ac in action.ActionAttachment)
+                                {
+                                    AttachmentCounter++;
+                                    <MudListItem Icon="@Icons.Filled.AttachFile">
+                                        <a href="@ac" target="_blank"> @($"Attachment {action.ActionAttachment.IndexOf(ac) + 1}")</a>
+                                        <MudIconButton Variant="Variant.Text"
+                                                       Color="Color.Secondary"
+                                                       Icon="@Icons.Filled.CloudDownload"
+                                                       Size="Size.Small"
+                                                       download="@ac"
+                                                       Link="@(ac)" Target="_top">
+
+                                        </MudIconButton>
+                                    </MudListItem>
+                                }
+                            </MudList>
+                        }
+                    </CustomUserCard>
+                }
+            </div>
+        }
+
+    }
+}

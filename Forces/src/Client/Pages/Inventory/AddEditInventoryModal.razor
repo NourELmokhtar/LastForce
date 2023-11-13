@@ -1,0 +1,148 @@
+﻿@inject Microsoft.Extensions.Localization.IStringLocalizer<AddEditInventoryModal> _localizer
+@inject IJSRuntime JSRuntime
+
+@code {
+
+    private async Task LogToConsole()
+    {
+        await JSRuntime.InvokeVoidAsync("console.log", BuildingName);
+        await JSRuntime.InvokeVoidAsync("console.log", converterForBuildings(BuildingName));
+        await JSRuntime.InvokeVoidAsync("console.log", _HouseList);
+        await JSRuntime.InvokeVoidAsync("console.log", _BuildingList);
+        await JSRuntime.InvokeVoidAsync("console.log", _RoomList.Where(x=>x.BuildingId == converterForBuildings(BuildingName)));
+        await JSRuntime.InvokeVoidAsync("console.log", filteredRooms);
+    }
+}
+<EditForm Model="@AddEditInventoryModel" OnValidSubmit="SaveAsync">
+    <FluentValidationValidator @ref="_fluentValidationValidator" />
+    <MudDialog>
+        <TitleContent>
+            @{
+                if (AddEditInventoryModel.Id == 0)
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Add" Class="mr-3 mb-n1" />
+                        @_localizer["Add Inventory"]
+                    </MudText>
+                }
+                else
+                {
+                    <MudText Typo="Typo.h6">
+                        <MudIcon Icon="@Icons.Material.Filled.Update" Class="mr-3 mb-n1" />
+                        @_localizer["Update Inventory"]
+                    </MudText>
+                }
+            }
+        </TitleContent>
+        <DialogContent>
+            <MudGrid>
+                <MudItem xs="12" md="6">
+                    <MudTextField Required="true" Immediate="true" T="string" For="@(() => AddEditInventoryModel.Name)" @bind-Value="AddEditInventoryModel.Name" Label="@_localizer["Inventory Name"]" />
+                </MudItem>
+               
+                <MudItem xs="12" md="6">
+
+                </MudItem>
+
+            </MudGrid>
+            <MudGrid>
+            <MudItem xs="12" md="6">
+                    <MudSelect Label="Select Inventory Type" @bind-Value="selectedDropdownItem">
+                    @if (dropdownItems != null)
+                    {
+                        @foreach (var item in dropdownItems)
+                        {
+                            <MudSelectItem Value="@item">@item</MudSelectItem>
+                        }
+                    }
+                </MudSelect>
+
+            </MudItem>
+
+            @if(selectedDropdownItem == "BasesSections")
+            {
+                <MudItem xs="12" md="6">
+                        <MudSelect Label="Select Base Section Name" @bind-Value="BaseSectionName">
+                        @if (_BaseSectionList != null)
+                        {
+                            @for (int i = 0; i < _BaseSectionList.Count; i++)
+                            {
+
+                                <MudSelectItem Value="@_BaseSectionList[i].SectionName"></MudSelectItem>
+
+                            }
+                        }
+                    </MudSelect>
+
+                </MudItem>
+
+            }
+            @if (selectedDropdownItem == "House")
+            {
+                <MudItem xs="12" md="6">
+                    <MudSelect Label="Select House Name" @bind-Value="HouseName">
+                        @if (_HouseList != null)
+                        {
+                            @for (int i = 0; i < _HouseList.Count; i++)
+                            {
+
+                                <MudSelectItem Value="@_HouseList[i].HouseName"></MudSelectItem>
+
+                            }
+                        }
+                    </MudSelect>
+
+                </MudItem>
+
+            }
+            @if (selectedDropdownItem == "Building")
+            {
+                <MudItem xs="12" md="6">
+                    <MudSelect Label="Select Building Name" @bind-Value="BuildingName" @onchange="GetRoomsAsync">
+                        @if (_BuildingList != null)
+                        {
+                            @for (int i = 0; i < _BuildingList.Count; i++)
+                            {
+
+                                <MudSelectItem Value="@_BuildingList[i].BuildingName"></MudSelectItem>
+
+                            }
+                        }
+                    </MudSelect>
+
+                </MudItem>
+
+            }
+            @if (selectedDropdownItem == "Building" && (BuildingName != "" && BuildingName != null))
+            {
+                <MudItem xs="12" md="6">
+                    <MudSelect Label="Select Room Number" @bind-Value="RoomNumber">
+                        @if (filteredRooms != null)
+                        {
+                            @for (int i = 0; i < filteredRooms.Count(); i++)
+                            {
+                                <MudSelectItem Value="@filteredRooms.ElementAt(i).RoomNumber"></MudSelectItem>
+                            }
+
+                        }
+                    </MudSelect>
+
+                </MudItem>
+
+            }
+            </MudGrid>
+        </DialogContent>
+        <DialogActions>
+            <MudButton DisableElevation Variant="Variant.Filled" OnClick="Cancel">@_localizer["Cancel"]</MudButton>
+            @if (AddEditInventoryModel.Id != 0)
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Secondary">@_localizer["Update"]</MudButton>
+            }
+            else
+            {
+                <MudButton DisableElevation Variant="Variant.Filled" ButtonType="ButtonType.Submit" Disabled="@(!Validated)" Color="Color.Success">@_localizer["Save"]</MudButton>
+            }
+        </DialogActions>
+    </MudDialog>
+</EditForm>
+<MudButton DisableElevation Variant="Variant.Filled" OnClick="LogToConsole">Log to Console</MudButton>

@@ -1,0 +1,208 @@
+﻿@page "/MPR/Dashboard"
+@using ChartJs.Blazor;
+@using ChartJs.Blazor.Common;
+@using ChartJs.Blazor.PieChart;
+@using ChartJs.Blazor.Util;
+@using Forces.Application.Features.MPRDashboard.Query.GetMPRData;
+@using static Forces.Client.Shared.SampleUtils;
+@inject Microsoft.Extensions.Localization.IStringLocalizer<MPRDashboardPage> _localizer
+@inject Infrastructure.Managers.Requests.NPR.INprManager _manager
+<HeroTitle Title="@_localizer["MPR Dashboard"]" Description="@_localizer["Realtime Updates & Insights"]" />
+@if (_loading)
+{
+    <MudProgressCircular Color="Color.Primary" Indeterminate="true" />
+}
+else
+{
+    <MudGrid>
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                <MudIcon Icon="@Icons.Material.Filled.AllInclusive" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                <div>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Requests"]</MudText>
+                    <MudText Typo="Typo.h5">@Model.TotalRequests</MudText>
+                </div>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                <MudIcon Icon="@Icons.Material.Filled.Done" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                <div>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Completed"]</MudText>
+                    <MudText Typo="Typo.h5">@Model.Completed</MudText>
+                </div>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                <MudIcon Icon="@Icons.Material.Filled.Pending" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                <div>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Pending"]</MudText>
+                    <MudText Typo="Typo.h5">@Model.Pending</MudText>
+                </div>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                <MudIcon Icon="@Icons.Material.Filled.DoNotDisturbOff" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                <div>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Rejected"]</MudText>
+                    <MudText Typo="Typo.h5">@Model.Rejected</MudText>
+                </div>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                <MudIcon Icon="@Icons.Material.Filled.Cancel" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                <div>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Canceled"]</MudText>
+                    <MudText Typo="Typo.h5">@Model.Canceld</MudText>
+                </div>
+            </MudPaper>
+        </MudItem>
+
+        <MudItem xs="12" sm="6" md="3">
+            <MudPaper Elevation="25" Class="d-flex flex-row pt-6 pb-4" Style="height:100px;">
+                <MudIcon Icon="@Icons.Material.Filled.Payments" Color="Color.Primary" Class="mx-4" Style="width:54px; height:54px;"></MudIcon>
+                <div>
+                    <MudText Typo="Typo.subtitle1" Class="mud-text-secondary mb-n1">@_localizer["Paied Off"]</MudText>
+                    <MudText Typo="Typo.h5">@Model.PaiedOff</MudText>
+                </div>
+            </MudPaper>
+        </MudItem>
+    </MudGrid>
+    <MudGrid>
+        <MudItem md="6">
+            <MudPaper Elevation="25" Class="d-flex flex-column pt-6 pb-4" Style="justify-content: center;">
+                <div class="d-flex flex-column" style=" width:100%;justify-content: center">
+                    <Chart Config="_configv" @ref="_chartv"></Chart>
+                </div>
+            </MudPaper>
+            
+        </MudItem>
+        <MudItem md="6">
+            <MudPaper Elevation="25" Class="d-flex flex-column pt-6 pb-4" Style="justify-content: center;">
+                <div class="d-flex flex-column" style=" width:100%;justify-content: center">
+                    <Chart Config="_configf" @ref="_chartf"></Chart>
+                </div>
+            </MudPaper>
+            
+        </MudItem>
+    </MudGrid>
+
+}
+
+@code {
+    GetMPRDashboardDataResponse Model = new GetMPRDashboardDataResponse();
+    private bool _loading = true;
+    private PieConfig _configv;
+    private Chart _chartv;
+
+    private int[] chartData;
+    
+    private PieConfig _configf;
+    private Chart _chartf;
+
+    string[] labels = { "Completed", "Pending", "Rejected","Canceled" };
+    string[] AllRequests = { "Completed Requests", "Paied Off" };
+    private int[] FulechartData;
+    protected override async Task OnInitializedAsync()
+    {
+        await GetData();
+        _loading = false;
+    }
+    private async Task GetData()
+    {
+        var Response = await _manager.GetDashboardData();
+        if (Response.Succeeded)
+        {
+            Model = Response.Data;
+
+            chartData = new int[] { Model.Completed, Model.Pending, Model.Rejected,Model.Canceld };
+            FulechartData = new int[] { Model.Completed, Model.PaiedOff};
+           
+            DrawCharts();
+        }else
+        {
+            foreach (var msg in Response.Messages)
+            {
+                _snackBar.Add(msg, Severity.Error);
+            }
+        }
+    }
+
+    private string IconColor(int index)
+    {
+        return ChartColors.All.Take(chartData.Count()).Select(ColorUtil.FromDrawingColor).ToArray()[index];
+    }
+    private void DrawCharts()
+    {
+        DrawVChart();
+        DrawFChart();
+    }
+    private void DrawFChart()
+    {
+        _configf = new PieConfig
+            {
+                Options = new PieOptions
+                {
+                    Responsive = false,
+                    Title = new OptionsTitle
+                    {
+                        Display = true,
+                        Text = "Paied Off Summry Chart"
+                    },
+                    Legend = new Legend()
+                    {
+                        Display = true,
+                        Position = ChartJs.Blazor.Common.Enums.Position.Right,
+
+                    },
+                    Tooltips = new Tooltips()
+
+                },
+            };
+        PieDataset<int> dataset = new PieDataset<int>(FulechartData.ToList())
+            {
+                BackgroundColor = ChartColors.All.Take(FulechartData.Count()).Select(ColorUtil.FromDrawingColor).ToArray()
+
+            };
+        _configf.Data.Datasets.Add(dataset);
+        _configf.Data.Labels.AddRange(AllRequests);
+    }
+    private void DrawVChart()
+    {
+        _configv = new PieConfig
+            {
+                Options = new PieOptions
+                {
+                    Responsive = false,
+                    Title = new OptionsTitle
+                    {
+                        Display = true,
+                        Text = "Requests Activity Chart"
+                    },
+                    Legend = new Legend()
+                    {
+                        Display = true,
+                        Position = ChartJs.Blazor.Common.Enums.Position.Left,
+
+                    },
+                    Tooltips = new Tooltips()
+
+                },
+            };
+        PieDataset<int> dataset = new PieDataset<int>(chartData.ToList())
+            {
+                BackgroundColor = ChartColors.All.Take(chartData.Count()).Select(ColorUtil.FromDrawingColor).ToArray()
+
+            };
+        _configv.Data.Datasets.Add(dataset);
+        _configv.Data.Labels.AddRange(labels);
+
+    }
+}

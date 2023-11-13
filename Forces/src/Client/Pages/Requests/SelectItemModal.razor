@@ -1,0 +1,58 @@
+﻿@using Forces.Application.Features.Items.Queries.GetAll
+@inject Microsoft.Extensions.Localization.IStringLocalizer<SelectItemModal> _localizer
+@using Forces.Application.Extensions
+<MudDialog>
+    <DialogContent>
+        <MudContainer Style="overflow-y:auto;height:80vh">
+            <MudTable Items="@_ItemsList" Dense="true" Hover="true" Breakpoint="Breakpoint.Sm" Filter="new Func<GetAllItemsResponse,bool>(Search)" Loading="@_loaded" LoadingProgressColor="Color.Info">
+                <ToolBarContent>
+                    <MudButton DisableElevation Variant="Variant.Filled" Color="Color.Primary" OnClick="(() => InvokeAddNewModal())" StartIcon="@Icons.Material.Filled.Add" IconColor="Color.Surface">@_localizer["Create"]</MudButton>
+                    <MudSpacer/>
+                    <MudTextField Immediate="true" @bind-Value="_searchString" Placeholder="Search For Items" Adornment="Adornment.Start" AdornmentIcon="@Icons.Material.Filled.Search" IconSize="Size.Medium" Class="mt-0"></MudTextField>
+                </ToolBarContent>
+                <HeaderContent>
+                    <MudTh><MudTableSortLabel SortBy="new Func<GetAllItemsResponse, object>(x => x.Id)">@_localizer["Id"]</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<GetAllItemsResponse, object>(x => x.ItemName)">@_localizer["Name"]</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<GetAllItemsResponse, object>(x => x.ItemArName)">@_localizer["Ar Name"]</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<GetAllItemsResponse, object>(x => x.ItemCode)">@_localizer["Code"]</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<GetAllItemsResponse, object>(x => x.ItemNsn)">@_localizer["NSN"]</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<GetAllItemsResponse, object>(x => x.ItemDescription)">@_localizer["Description"]</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<GetAllItemsResponse, object>(x => x.MeasureName)">@_localizer["Unit"]</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<GetAllItemsResponse, object>(x => x.ItemClass)">@_localizer["Class"]</MudTableSortLabel></MudTh>
+                    <MudTh><MudTableSortLabel SortBy="new Func<GetAllItemsResponse, object>(x => x.VoteCode)">@_localizer["Vote Code"]</MudTableSortLabel></MudTh>
+                </HeaderContent>
+                <RowTemplate>
+                    <MudTd DataLabel="Id">@context.Id</MudTd>
+                    <MudTd DataLabel="Name">
+                        <MudHighlighter Text="@context.ItemName" HighlightedText="@_searchString" />
+                    </MudTd>
+                    <MudTd DataLabel="Ar Name">
+                        <MudHighlighter Text="@context.ItemArName" HighlightedText="@_searchString" />
+                    </MudTd>
+                    <MudTd DataLabel="Code">
+                        <MudHighlighter Text="@context.ItemCode" HighlightedText="@_searchString" />
+                    </MudTd>
+                    <MudTd DataLabel="NSN">
+                        <MudHighlighter Text="@context.ItemNsn" HighlightedText="@_searchString" />
+                    </MudTd>
+                    <MudTd DataLabel="Description">
+                        <MudHighlighter Text="@context.ItemDescription" HighlightedText="@_searchString" />
+                    </MudTd>
+                    <MudTd DataLabel="Unit">
+                        <MudHighlighter Text="@context.MeasureName" HighlightedText="@_searchString" />
+                    </MudTd>
+                    <MudTd DataLabel="Class">
+                        <MudHighlighter Text="@context.ItemClass.ToDescriptionString()" HighlightedText="@_searchString" />
+                    </MudTd>
+                    <MudTd DataLabel="Vote Code">
+                        <MudHighlighter Text="@context.VoteCode" HighlightedText="@_searchString" />
+                    </MudTd>
+                    <MudTd><MudIconButton OnClick="@(()=> Submit(context))" Icon=@Icons.Filled.PinInvoke Color="Color.Success"></MudIconButton></MudTd>
+                </RowTemplate>
+            </MudTable>
+        </MudContainer>
+    </DialogContent>
+    <DialogActions>
+        <MudButton DisableElevation Variant="Variant.Filled" OnClick="Cancel">@_localizer["Cancel"]</MudButton>
+    </DialogActions>
+</MudDialog>

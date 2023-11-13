@@ -1,0 +1,58 @@
+﻿@using System.Linq.Expressions
+@using Forces.Application.Features.Bases.Queries.GetAll
+<MudSelect T="int" Required="@Required" For="@For" ToStringFunc="@Baseconverter()" @bind-Value="@BindingValue" Label="@Lable" AnchorOrigin="Origin.BottomCenter">
+    @if (_BasesList != null)
+    {
+        foreach (var Base in _BasesList)
+        {
+            <MudSelectItem Value="@Base.Id" />
+        }
+    }
+
+</MudSelect>
+
+@code {
+    [Inject] private IBaseManager BaseManager { get; set; }
+    [Parameter] public int BaseId { get; set; }
+    [Parameter] public Expression<Func<int>> For { get; set; }
+    [Parameter] public bool Required { get; set; } = false;
+    [Parameter] public string Lable { get; set; } = "Base";
+    private List<GetAllBasesResponse> _BasesList = new();
+    private int _value;
+    [Parameter]
+    public int BindingValue
+    {
+        get => _value;
+        set
+        {
+            if (_value == value) return;
+            _value = value;
+            BindingValueChanged.InvokeAsync(value);
+        }
+    }
+    [Parameter]
+    public EventCallback<int> BindingValueChanged { get; set; }
+    private async Task GetBases()
+    {
+        var response = await BaseManager.GetAllAsync();
+        if (response.Succeeded)
+        {
+            _BasesList = response.Data.ToList();
+        }
+        else
+        {
+            foreach (var message in response.Messages)
+            {
+                _snackBar.Add(message, Severity.Error);
+            }
+        }
+    }
+    protected override async Task OnInitializedAsync()
+    {
+        await GetBases();
+    }
+    Func<int, string> Baseconverter()
+    {
+        return p => $"{_BasesList.FirstOrDefault(x => x.Id == p).BaseName} | {_BasesList.FirstOrDefault(x => x.Id == p).BaseCode}";
+    }
+}
